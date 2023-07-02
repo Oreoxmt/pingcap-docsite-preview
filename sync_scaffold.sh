@@ -47,5 +47,5 @@ cp "$CLONE_DIR/$SYNC_JSON_FILE" "./$SYNC_JSON_FILE"
 
 ## Commit changes with the commit SHA from the cloned repository
 CURRENT_SHA=$(git -C "$CLONE_DIR" rev-parse HEAD)
-git add .
+git add . || true
 git commit -m "Sync the scaffold from $REPO_URL/commit/$CURRENT_SHA" || echo "No changes detected"
