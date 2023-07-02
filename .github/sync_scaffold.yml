@@ -1,0 +1,34 @@
+name: Sync scaffold
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 0 */15 * *" # every 15 days
+
+jobs:
+
+  sync_scaffold:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+    - name: Checkout current repo
+      uses: actions/checkout@v3
+      with:
+        path: pingcap-docsite-preview
+
+    - name: Checkout docs-staging repo
+      uses: actions/checkout@v3
+      with:
+        repository: 'pingcap/docs-staging'
+        path: docs-staging
+
+    - name: Run sync_scaffold script
+      run: |
+        git config user.name "PingCAP Docsite Preview Bot"
+        git config user.email ""
+        ./sync_scaffold.sh
+        git push
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
