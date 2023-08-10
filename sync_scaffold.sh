@@ -11,7 +11,7 @@ SYNC_FILES=("TOC.md" "_index.md" "_docHome.md")
 SYNC_JSON_FILE="docs.json"
 
 # Get the current script's directory and change to it
-SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
+SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
 cd "$SCRIPT_DIR"
 
 # Verify if CLONE_DIR is a git repository
