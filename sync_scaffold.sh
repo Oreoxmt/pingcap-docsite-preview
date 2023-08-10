@@ -45,6 +45,9 @@ rsync -av --checksum "${INCLUDES[@]}" --exclude='*' "$SRC" "$DEST"
 # Copy SYNC_JSON_FILE from CLONE_DIR to the current directory
 cp "$CLONE_DIR/$SYNC_JSON_FILE" "./$SYNC_JSON_FILE"
 
+# Exit if TEST is set and not empty
+test -n "$TEST" && echo "Test mode, exiting..." && exit 0
+
 ## Commit changes with the commit SHA from the cloned repository
 CURRENT_SHA=$(git -C "$CLONE_DIR" rev-parse HEAD)
 git add . || true
