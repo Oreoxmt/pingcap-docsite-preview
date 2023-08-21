@@ -40,7 +40,7 @@ for file in "${SYNC_FILES[@]}"; do
 done
 
 # Synchronize SRC and DEST
-rsync -av --checksum "${INCLUDES[@]}" --exclude='*' "$SRC" "$DEST"
+rsync -avm --checksum "${INCLUDES[@]}" --exclude='*' "$SRC" "$DEST"
 
 # Copy SYNC_JSON_FILE from CLONE_DIR to the current directory
 cp "$CLONE_DIR/$SYNC_JSON_FILE" "./$SYNC_JSON_FILE"
