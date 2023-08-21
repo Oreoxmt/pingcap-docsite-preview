@@ -11,8 +11,11 @@ script_name: str = "sync_scaffold.sh"
 feature_command: str = "/" + script_name
 diff_exclude: list = ["--exclude", "temp", "--exclude", script_name]
 
+script_env = os.environ.copy()
+script_env["TEST"] = str(1)
+
 test = DocSitePreviewTest(test_dir, feature_dir, feature_command)
 
-test.execute()
+test.execute(env=script_env)
 
 test.verify(diff_exclude)
