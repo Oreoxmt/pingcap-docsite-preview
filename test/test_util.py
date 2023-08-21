@@ -50,7 +50,7 @@ class DocSitePreviewTest:
         Execute the feature command.
         """
         command_str = self.test_feature_path + " " + args
-        command_list: list = shlex.split(command_str)
+        command_list = shlex.split(command_str)
         self._execute_command(command_list, self.test_output, env)
 
     @staticmethod
@@ -68,6 +68,6 @@ class DocSitePreviewTest:
         """
         Use diff command to compare the expected output (data) and the actual output.
         """
-        args: list = shlex.split(command)
+        args = shlex.split(command)
         self._execute_command(args, self.test_dir)
         print("Test {} passed successfully".format(self.script_name))
