@@ -1,4 +1,5 @@
 import os
+import shlex
 import shutil
 import subprocess
 
@@ -62,10 +63,10 @@ class DocSitePreviewTest:
         if code != 0:
             raise Exception("Error: command returned code {}".format(code))
 
-    def verify(self, command: list | None = None):
+    def verify(self, command: str = "diff -r data actual"):
         """
         Use diff command to compare the expected output (data) and the actual output.
         """
-        diff_command = ["diff", "-r", "data", "actual"] + (command or [])
-        self._execute_command(diff_command, self.test_dir)
-        print("Test {} passed successfully".format(self.feature_command))
+        args: list = shlex.split(command)
+        self._execute_command(args, self.test_dir)
+        print("Test {} passed successfully".format(self.script_name))
