@@ -14,19 +14,60 @@ SYNC_JSON_FILE="docs.json"
 SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
 cd "$SCRIPT_DIR"
 
-# Verify if CLONE_DIR is a git repository
-if [ ! -e "$CLONE_DIR/.git" ]; then
-  if [ -d "$CLONE_DIR" ]; then
-    # If CLONE_DIR is not a git repository, delete it
+# Remove CLONE_DIR if it is a directory without .git
+ensure_git_dir() {
+  if [ -d "$CLONE_DIR" ] && [ ! -e "$CLONE_DIR/.git" ]; then
     rm -rf "$CLONE_DIR"
   fi
-  # Shallow clone the repository
-  git clone --depth 1 "$REPO_URL" "$CLONE_DIR"
+}
 
+# Checkout a specific branch or commit and pull the latest changes
+checkout_pull_ref() {
+  TARGET_REF="$1"
+  git -C "$CLONE_DIR" checkout "$TARGET_REF"
+  git -C "$CLONE_DIR" pull origin "$TARGET_REF"
+}
+
+# Shallow clone, checkout, and pull the default branch
+clone_checkout_default() {
+  TARGET_REF=$1
+  ensure_git_dir
+  # If CLONE_DIR is not a git repository, shallow clone it
+  if [ ! -e "$CLONE_DIR/.git" ]; then
+    git clone --depth 1 "$REPO_URL" "$CLONE_DIR"
+  fi
+  checkout_pull_ref "$TARGET_REF"
+}
+
+# Clone, checkout, and pull a specific branch or commit
+clone_checkout_spec() {
+  TARGET_REF=$1
+  ensure_git_dir
+  # If CLONE_DIR is not a git repository, clone it
+  if [ ! -e "$CLONE_DIR/.git" ]; then
+    git clone "$REPO_URL" "$CLONE_DIR"
+  fi
+  # If CLONE_DIR is a shallow clone, convert it to a normal clone
+  if [ -f "$CLONE_DIR/.git/shallow" ]; then
+    echo "Converting a shallow clone to a normal clone..."
+    git -C "$CLONE_DIR" fetch --unshallow
+    git -C "$CLONE_DIR" config remote.origin.fetch "+refs/heads/*:refs/remotes/origin/*"
+    git -C "$CLONE_DIR" fetch origin
+  fi
+  checkout_pull_ref "$TARGET_REF"
+}
+
+# Parse command-line arguments
+if [ -n "$1" ]; then
+  # If the first command-line argument is provided, sync from a specific branch or commit.
+  TARGET_REF="$1"
+  echo "Syncing from $REPO_URL/commit/$TARGET_REF"
+  clone_checkout_spec "$TARGET_REF"
 else
-  # If the directory already exists, switch to main branch and pull the latest changes
-  git -C "$CLONE_DIR" checkout main
-  git -C "$CLONE_DIR" pull origin main
+  # If the first command-line argument is not provided, sync from the default branch (main).
+  TARGET_REF="main"
+  echo "Syncing from $REPO_URL/commit/$TARGET_REF"
+  clone_checkout_default "$TARGET_REF"
 fi
 
 # Set source and destination directories for rsync
