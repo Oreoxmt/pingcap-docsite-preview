@@ -45,12 +45,13 @@ class DocSitePreviewTest:
         """
         os.chmod(script, 0o755)
 
-    def execute(self, env: dict | None = None):
+    def execute(self, args: str = "", env: dict | None = None):
         """
         Execute the feature command.
         """
-
-        self._execute_command(self.test_feature_path, self.test_output, env)
+        command_str = self.test_feature_path + " " + args
+        command_list: list = shlex.split(command_str)
+        self._execute_command(command_list, self.test_output, env)
 
     @staticmethod
     def _execute_command(command, cwd, env=None):
