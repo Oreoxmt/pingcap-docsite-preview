@@ -5,12 +5,12 @@ import subprocess
 
 class DocSitePreviewTest:
 
-    def __init__(self, test_dir: str, feature_dir: str, feature_command: str):
+    def __init__(self, test_dir: str, feature_dir: str, script_name: str):
         self.feature_dir = feature_dir
-        self.feature_command = feature_command
+        self.script_name = script_name
         self.test_dir = test_dir
         self.test_output = os.path.join(self.test_dir, "actual")
-        self.test_feature_path = self.test_output + self.feature_command
+        self.test_feature_path = os.path.join(self.test_output, self.script_name)
         self._setup_test_env()
 
     def _setup_test_env(self):
@@ -34,8 +34,7 @@ class DocSitePreviewTest:
         """
         Copy the script to the test environment.
         """
-        shutil.copy(self.feature_dir + self.feature_command,
-                    self.test_feature_path)
+        shutil.copy(os.path.join(self.feature_dir, self.script_name), self.test_feature_path)
         self._make_script_executable(self.test_feature_path)
 
     @staticmethod
