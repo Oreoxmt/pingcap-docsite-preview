@@ -45,20 +45,20 @@ class DocSitePreviewTest:
         """
         os.chmod(script, 0o755)
 
-    def execute(self):
+    def execute(self, env: dict | None = None):
         """
         Execute the feature command.
         """
 
-        self._execute_command(self.test_feature_path, self.test_output)
+        self._execute_command(self.test_feature_path, self.test_output, env)
 
     @staticmethod
-    def _execute_command(command, cwd):
+    def _execute_command(command, cwd, env=None):
         """
         Execute a command and check its exit code.
         Raise an exception if the command does not return 0.
         """
-        process = subprocess.Popen(command, cwd=cwd)
+        process = subprocess.Popen(command, cwd=cwd, env=env)
         code = process.wait()
         if code != 0:
             raise Exception("Error: command returned code {}".format(code))
