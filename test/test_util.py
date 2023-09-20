@@ -3,6 +3,7 @@ import shlex
 import shutil
 import subprocess
 import time
+from typing import List, Dict
 
 
 class DocSitePreviewTest:
@@ -48,7 +49,7 @@ class DocSitePreviewTest:
         """
         os.chmod(script, 0o755)
 
-    def execute(self, args: str = "", env: dict | None = None) -> bool:
+    def execute(self, args: str = "", env: Dict[str, str] | None = None) -> bool:
         """
         Execute the feature command.
         """
@@ -56,13 +57,13 @@ class DocSitePreviewTest:
         return self._execute_command(shlex.split(command), self.test_output, "execute", env)
 
     @staticmethod
-    def _execute_command(command: list, cwd, task: str, env=None) -> bool:
+    def _execute_command(command: List[str], cwd: str, task: str, env: Dict[str, str] | None = None) -> bool:
         """
         Execute a command and log the output to *.log.
         Returns:
             bool: True if the command is executed successfully, False otherwise.
         """
-        log_path = os.path.join(cwd, f"{task}_{time.time_ns()}.log")
+        log_path = os.path.join(cwd, f"{task}_{int(time.time())}.log")
         with open(log_path, "w") as f:
             result = subprocess.run(command, stdout=f, stderr=f, text=True, cwd=cwd, env=env)
             if result.returncode != 0:

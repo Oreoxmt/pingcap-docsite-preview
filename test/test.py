@@ -1,7 +1,7 @@
 import os
 import time
 import tomllib
-
+from typing import Dict
 from tqdm import tqdm
 
 from test_util import DocSitePreviewTest
@@ -28,7 +28,7 @@ class TestRunner:
         return config
 
     @staticmethod
-    def _load_env() -> dict:
+    def _load_env() -> Dict[str, str]:
         """
         Load environment variables from .env file.
         """
@@ -50,7 +50,7 @@ class TestRunner:
         result = f"{hyphens}Test Results{hyphens}\n"
         print(f"Running Tests...")
 
-        for feature, config in self.tests.items():
+        for _, config in self.tests.items():
             script_name = config["test_target"]
             diff_command = config["diff_command"]
 
