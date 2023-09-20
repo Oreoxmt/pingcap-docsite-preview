@@ -1,0 +1,10 @@
+[sync_scaffold]
+
+diff_command = "diff -qrs data actual --exclude temp --exclude '*.log' --exclude sync_scaffold.sh"
+test_target = "sync_scaffold.sh"
+
+[[sync_scaffold.test_cases]]
+
+name = "Sync scaffold from a commit"
+args = "265874160aec258f9c725b0e940bc803ca558bda"
+directory = "test/sync_scaffold/"
