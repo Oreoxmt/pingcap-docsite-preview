@@ -3,7 +3,7 @@ import shlex
 import shutil
 import subprocess
 import time
-from typing import List, Dict
+from typing import Dict, List
 
 
 class DocSitePreviewTest:

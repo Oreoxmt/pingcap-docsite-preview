@@ -1,8 +1,9 @@
 import os
 import time
 import tomllib
-from typing import Dict, List
 from dataclasses import dataclass
+from typing import Dict, List
+
 from tqdm import tqdm
 
 from test_util import DocSitePreviewTest
