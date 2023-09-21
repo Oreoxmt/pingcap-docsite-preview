@@ -1,0 +1,39 @@
+[sync_scaffold]
+
+diff_command = "diff -qrs data actual --exclude temp --exclude '*.log' --exclude sync_scaffold.sh"
+test_target = "sync_scaffold.sh"
+
+[[sync_scaffold.test_cases]]
+
+name = "Sync scaffold from a commit"
+args = "265874160aec258f9c725b0e940bc803ca558bda"
+directory = "test/sync_scaffold/"
+
+[sync_pr]
+
+diff_command = "diff -qrs data actual --exclude temp --exclude '*.log' --exclude sync_pr.sh"
+test_target = "sync_pr.sh"
+
+[[sync_pr.test_cases]]
+
+name = "Sync markdown-pages from a TiDB Cloud PR"
+args = "preview-cloud/pingcap/docs/10098"
+directory = "test/sync_pr_cloud/"
+
+[[sync_pr.test_cases]]
+
+name = "Sync markdown-pages from a docs PR"
+args = "preview/pingcap/docs/12929"
+directory = "test/sync_pr_docs/"
+
+[[sync_pr.test_cases]]
+
+name = "Sync markdown-pages from a docs-cn PR"
+args = "preview/pingcap/docs-cn/14523"
+directory = "test/sync_pr_docs_cn/"
+
+[[sync_pr.test_cases]]
+
+name = "Sync markdown-pages from a TiDB Operator PR"
+args = "preview-operator/pingcap/docs-tidb-operator/2397"
+directory = "test/sync_pr_operator/"
