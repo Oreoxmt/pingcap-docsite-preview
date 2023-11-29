@@ -1,4 +1,4 @@
-name: Sync a PR
+name: Sync documentation changes from a PR to the preview branch
 
 on:
   push:
