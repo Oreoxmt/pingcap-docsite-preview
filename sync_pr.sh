@@ -16,30 +16,28 @@
 # 1. Install jq
 # 2. Set the GITHUB_TOKEN environment variable
 
-set -e
-
-test -n "$TEST" && set -x
+set -ex
 
 check_prerequisites() {
   # Verify if jq is installed and GITHUB_TOKEN is set.
   which jq &>/dev/null || (echo "Error: jq is required but not installed. You can download and install jq from <https://stedolan.github.io/jq/download/>." && exit 1)
 
-  test -n "$TEST" && set +x
+  set +x
 
   test -n "$GITHUB_TOKEN" || (echo "Error: GITHUB_TOKEN (repo scope) is required but not set." && exit 1)
 
-  test -n "$TEST" && set -x
+  set -x
 }
 
 get_pr_base_branch() {
   # Get the base branch of a PR using GitHub API <https://docs.github.com/en/rest/pulls/pulls?apiVersion=2022-11-28#get-a-pull-request>
-  test -n "$TEST" && set +x
+  set +x
 
   BASE_BRANCH=$(curl -fsSL -H "Authorization: token $GITHUB_TOKEN" \
     "https://api.github.com/repos/$REPO_OWNER/$REPO_NAME/pulls/$PR_NUMBER" |
     jq -r '.base.ref')
 
-  test -n "$TEST" && set -x
+  set -x
 
   # Ensure that BASE_BRANCH is not empty
   test -n "$BASE_BRANCH" || (echo "Error: Cannot get BASE_BRANCH." && exit 1)
