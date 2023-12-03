@@ -37,3 +37,15 @@ directory = "test/sync_pr_docs_cn/"
 name = "Sync markdown-pages from a TiDB Operator PR"
 args = "preview-operator/pingcap/docs-tidb-operator/2397"
 directory = "test/sync_pr_operator/"
+
+[sync_mult_prs]
+
+diff_command = "diff -qrs data actual --exclude temp --exclude '*.log' --exclude sync_mult_prs.sh --exclude sync_pr.sh"
+test_target = "sync_mult_prs.sh"
+test_dependencies = ["sync_pr.sh"]
+
+[[sync_mult_prs.test_cases]]
+
+name = "Sync markdown-pages from multiple PRs"
+args = ""
+directory = "test/sync_mult_prs/"
