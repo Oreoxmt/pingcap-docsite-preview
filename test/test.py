@@ -33,6 +33,7 @@ class TestConfig:
     diff_command: str
     test_target: str
     test_cases: List[TestCase]
+    test_dependencies: List[str] = None
 
 
 class TestRunner:
@@ -56,6 +57,7 @@ class TestRunner:
             config.append(TestConfig(
                 diff_command=test["diff_command"],
                 test_target=test["test_target"],
+                test_dependencies=test.get("test_dependencies"),
                 test_cases=test_cases))
         return config
 
@@ -87,7 +89,7 @@ class TestRunner:
                 test_dir = os.path.abspath(case.directory)
                 script_args = case.args
 
-                test = DocSitePreviewTest(test_dir, feature_dir, script_name)
+                test = DocSitePreviewTest(test_dir, feature_dir, script_name, config.test_dependencies)
 
                 if test.execute(args=script_args, env=self._env) and test.verify(diff_command):
                     self.report.success_tests.append(case_name)

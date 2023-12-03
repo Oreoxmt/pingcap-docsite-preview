@@ -9,7 +9,7 @@ from typing import Dict, List
 
 class DocSitePreviewTest:
 
-    def __init__(self, test_dir: str, feature_dir: str, script_name: str):
+    def __init__(self, test_dir: str, feature_dir: str, script_name: str, test_dependencies: List[str] = None):
         self.test_dir = test_dir
         self.feature_dir = feature_dir
         self.script_name = script_name
@@ -18,6 +18,8 @@ class DocSitePreviewTest:
         self.test_script = os.path.join(self.test_output, self.script_name)
 
         self._setup_test_env()
+        if test_dependencies:
+            self._load_dependencies(test_dependencies)
 
     def _setup_test_env(self) -> None:
         """
@@ -42,6 +44,16 @@ class DocSitePreviewTest:
         """
         shutil.copy(os.path.join(self.feature_dir, self.script_name), self.test_script)
         self._make_executable(self.test_script)
+
+    def _load_dependencies(self, dependencies: List[str]) -> None:
+        """
+        Copy the dependencies to the test environment.
+        """
+        for dependency in dependencies:
+            dependency_script = os.path.join(self.feature_dir, dependency)
+            test_dependency_script = os.path.join(self.test_output, dependency)
+            shutil.copy(dependency_script, test_dependency_script)
+            self._make_executable(test_dependency_script)
 
     @staticmethod
     def _make_executable(script: str) -> None:
