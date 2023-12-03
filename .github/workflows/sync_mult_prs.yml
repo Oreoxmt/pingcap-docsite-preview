@@ -1,11 +1,6 @@
-name: Sync doc changes from a PR
+name: Sync doc changes from multiple PRs
 
 on:
-  push:
-    branches:
-      - preview/**
-      - preview-cloud/**
-      - preview-operator/**
   workflow_dispatch:
 
 concurrency:
@@ -14,7 +9,7 @@ concurrency:
 
 jobs:
 
-  sync_pr:
+  sync_mult_prs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -23,11 +18,11 @@ jobs:
     - name: Checkout current repo
       uses: actions/checkout@v3
 
-    - name: Run sync_pr script
+    - name: Run sync_mult_prs script
       run: |
         git config user.name "Docsite Preview Bot"
         git config user.email ""
-        ./sync_pr.sh
+        ./sync_mult_prs.sh
         ./.github/git_push.sh ${{ github.ref_name }}
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
