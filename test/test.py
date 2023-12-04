@@ -102,7 +102,10 @@ class TestRunner:
         """
         Analyze test results and generate a report.
         """
-        terminal_width = os.get_terminal_size().columns
+        try:
+            terminal_width = os.get_terminal_size().columns
+        except OSError:
+            terminal_width = 80
         hyphens = "-" * ((terminal_width - len("Test Results")) // 2)
         duration = self.report.end_time - self.report.start_time
 
