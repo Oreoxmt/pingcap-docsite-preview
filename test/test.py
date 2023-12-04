@@ -1,11 +1,9 @@
 import os
 import time
 import tomllib
-
+from concurrent.futures import ThreadPoolExecutor
 from dataclasses import dataclass
 from typing import Dict, List
-
-from tqdm import tqdm
 
 from test_util import DocSitePreviewTest
 
@@ -39,9 +37,7 @@ class TestConfig:
 class TestRunner:
     def __init__(self):
         self.tests = self._load_config()
-        self.report = TestReport(
-            start_time=time.time(), end_time=time.time(),
-            success_tests=[], failed_tests=[])
+        self.report = TestReport(start_time=time.time(), end_time=time.time(), success_tests=[], failed_tests=[])
         self._env = self._load_env()
 
     @staticmethod
@@ -54,11 +50,8 @@ class TestRunner:
         config = []
         for _, test in data.items():
             test_cases = [TestCase(**case) for case in test["test_cases"]]
-            config.append(TestConfig(
-                diff_command=test["diff_command"],
-                test_target=test["test_target"],
-                test_dependencies=test.get("test_dependencies"),
-                test_cases=test_cases))
+            config.append(TestConfig(diff_command=test["diff_command"], test_target=test["test_target"],
+                                     test_dependencies=test.get("test_dependencies"), test_cases=test_cases))
         return config
 
     @staticmethod
@@ -73,29 +66,36 @@ class TestRunner:
                 env[key] = value
         return env
 
+    def run_test_case(self, config, case) -> None:
+        script_name = config.test_target
+        diff_command = config.diff_command
+        case_name = case.name
+        feature_dir = os.path.dirname(case_name)
+        test_dir = os.path.abspath(case.directory)
+        script_args = case.args
+
+        test = DocSitePreviewTest(test_dir, feature_dir, script_name, config.test_dependencies)
+        print(f"Running Test {case_name}...")
+        if test.execute(args=script_args, env=self._env) and test.verify(diff_command):
+            self.report.success_tests.append(case_name)
+        else:
+            self.report.failed_tests.append(case_name)
+
     def run(self) -> None:
         """
         Run test cases based on given configuration and environment variables.
         """
         print(f"Running Tests...")
 
-        for config in self.tests:
-            script_name = config.test_target
-            diff_command = config.diff_command
-
-            for case in tqdm(config.test_cases):
-                case_name = case.name
-                feature_dir = os.path.dirname(case_name)
-                test_dir = os.path.abspath(case.directory)
-                script_args = case.args
-
-                test = DocSitePreviewTest(test_dir, feature_dir, script_name, config.test_dependencies)
-
-                if test.execute(args=script_args, env=self._env) and test.verify(diff_command):
-                    self.report.success_tests.append(case_name)
-                else:
-                    self.report.failed_tests.append(case_name)
-
+        with ThreadPoolExecutor() as executor:
+            futures = []
+            for config in self.tests:
+                for case in config.test_cases:
+                    future = executor.submit(self.run_test_case, config, case)
+                    futures.append(future)
+            # Wait for all futures to complete
+            for future in futures:
+                future.result()
         self.report.end_time = time.time()
 
     def analyze(self) -> str:
