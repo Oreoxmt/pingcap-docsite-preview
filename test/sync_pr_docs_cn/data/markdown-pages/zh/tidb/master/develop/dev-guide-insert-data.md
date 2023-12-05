@@ -23,15 +23,11 @@ aliases: ['/zh/tidb/dev/insert-data']
 
 - 一个**多行插入语句**：
 
-    {{< copyable "sql" >}}
-
     ```sql
     INSERT INTO `player` (`id`, `coins`, `goods`) VALUES (1, 1000, 1), (2, 230, 2), (3, 300, 5);
     ```
 
 - 多个**单行插入语句**：
-
-    {{< copyable "sql" >}}
 
     ```sql
     INSERT INTO `player` (`id`, `coins`, `goods`) VALUES (1, 1000, 1);
@@ -273,15 +269,11 @@ ERROR 8216 (HY000): Invalid auto random: Explicit insertion on auto_random colum
 
 - (推荐) 插入语句中去除此列，使用 TiDB 帮你初始化的 `AUTO_RANDOM` 值。这样符合 `AUTO_RANDOM` 的语义。
 
-    {{< copyable "sql" >}}
-
     ```sql
     INSERT INTO `bookshop`.`users` (`balance`, `nickname`) VALUES (0.00, 'nicky');
     ```
 
 - 如果你确认一定需要指定此列，那么可以使用 [SET 语句](/sql-statements/sql-statement-set-variable.md)通过更改用户变量的方式，允许在插入时，指定 `AUTO_RANDOM` 的列。
-
-    {{< copyable "sql" >}}
 
     ```sql
     SET @@allow_auto_random_explicit_insert = true;

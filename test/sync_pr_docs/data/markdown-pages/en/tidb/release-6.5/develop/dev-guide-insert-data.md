@@ -22,15 +22,11 @@ There are two ways to insert multiple rows of data. For example, if you need to 
 
 - A **multi-line insertion statement**:
 
-    {{< copyable "sql" >}}
-
     ```sql
     INSERT INTO `player` (`id`, `coins`, `goods`) VALUES (1, 1000, 1), (2, 230, 2), (3, 300, 5);
     ```
 
 - Multiple **single-line insertion statements**:
-
-    {{< copyable "sql" >}}
 
     ```sql
     INSERT INTO `player` (`id`, `coins`, `goods`) VALUES (1, 1000, 1);
@@ -284,15 +280,11 @@ There are two solutions to handle this error:
 
 - (Recommended) Remove this column from the insert statement and use the `AUTO_RANDOM` value that TiDB initialized for you. This fits the semantics of `AUTO_RANDOM`.
 
-    {{< copyable "sql" >}}
-
     ```sql
     INSERT INTO `bookshop`.`users` (`balance`, `nickname`) VALUES (0.00, 'nicky');
     ```
 
 - If you are sure that you **_must_** specify this column, then you can use the [`SET` statement](https://docs.pingcap.com/zh/tidb/stable/sql-statement-set-variable) to allow the column of `AUTO_RANDOM` to be specified during insertion time by changing the user variable.
-
-    {{< copyable "sql" >}}
 
     ```sql
     SET @@allow_auto_random_explicit_insert = true;

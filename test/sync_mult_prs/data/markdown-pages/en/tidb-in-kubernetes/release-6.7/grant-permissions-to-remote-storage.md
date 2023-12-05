@@ -17,8 +17,6 @@ The AWS client can read `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY` from the
 
 Create the `s3-secret` secret by running the following command. Use the AWS account's AccessKey and SecretKey. The secret stores the credential used for accessing S3-compatible storage.
 
-{{< copyable "shell-regular" >}}
-
 ```shell
 kubectl create secret generic s3-secret --from-literal=access_key=xxx --from-literal=secret_key=yyy --namespace=test1
 ```
@@ -69,8 +67,6 @@ If you associate the user's [IAM](https://aws.amazon.com/cn/iam/) role with the 
 2. Associate IAM with the TiKV Pod:
 
     When you use BR to back up TiDB data, the TiKV Pod also needs to perform read and write operations on S3-compatible storage as the BR Pod does. Therefore, you need to add annotations to the TiKV Pod to associate it with the IAM role.
-
-    {{< copyable "shell-regular" >}}
 
     ```shell
     kubectl patch tc demo1 -n test1 --type merge -p '{"spec":{"tikv":{"annotations":{"iam.amazonaws.com/role":"arn:aws:iam::123456789012:role/user"}}}}'
@@ -126,8 +122,6 @@ When you use this method to grant permissions, you can [create the EKS cluster](
 
 3. Associate the IAM role with the `ServiceAccount` resources.
 
-    {{< copyable "shell-regular" >}}
-
     ```shell
     kubectl annotate sa tidb-backup-manager eks.amazonaws.com/role-arn=arn:aws:iam::123456789012:role/user --namespace=test1
     ```
@@ -141,8 +135,6 @@ When you use this method to grant permissions, you can [create the EKS cluster](
      Restart the tidb-controller-manager Pod of TiDB Operator to make the configured `ServiceAccount` take effect.
 
 4. Associate the `ServiceAccount` with the TiKV Pod:
-
-    {{< copyable "shell-regular" >}}
 
     ```shell
     kubectl patch tc demo1 -n test1 --type merge -p '{"spec":{"tikv":{"serviceAccount": "tidb-backup-manager"}}}'
@@ -160,8 +152,6 @@ When you use this method to grant permissions, you can [create the EKS cluster](
 
 Create the `gcs-secret` secret which stores the credential used to access GCS. The `google-credentials.json` file stores the service account key that you have downloaded from the Google Cloud console. Refer to [Google Cloud documentation](https://cloud.google.com/docs/authentication/getting-started) for details.
 
-{{< copyable "shell-regular" >}}
-
 ```shell
 kubectl create secret generic gcs-secret --from-file=credentials=./google-credentials.json -n test1
 ```
@@ -176,8 +166,6 @@ The Azure client can read `AZURE_STORAGE_ACCOUNT` and `AZURE_STORAGE_KEY` from t
 
 Run the following command to create the `azblob-secret` secret and use your Azure account access key to grant permissions. The secret stores the credential used for accessing Azure Blob Storage.
 
-{{< copyable "shell-regular" >}}
-
 ```shell
 kubectl create secret generic azblob-secret --from-literal=AZURE_STORAGE_ACCOUNT=xxx --from-literal=AZURE_STORAGE_KEY=yyy --namespace=test1
 ```
@@ -188,8 +176,6 @@ The Azure client can read `AZURE_STORAGE_ACCOUNT`, `AZURE_CLIENT_ID`, `AZURE_TEN
 
 1. Create the `azblob-secret-ad` secret by running the following command. Use the Active Directory (AD) of your Azure account. The secret stores the credential used for accessing Azure Blob Storage.
 
-    {{< copyable "shell-regular" >}}
-
     ```shell
     kubectl create secret generic azblob-secret-ad --from-literal=AZURE_STORAGE_ACCOUNT=xxx --from-literal=AZURE_CLIENT_ID=yyy --from-literal=AZURE_TENANT_ID=zzz --from-literal=AZURE_CLIENT_SECRET=aaa --namespace=test1
     ```
@@ -197,8 +183,6 @@ The Azure client can read `AZURE_STORAGE_ACCOUNT`, `AZURE_CLIENT_ID`, `AZURE_TEN
 2. Associate the secret with the TiKV Pod:
 
     When you use BR to back up TiDB data, the TiKV Pod also needs to perform read and write operations on Azure Blob Storage as the BR Pod does. Therefore, you need to associate the TiKV Pod with the secret.
-
-    {{< copyable "shell-regular" >}}
 
     ```shell
     kubectl patch tc demo1 -n test1 --type merge -p '{"spec":{"tikv":{"envFrom":[{"secretRef":{"name":"azblob-secret-ad"}}]}}}'

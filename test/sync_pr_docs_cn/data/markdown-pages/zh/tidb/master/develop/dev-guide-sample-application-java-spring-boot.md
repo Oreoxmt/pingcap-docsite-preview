@@ -42,15 +42,11 @@ aliases: ['/zh/tidb/dev/dev-guide-sample-application-spring-boot', '/zh/tidb/dev
 
 - macOS 安装：
 
-    {{< copyable "shell-regular" >}}
-
     ```
     brew install maven
     ```
 
 - 基于 Debian 的 Linux 发行版上安装（如 Ubuntu 等）：
-
-    {{< copyable "shell-regular" >}}
 
     ```
     apt-get install maven
@@ -60,15 +56,11 @@ aliases: ['/zh/tidb/dev/dev-guide-sample-application-spring-boot', '/zh/tidb/dev
 
 - dnf 包管理器
 
-    {{< copyable "shell-regular" >}}
-
     ```
     dnf install maven
     ```
 
 - yum 包管理器
-
-    {{< copyable "shell-regular" >}}
 
     ```
     yum install maven

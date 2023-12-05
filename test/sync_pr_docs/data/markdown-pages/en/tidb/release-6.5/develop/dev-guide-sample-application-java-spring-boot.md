@@ -52,15 +52,11 @@ To install **Maven** from the command line.
 
 - macOS:
 
-    {{< copyable "shell-regular" >}}
-
     ```shell
     brew install maven
     ```
 
 - Debian-based Linux distributions (such as Ubuntu):
-
-    {{< copyable "shell-regular" >}}
 
     ```shell
     apt-get install maven
@@ -70,15 +66,11 @@ To install **Maven** from the command line.
 
     - dnf:
 
-        {{< copyable "shell-regular" >}}
-
         ```shell
         dnf install maven
         ```
 
     - yum:
-
-        {{< copyable "shell-regular" >}}
 
         ```shell
         yum install maven
@@ -156,15 +148,11 @@ If you prefer to build manually, follow these steps:
 
 1. Clear cache and package:
 
-    {{< copyable "shell-regular" >}}
-
     ```shell
     mvn clean package
     ```
 
 2. Run applications with JAR files:
-
-    {{< copyable "shell-regular" >}}
 
     ```shell
     java -jar target/spring-jpa-hibernate-0.0.1.jar

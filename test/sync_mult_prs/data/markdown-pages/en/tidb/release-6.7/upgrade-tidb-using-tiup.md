@@ -59,16 +59,12 @@ Before upgrading your TiDB cluster, you first need to upgrade TiUP or TiUP mirro
 
 1. Upgrade the TiUP version. It is recommended that the TiUP version is `1.11.3` or later.
 
-    {{< copyable "shell-regular" >}}
-
     ```shell
     tiup update --self
     tiup --version
     ```
 
 2. Upgrade the TiUP Cluster version. It is recommended that the TiUP Cluster version is `1.11.3` or later.
-
-    {{< copyable "shell-regular" >}}
 
     ```shell
     tiup update cluster
@@ -83,8 +79,6 @@ Before upgrading your TiDB cluster, you first need to upgrade TiUP or TiUP mirro
 
 Refer to [Deploy a TiDB Cluster Using TiUP - Deploy TiUP offline](/production-deployment-using-tiup.md#deploy-tiup-offline) to download the TiUP mirror of the new version and upload it to the control machine. After executing `local_install.sh`, TiUP will complete the overwrite upgrade.
 
-{{< copyable "shell-regular" >}}
-
 ```shell
 tar xzvf tidb-community-server-${version}-linux-amd64.tar.gz
 sh tidb-community-server-${version}-linux-amd64/local_install.sh
@@ -92,8 +86,6 @@ source /home/tidb/.bash_profile
 ```
 
 After the overwrite upgrade, run the following command to merge the server and toolkit offline mirrors to the server directory:
-
-{{< copyable "shell-regular" >}}
 
 ```bash
 tar xf tidb-community-toolkit-${version}-linux-amd64.tar.gz
@@ -104,8 +96,6 @@ tiup mirror merge ../tidb-community-toolkit-${version}-linux-amd64
 ```
 
 After merging the mirrors, run the following command to upgrade the TiUP Cluster component:
-
-{{< copyable "shell-regular" >}}
 
 ```shell
 tiup update cluster
@@ -124,8 +114,6 @@ Now, the offline mirror has been upgraded successfully. If an error occurs durin
 
 1. Enter the `vi` editing mode to edit the topology file:
 
-    {{< copyable "shell-regular" >}}
-
     ```shell
     tiup cluster edit-config <cluster-name>
     ```
@@ -141,8 +129,6 @@ Now, the offline mirror has been upgraded successfully. If an error occurs durin
 ### Step 4: Check the health status of the current cluster
 
 To avoid the undefined behaviors or other issues during the upgrade, it is recommended to check the health status of Regions of the current cluster before the upgrade. To do that, you can use the `check` sub-command.
-
-{{< copyable "shell-regular" >}}
 
 ```shell
 tiup cluster check <cluster-name> --cluster
@@ -174,15 +160,11 @@ If your application has a maintenance window for the database to be stopped for 
 
 #### Online upgrade
 
-{{< copyable "shell-regular" >}}
-
 ```shell
 tiup cluster upgrade <cluster-name> <version>
 ```
 
 For example, if you want to upgrade the cluster to v7.1.0:
-
-{{< copyable "shell-regular" >}}
 
 ```shell
 tiup cluster upgrade <cluster-name> v7.1.0
@@ -207,23 +189,17 @@ tiup cluster upgrade <cluster-name> v7.1.0
 
 1. Before the offline upgrade, you first need to stop the entire cluster.
 
-    {{< copyable "shell-regular" >}}
-
     ```shell
     tiup cluster stop <cluster-name>
     ```
 
 2. Use the `upgrade` command with the `--offline` option to perform the offline upgrade. Fill in the name of your cluster for `<cluster-name>` and the version to upgrade to for `<version>`, such as `v7.1.0`.
 
-    {{< copyable "shell-regular" >}}
-
     ```shell
     tiup cluster upgrade <cluster-name> <version> --offline
     ```
 
 3. After the upgrade, the cluster will not be automatically restarted. You need to use the `start` command to restart it.
-
-    {{< copyable "shell-regular" >}}
 
     ```shell
     tiup cluster start <cluster-name>
@@ -232,8 +208,6 @@ tiup cluster upgrade <cluster-name> v7.1.0
 ### Verify the cluster version
 
 Execute the `display` command to view the latest cluster version `TiDB Version`:
-
-{{< copyable "shell-regular" >}}
 
 ```shell
 tiup cluster display <cluster-name>
@@ -255,8 +229,6 @@ Re-execute the `tiup cluster upgrade` command to resume the upgrade. The upgrade
 
 1. Execute `tiup cluster audit` to see the operation records:
 
-    {{< copyable "shell-regular" >}}
-
     ```shell
     tiup cluster audit
     ```
@@ -264,8 +236,6 @@ Re-execute the `tiup cluster upgrade` command to resume the upgrade. The upgrade
     Find the failed upgrade operation record and keep the ID of this operation record. The ID is the `<audit-id>` value in the next step.
 
 2. Execute `tiup cluster replay <audit-id>` to retry the corresponding operation:
-
-    {{< copyable "shell-regular" >}}
 
     ```shell
     tiup cluster replay <audit-id>
@@ -275,8 +245,6 @@ Re-execute the `tiup cluster upgrade` command to resume the upgrade. The upgrade
 
 You can specify `--force`. Then the processes of transferring PD leader and evicting TiKV leader are skipped during the upgrade. The cluster is directly restarted to update the version, which has a great impact on the cluster that runs online. In the following command, `<version>` is the version to upgrade to, such as `v7.1.0`.
 
-{{< copyable "shell-regular" >}}
-
 ```shell
 tiup cluster upgrade <cluster-name> <version> --force
 ```
@@ -284,8 +252,6 @@ tiup cluster upgrade <cluster-name> <version> --force
 ### How to update the version of tools such as pd-ctl after upgrading the TiDB cluster?
 
 You can upgrade the tool version by using TiUP to install the `ctl` component of the corresponding version:
-
-{{< copyable "shell-regular" >}}
 
 ```shell
 tiup install ctl:v7.1.0
