@@ -87,6 +87,13 @@ generate_sync_tasks() {
   esac
 }
 
+remove_copyable() {
+  # Remove copyable strings ({{< copyable "..." >}}\n) from Markdown files.
+  $FIND . -name '*.md' | while IFS= read -r FILE; do
+    $SED -i '/{{< copyable ".*" >}}/{N;d}' "$FILE"
+  done
+}
+
 clone_repo() {
 
   # Clone repo if it doesn't exist already.
@@ -115,6 +122,9 @@ perform_sync_task() {
     git -C "$SRC_DIR" diff --merge-base --name-only --diff-filter=AMR origin/"$BASE_BRANCH" --relative | tee /dev/fd/2 |
       rsync -av --files-from=- "$SRC_DIR" "$DEST_DIR"
 
+    # Remove copyable strings.
+    (cd "$DEST_DIR" && remove_copyable)
+
     if [[ "$IS_CLOUD" && -f "$DEST_DIR/TOC-tidb-cloud.md" ]]; then
       process_cloud_toc "$DEST_DIR"
     fi
@@ -131,6 +141,10 @@ commit_changes() {
   # Commit changes, if any.
   git commit -m "$COMMIT_MESS" || echo "No changes to commit"
 }
+
+# Select appropriate versions of find and sed depending on the operating system.
+FIND=$(which gfind || which find)
+SED=$(which gsed || which sed)
 
 # Get the directory of this script.
 SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
