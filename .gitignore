@@ -1,6 +1,6 @@
 # Temporary files
 temp
-
+website-docs
 # Environment variables used in tests
 .env
 
