@@ -1,0 +1,43 @@
+name: Sync docs on schedule
+
+on:
+  workflow_dispatch:
+#  schedule:
+#    - cron: "0 0 */15 * *" # every 15 days
+#    - cron: "0 0 * * *" # every day at 00:00
+#    - cron: "0 */6 * * *" # every 6 hours
+
+jobs:
+  sync_scheduler:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      actions: write
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    steps:
+    - name: Checkout current repo
+      uses: actions/checkout@v3
+
+    - name: Sync scaffold on schedule
+      if: github.event_name == 'schedule' && github.event.schedule == '0 0 */15 * *'
+      run: |
+        gh workflow run sync_scaffold.yml --ref ${{env.SCAFFOLD_BRANCH}}
+
+    - name: Sync preview branch on schedule
+      if: github.event_name == 'schedule' && github.event.schedule == '0 0 * * *'
+      run: |
+        gh workflow run sync_pr.yml --ref ${{env.PREVIEW_BRANCH}}
+
+    - name: Sync preview branch (multiple PRs) on schedule
+      if: github.event_name == 'schedule' && github.event.schedule == '0 */6 * * *'
+      run: |
+        gh workflow run sync_mult_prs.yml --ref ${{env.MULT_PR_PREVIEW_BRANCH}}
+
+    - name: Sync multiple branches on workflow_dispatch
+      if: github.event_name == 'workflow_dispatch'
+      run: |
+        gh workflow run sync_scaffold.yml --ref ${{env.SCAFFOLD_BRANCH}}
+        gh workflow run sync_pr.yml --ref ${{env.PREVIEW_BRANCH}}
+        gh workflow run sync_mult_prs.yml --ref ${{env.MULT_PR_PREVIEW_BRANCH}}
