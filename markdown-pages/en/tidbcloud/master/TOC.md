@@ -206,33 +206,33 @@
     - [TiKV Follower Read](/follower-read.md)
     - [Coprocessor Cache](/coprocessor-cache.md)
     - Garbage Collection (GC)
-       - [Overview](/garbage-collection-overview.md)
-       - [Configuration](/garbage-collection-configuration.md)
+      - [Overview](/garbage-collection-overview.md)
+      - [Configuration](/garbage-collection-configuration.md)
     - [Tune TiFlash Performance](/tiflash/tune-tiflash-performance.md)
   - [Upgrade a TiDB Cluster](/tidb-cloud/upgrade-tidb-cluster.md)
   - [Delete a TiDB Cluster](/tidb-cloud/delete-tidb-cluster.md)
 - Migrate or Import Data
   - [Overview](/tidb-cloud/tidb-cloud-migration-overview.md)
   - Migrate Data into TiDB Cloud
-      - [Migrate Existing and Incremental Data Using Data Migration](/tidb-cloud/migrate-from-mysql-using-data-migration.md)
-      - [Migrate Incremental Data Using Data Migration](/tidb-cloud/migrate-incremental-data-from-mysql-using-data-migration.md)
-      - [Migrate and Merge MySQL Shards of Large Datasets](/tidb-cloud/migrate-sql-shards.md)
-      - [Migrate from On-Premises TiDB to TiDB Cloud](/tidb-cloud/migrate-from-op-tidb.md)
-      - [Migrate from MySQL-Compatible Databases Using AWS DMS](/tidb-cloud/migrate-from-mysql-using-aws-dms.md)
-      - [Migrate from Amazon RDS for Oracle Using AWS DMS](/tidb-cloud/migrate-from-oracle-using-aws-dms.md)
+    - [Migrate Existing and Incremental Data Using Data Migration](/tidb-cloud/migrate-from-mysql-using-data-migration.md)
+    - [Migrate Incremental Data Using Data Migration](/tidb-cloud/migrate-incremental-data-from-mysql-using-data-migration.md)
+    - [Migrate and Merge MySQL Shards of Large Datasets](/tidb-cloud/migrate-sql-shards.md)
+    - [Migrate from On-Premises TiDB to TiDB Cloud](/tidb-cloud/migrate-from-op-tidb.md)
+    - [Migrate from MySQL-Compatible Databases Using AWS DMS](/tidb-cloud/migrate-from-mysql-using-aws-dms.md)
+    - [Migrate from Amazon RDS for Oracle Using AWS DMS](/tidb-cloud/migrate-from-oracle-using-aws-dms.md)
   - Import Data into TiDB Cloud
-      - [Import Local Files](/tidb-cloud/tidb-cloud-import-local-files.md)
-      - [Import Sample Data (SQL File)](/tidb-cloud/import-sample-data.md)
-      - [Import CSV Files from Amazon S3 or GCS](/tidb-cloud/import-csv-files.md)
-      - [Import Apache Parquet Files from Amazon S3 or GCS](/tidb-cloud/import-parquet-files.md)
-      - [Import with MySQL CLI](/tidb-cloud/import-with-mysql-cli.md)
+    - [Import Local Files](/tidb-cloud/tidb-cloud-import-local-files.md)
+    - [Import Sample Data (SQL File)](/tidb-cloud/import-sample-data.md)
+    - [Import CSV Files from Amazon S3 or GCS](/tidb-cloud/import-csv-files.md)
+    - [Import Apache Parquet Files from Amazon S3 or GCS](/tidb-cloud/import-parquet-files.md)
+    - [Import with MySQL CLI](/tidb-cloud/import-with-mysql-cli.md)
   - Reference
-      - [Configure Amazon S3 Access and GCS Access](/tidb-cloud/config-s3-and-gcs-access.md)
-      - [Naming Conventions for Data Import](/tidb-cloud/naming-conventions-for-data-import.md)
-      - [CSV Configurations for Importing Data](/tidb-cloud/csv-config-for-import-data.md)
-      - [Troubleshoot Access Denied Errors during Data Import from Amazon S3](/tidb-cloud/troubleshoot-import-access-denied-error.md)
-      - [Precheck Errors, Migration Errors, and Alerts for Data Migration](/tidb-cloud/tidb-cloud-dm-precheck-and-troubleshooting.md)
-      - [Connect AWS DMS to TiDB Cloud clusters](/tidb-cloud/tidb-cloud-connect-aws-dms.md)
+    - [Configure Amazon S3 Access and GCS Access](/tidb-cloud/config-s3-and-gcs-access.md)
+    - [Naming Conventions for Data Import](/tidb-cloud/naming-conventions-for-data-import.md)
+    - [CSV Configurations for Importing Data](/tidb-cloud/csv-config-for-import-data.md)
+    - [Troubleshoot Access Denied Errors during Data Import from Amazon S3](/tidb-cloud/troubleshoot-import-access-denied-error.md)
+    - [Precheck Errors, Migration Errors, and Alerts for Data Migration](/tidb-cloud/tidb-cloud-dm-precheck-and-troubleshooting.md)
+    - [Connect AWS DMS to TiDB Cloud clusters](/tidb-cloud/tidb-cloud-connect-aws-dms.md)
 - Explore Data
   - [Chat2Query (Beta)](/tidb-cloud/explore-data-with-chat2query.md)
 - Data Service (Beta)
@@ -242,7 +242,6 @@
   - [Manage Data App](/tidb-cloud/data-service-manage-data-app.md)
   - [Manage Endpoint](/tidb-cloud/data-service-manage-endpoint.md)
   - [API Key](/tidb-cloud/data-service-api-key.md)
-  - [Custom Domain](/tidb-cloud/data-service-custom-domain.md)
   - [Run in Postman](/tidb-cloud/data-service-postman-integration.md)
   - [Deploy Automatically with GitHub](/tidb-cloud/data-service-manage-github-connection.md)
   - [Use OpenAPI Specification with Next.js](/tidb-cloud/data-service-oas-with-nextjs.md)
@@ -270,7 +269,7 @@
       - [Connect via VPC Peering](/tidb-cloud/set-up-vpc-peering-connections.md)
       - [TLS Connections to TiDB Dedicated](/tidb-cloud/tidb-cloud-tls-connect-to-dedicated.md)
   - Data Access Control
-      - [Encryption at Rest Using Customer-Managed Encryption Keys](/tidb-cloud/tidb-cloud-encrypt-cmek.md)
+    - [Encryption at Rest Using Customer-Managed Encryption Keys](/tidb-cloud/tidb-cloud-encrypt-cmek.md)
   - Database Access Control
     - [Configure Cluster Security Settings](/tidb-cloud/configure-security-settings.md)
   - Audit Management
@@ -279,16 +278,12 @@
 - Billing
   - [Invoices](/tidb-cloud/tidb-cloud-billing.md#invoices)
   - [Billing Details](/tidb-cloud/tidb-cloud-billing.md#billing-details)
-  - [Cost Explorer](/tidb-cloud/tidb-cloud-billing.md#cost-explorer)
-  - [Billing Profile](/tidb-cloud/tidb-cloud-billing.md#billing-profile)
   - [Credits](/tidb-cloud/tidb-cloud-billing.md#credits)
   - [Payment Method Setting](/tidb-cloud/tidb-cloud-billing.md#payment-method)
   - [Billing from AWS or GCP Marketplace](/tidb-cloud/tidb-cloud-billing.md#billing-from-aws-marketplace-or-google-cloud-marketplace)
   - [Billing for Changefeed](/tidb-cloud/tidb-cloud-billing-ticdc-rcu.md)
   - [Billing for Data Migration](/tidb-cloud/tidb-cloud-billing-dm.md)
-- Managed Service Provider Program
-  - [Managed Service Provider](/tidb-cloud/managed-service-provider.md)
-  - [MSP Customer](/tidb-cloud/managed-service-provider-customer.md)
+- API
 - API
   - [API Overview](/tidb-cloud/api-overview.md)
   - API Reference
@@ -570,6 +565,7 @@
         - [`DDL_JOBS`](/information-schema/information-schema-ddl-jobs.md)
         - [`DEADLOCKS`](/information-schema/information-schema-deadlocks.md)
         - [`ENGINES`](/information-schema/information-schema-engines.md)
+        - [`KEYWORDS`](/information-schema/information-schema-keywords.md)
         - [`KEY_COLUMN_USAGE`](/information-schema/information-schema-key-column-usage.md)
         - [`MEMORY_USAGE`](/information-schema/information-schema-memory-usage.md)
         - [`MEMORY_USAGE_OPS_HISTORY`](/information-schema/information-schema-memory-usage-ops-history.md)
@@ -606,29 +602,54 @@
         - [`SESSION_CONNECT_ATTRS`](/performance-schema/performance-schema-session-connect-attrs.md)
     - [Metadata Lock](/metadata-lock.md)
     - [Use UUIDs](/best-practices/uuid.md)
+    - [TiDB DDL V2](/ddl-v2.md)
   - [System Variables](/system-variables.md)
   - [Server Status Variables](/status-variables.md)
   - Storage Engines
     - TiKV
-        - [TiKV Overview](/tikv-overview.md)
-        - [RocksDB Overview](/storage-engine/rocksdb-overview.md)
+      - [TiKV Overview](/tikv-overview.md)
+      - [RocksDB Overview](/storage-engine/rocksdb-overview.md)
     - TiFlash
       - [TiFlash Overview](/tiflash/tiflash-overview.md)
       - [Spill to Disk](/tiflash/tiflash-spill-disk.md)
   - CLI
     - [Overview](/tidb-cloud/cli-reference.md)
-    - cluster
+    - serverless
       - [create](/tidb-cloud/ticloud-cluster-create.md)
       - [delete](/tidb-cloud/ticloud-cluster-delete.md)
       - [describe](/tidb-cloud/ticloud-cluster-describe.md)
       - [list](/tidb-cloud/ticloud-cluster-list.md)
       - [connect-info](/tidb-cloud/ticloud-cluster-connect-info.md)
-    - branch
-      - [create](/tidb-cloud/ticloud-branch-create.md)
-      - [delete](/tidb-cloud/ticloud-branch-delete.md)
-      - [describe](/tidb-cloud/ticloud-branch-describe.md)
-      - [list](/tidb-cloud/ticloud-branch-list.md)
-      - [connect-info](/tidb-cloud/ticloud-branch-connect-info.md)
+      - [update](/tidb-cloud/ticloud-serverless-update.md)
+      - [spending-limit](/tidb-cloud/ticloud-serverless-spending-limit.md)
+      - [regions](/tidb-cloud/ticloud-serverless-regions.md)
+      - [shell](/tidb-cloud/ticloud-serverless-shell.md)
+      - branch
+        - [create](/tidb-cloud/ticloud-branch-create.md)
+        - [delete](/tidb-cloud/ticloud-branch-delete.md)
+        - [describe](/tidb-cloud/ticloud-branch-describe.md)
+        - [list](/tidb-cloud/ticloud-branch-list.md)
+        - [connect-info](/tidb-cloud/ticloud-branch-connect-info.md)
+        - [shell](/tidb-cloud/ticloud-branch-shell.md)
+      - import
+        - [cancel](/tidb-cloud/ticloud-import-cancel.md)
+        - [describe](/tidb-cloud/ticloud-import-describe.md)
+        - [list](/tidb-cloud/ticloud-import-list.md)
+        - start
+          - [local](/tidb-cloud/ticloud-import-start-local.md)
+          - [s3](/tidb-cloud/ticloud-import-start-s3.md)
+          - [mysql](/tidb-cloud/ticloud-import-start-mysql.md)
+      - backup
+        - [describe](/tidb-cloud/ticloud-serverless-backup-describe.md)
+        - [list](/tidb-cloud/ticloud-serverless-backup-list.md)
+      - [restore](/tidb-cloud/ticloud-serverless-restore.md)
+      - export
+        - [create](/tidb-cloud/ticloud-serverless-export-create.md)
+        - [describe](/tidb-cloud/ticloud-serverless-export-describe.md)
+        - [list](/tidb-cloud/ticloud-serverless-export-list.md)
+        - [cancel](/tidb-cloud/ticloud-serverless-export-cancel.md)
+        - [download](/tidb-cloud/ticloud-serverless-export-download.md)
+    - [ai](/tidb-cloud/ticloud-ai.md)
     - config
       - [create](/tidb-cloud/ticloud-config-create.md)
       - [delete](/tidb-cloud/ticloud-config-delete.md)
@@ -637,15 +658,6 @@
       - [list](/tidb-cloud/ticloud-config-list.md)
       - [set](/tidb-cloud/ticloud-config-set.md)
       - [use](/tidb-cloud/ticloud-config-use.md)
-    - [connect](/tidb-cloud/ticloud-connect.md)
-    - import
-      - [cancel](/tidb-cloud/ticloud-import-cancel.md)
-      - [describe](/tidb-cloud/ticloud-import-describe.md)
-      - [list](/tidb-cloud/ticloud-import-list.md)
-      - start
-        - [local](/tidb-cloud/ticloud-import-start-local.md)
-        - [s3](/tidb-cloud/ticloud-import-start-s3.md)
-        - [mysql](/tidb-cloud/ticloud-import-start-mysql.md)
     - project
       - [list](/tidb-cloud/ticloud-project-list.md)
     - [update](/tidb-cloud/ticloud-update.md)
@@ -660,8 +672,7 @@
   - [TiDB Cloud FAQs](/tidb-cloud/tidb-cloud-faq.md)
   - [TiDB Serverless FAQs](/tidb-cloud/serverless-faqs.md)
 - Release Notes
-  - [2024](/tidb-cloud/tidb-cloud-release-notes.md)
-  - [2023](/tidb-cloud/release-notes-2023.md)
+  - [2023](/tidb-cloud/tidb-cloud-release-notes.md)
   - [2022](/tidb-cloud/release-notes-2022.md)
   - [2021](/tidb-cloud/release-notes-2021.md)
   - [2020](/tidb-cloud/release-notes-2020.md)
