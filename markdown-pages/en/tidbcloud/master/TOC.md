@@ -242,6 +242,7 @@
   - [Manage Data App](/tidb-cloud/data-service-manage-data-app.md)
   - [Manage Endpoint](/tidb-cloud/data-service-manage-endpoint.md)
   - [API Key](/tidb-cloud/data-service-api-key.md)
+  - [Custom Domain](/tidb-cloud/data-service-custom-domain.md)
   - [Run in Postman](/tidb-cloud/data-service-postman-integration.md)
   - [Deploy Automatically with GitHub](/tidb-cloud/data-service-manage-github-connection.md)
   - [Use OpenAPI Specification with Next.js](/tidb-cloud/data-service-oas-with-nextjs.md)
@@ -278,12 +279,16 @@
 - Billing
   - [Invoices](/tidb-cloud/tidb-cloud-billing.md#invoices)
   - [Billing Details](/tidb-cloud/tidb-cloud-billing.md#billing-details)
+  - [Cost Explorer](/tidb-cloud/tidb-cloud-billing.md#cost-explorer)
+  - [Billing Profile](/tidb-cloud/tidb-cloud-billing.md#billing-profile)
   - [Credits](/tidb-cloud/tidb-cloud-billing.md#credits)
   - [Payment Method Setting](/tidb-cloud/tidb-cloud-billing.md#payment-method)
   - [Billing from AWS or GCP Marketplace](/tidb-cloud/tidb-cloud-billing.md#billing-from-aws-marketplace-or-google-cloud-marketplace)
   - [Billing for Changefeed](/tidb-cloud/tidb-cloud-billing-ticdc-rcu.md)
   - [Billing for Data Migration](/tidb-cloud/tidb-cloud-billing-dm.md)
-- API
+- Managed Service Provider Program
+  - [Managed Service Provider](/tidb-cloud/managed-service-provider.md)
+  - [MSP Customer](/tidb-cloud/managed-service-provider-customer.md)
 - API
   - [API Overview](/tidb-cloud/api-overview.md)
   - API Reference
@@ -565,7 +570,6 @@
         - [`DDL_JOBS`](/information-schema/information-schema-ddl-jobs.md)
         - [`DEADLOCKS`](/information-schema/information-schema-deadlocks.md)
         - [`ENGINES`](/information-schema/information-schema-engines.md)
-        - [`KEYWORDS`](/information-schema/information-schema-keywords.md)
         - [`KEY_COLUMN_USAGE`](/information-schema/information-schema-key-column-usage.md)
         - [`MEMORY_USAGE`](/information-schema/information-schema-memory-usage.md)
         - [`MEMORY_USAGE_OPS_HISTORY`](/information-schema/information-schema-memory-usage-ops-history.md)
@@ -602,7 +606,6 @@
         - [`SESSION_CONNECT_ATTRS`](/performance-schema/performance-schema-session-connect-attrs.md)
     - [Metadata Lock](/metadata-lock.md)
     - [Use UUIDs](/best-practices/uuid.md)
-    - [TiDB DDL V2](/ddl-v2.md)
   - [System Variables](/system-variables.md)
   - [Server Status Variables](/status-variables.md)
   - Storage Engines
@@ -614,42 +617,18 @@
       - [Spill to Disk](/tiflash/tiflash-spill-disk.md)
   - CLI
     - [Overview](/tidb-cloud/cli-reference.md)
-    - serverless
+    - cluster
       - [create](/tidb-cloud/ticloud-cluster-create.md)
       - [delete](/tidb-cloud/ticloud-cluster-delete.md)
       - [describe](/tidb-cloud/ticloud-cluster-describe.md)
       - [list](/tidb-cloud/ticloud-cluster-list.md)
       - [connect-info](/tidb-cloud/ticloud-cluster-connect-info.md)
-      - [update](/tidb-cloud/ticloud-serverless-update.md)
-      - [spending-limit](/tidb-cloud/ticloud-serverless-spending-limit.md)
-      - [regions](/tidb-cloud/ticloud-serverless-regions.md)
-      - [shell](/tidb-cloud/ticloud-serverless-shell.md)
-      - branch
-        - [create](/tidb-cloud/ticloud-branch-create.md)
-        - [delete](/tidb-cloud/ticloud-branch-delete.md)
-        - [describe](/tidb-cloud/ticloud-branch-describe.md)
-        - [list](/tidb-cloud/ticloud-branch-list.md)
-        - [connect-info](/tidb-cloud/ticloud-branch-connect-info.md)
-        - [shell](/tidb-cloud/ticloud-branch-shell.md)
-      - import
-        - [cancel](/tidb-cloud/ticloud-import-cancel.md)
-        - [describe](/tidb-cloud/ticloud-import-describe.md)
-        - [list](/tidb-cloud/ticloud-import-list.md)
-        - start
-          - [local](/tidb-cloud/ticloud-import-start-local.md)
-          - [s3](/tidb-cloud/ticloud-import-start-s3.md)
-          - [mysql](/tidb-cloud/ticloud-import-start-mysql.md)
-      - backup
-        - [describe](/tidb-cloud/ticloud-serverless-backup-describe.md)
-        - [list](/tidb-cloud/ticloud-serverless-backup-list.md)
-      - [restore](/tidb-cloud/ticloud-serverless-restore.md)
-      - export
-        - [create](/tidb-cloud/ticloud-serverless-export-create.md)
-        - [describe](/tidb-cloud/ticloud-serverless-export-describe.md)
-        - [list](/tidb-cloud/ticloud-serverless-export-list.md)
-        - [cancel](/tidb-cloud/ticloud-serverless-export-cancel.md)
-        - [download](/tidb-cloud/ticloud-serverless-export-download.md)
-    - [ai](/tidb-cloud/ticloud-ai.md)
+    - branch
+      - [create](/tidb-cloud/ticloud-branch-create.md)
+      - [delete](/tidb-cloud/ticloud-branch-delete.md)
+      - [describe](/tidb-cloud/ticloud-branch-describe.md)
+      - [list](/tidb-cloud/ticloud-branch-list.md)
+      - [connect-info](/tidb-cloud/ticloud-branch-connect-info.md)
     - config
       - [create](/tidb-cloud/ticloud-config-create.md)
       - [delete](/tidb-cloud/ticloud-config-delete.md)
@@ -658,6 +637,15 @@
       - [list](/tidb-cloud/ticloud-config-list.md)
       - [set](/tidb-cloud/ticloud-config-set.md)
       - [use](/tidb-cloud/ticloud-config-use.md)
+    - [connect](/tidb-cloud/ticloud-connect.md)
+    - import
+      - [cancel](/tidb-cloud/ticloud-import-cancel.md)
+      - [describe](/tidb-cloud/ticloud-import-describe.md)
+      - [list](/tidb-cloud/ticloud-import-list.md)
+      - start
+        - [local](/tidb-cloud/ticloud-import-start-local.md)
+        - [s3](/tidb-cloud/ticloud-import-start-s3.md)
+        - [mysql](/tidb-cloud/ticloud-import-start-mysql.md)
     - project
       - [list](/tidb-cloud/ticloud-project-list.md)
     - [update](/tidb-cloud/ticloud-update.md)
@@ -672,7 +660,8 @@
   - [TiDB Cloud FAQs](/tidb-cloud/tidb-cloud-faq.md)
   - [TiDB Serverless FAQs](/tidb-cloud/serverless-faqs.md)
 - Release Notes
-  - [2023](/tidb-cloud/tidb-cloud-release-notes.md)
+  - [2024](/tidb-cloud/tidb-cloud-release-notes.md)
+  - [2023](/tidb-cloud/release-notes-2023.md)
   - [2022](/tidb-cloud/release-notes-2022.md)
   - [2021](/tidb-cloud/release-notes-2021.md)
   - [2020](/tidb-cloud/release-notes-2020.md)
