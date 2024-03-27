@@ -33,7 +33,7 @@ TiDB 版本：8.0.0
   </tr>
   <tr>
     <td><a href="https://docs.pingcap.com/zh/tidb/v8.0/br-snapshot-guide#恢复快照备份数据">提升 BR 快照恢复速度 (GA) </a></td>
-    <td>通过该功能，BR 可以充分利用集群的规模优势，使 TiKV 集群中的所有节点都能参与到数据恢复的准备阶段，从而显著提升大规模集群中大数据集的恢复速度。实际测试表明，在恢复较慢的情况下，该功能可将恢复速度提升大约 3 倍。</td>
+    <td>通过该功能，BR 可以充分利用集群的规模优势，使 TiKV 集群中的所有节点都能参与到数据恢复的准备阶段，从而显著提升大规模集群中大数据集的恢复速度。实际测试表明，该功能可将下载带宽打满，下载速度可提升 8 到 10 倍, 端到端恢复速度大约提升 1.5 到 3 倍。</td>
   </tr>
   <tr>
     <td>增强在有大量表时缓存 schema 信息的稳定性</td>
@@ -52,11 +52,11 @@ TiDB 版本：8.0.0
   <tr>
     <td rowspan="2">数据迁移</td>
     <td>TiCDC 支持 <a href="https://docs.pingcap.com/zh/tidb/v8.0/ticdc-simple-protocol">Simple 协议</a> </td>
-    <td>TiCDC 支持了新的 Simple 消息协议，该协议通过在 DDL 和 BOOTSTRAP 事件中嵌入模式信息，实现了动态的消息模式跟踪功能 (in-band schema tracking)。</td>
+    <td>TiCDC 支持了新的 Simple 消息协议，该协议通过在 DDL 和 BOOTSTRAP 事件中嵌入表的 schema 信息，实现了对 schema 信息的动态追踪 (in-band schema tracking)。</td>
   </tr>
   <tr>
     <td>TiCDC 支持 <a href="https://docs.pingcap.com/zh/tidb/v8.0/ticdc-debezium">Debezium 协议</a> </td>
-    <td>TiCDC 支持了新的 Debezium 协议，现在可以使用生成 Debezium 格式消息的协议向 Kafka sink 发布复制事件。</td>
+    <td>TiCDC 支持了新的 Debezium 协议，TiCDC 可以使用该协议生成 Debezium 格式的数据变更事件并发送给 Kafka sink。</td>
   </tr>
 </tbody>
 </table>
@@ -67,16 +67,16 @@ TiDB 版本：8.0.0
 
 - PD 支持微服务模式（实验特性）[#5766](https://github.com/tikv/pd/issues/5766) @[binshi-bing](https://github.com/binshi-bing) **tw@qiancai** <!--1553/1558-->
 
-    从 v8.0.0 开始，PD 支持微服务模式。该模式可将 PD 的时间戳分配和集群调度功能拆分为以下微服务单独部署，从而实现 PD 的性能扩展，解决大规模集群下 PD 性能瓶颈问题。
+    从 v8.0.0 开始，PD 支持微服务模式。该模式可将 PD 的时间戳分配和集群调度功能拆分为以下微服务单独部署，从而实现 PD 的性能扩展，解决大规模集群下 PD 的性能瓶颈问题。
 
     - `tso` 微服务：为整个集群提供单调递增的时间戳分配。
     - `scheduling` 微服务：为整个集群提供调度功能，包括但不限于负载均衡、热点处理、副本修复、副本放置等。
 
   每个微服务都以独立进程的方式部署。当设置某个微服务的副本数大于 1 时，该微服务会自动实现主备的容灾模式，以确保服务的高可用性和可靠性。
 
-    目前 PD 微服务仅支持通过 TiDB Operator 和 TiUP Playground 进行部署。当 PD 出现明显的性能瓶颈且无法升配的情况下，建议考虑使用该模式。
+    目前 PD 微服务仅支持通过 TiDB Operator 和 TiUP Playground 进行部署。当 PD 出现明显的性能瓶颈且无法升级配置的情况下，建议考虑使用该模式。
 
-    更多信息，请参考[用户文档](pd-microservices.md)。
+    更多信息，请参考[用户文档](/pd-microservices.md)。
 
 * 增强 Titan 引擎的易用性 [#16245](https://github.com/tikv/tikv/issues/16245) @[Connor1996](https://github.com/Connor1996) **tw@qiancai** <!--1708-->
 
@@ -87,11 +87,11 @@ TiDB 版本：8.0.0
     
 ### 性能
 
-* BR 快照恢复速度最高提升 10 倍 GA [#50701](https://github.com/pingcap/tidb/issues/50701) @[3pointer](https://github.com/3pointer) @[Leavrth](https://github.com/Leavrth) **tw@qiancai** <!--1681-->
+* BR 快照恢复速度提升 GA [#50701](https://github.com/pingcap/tidb/issues/50701) @[3pointer](https://github.com/3pointer) @[Leavrth](https://github.com/Leavrth) **tw@qiancai** <!--1681-->
 
-    从 TiDB v8.0.0 起，快照恢复提速正式发布，并默认启用。通过采用粗粒度打散 Region 算法、批量创建库表、降低 SST 文件下载和 Ingest 操作之间的相互影响、加速表统计信息恢复等改进措施，在保持数据充分打散的前提下，快照恢复的速度最高提升约 10 倍。该功能充分利用了每个 TiKV 节点的所有资源，实现并行快速恢复。根据实际案例的测试结果，单个 TiKV 节点的数据恢复速度稳定在 1.2 GB/s，能够在 1 小时内完成对 100 TB 数据的恢复。
+    TiDB v8.0.0 版本正式发布并默认启用新的快照恢复算法，通过采用粗粒度打散 Region 算法、批量创建库表、降低 SST 文件下载和 Ingest 操作之间的相互影响、加速表统计信息恢复等改进措施，快照恢复的速度有大幅提升。在实际案例中，单个 TiKV 节点的数据恢复速度稳定在 1.2 GiB/s，并且能够在 1 小时内完成对 100 TiB 数据的恢复。
     
-    这意味着即使在高负载环境下，BR 工具也能够充分利用每个 TiKV 节点的资源，显著减少数据库恢复时间，增强数据库的可用性和可靠性，减少因数据丢失或系统故障引起的停机时间和业务损失。
+    这意味着即使在高负载环境下，BR 工具也能够充分利用每个 TiKV 节点的资源，显著减少数据库恢复时间，增强数据库的可用性和可靠性，减少因数据丢失或系统故障引起的停机时间和业务损失。需要注意的是，恢复速度的提升是因为使用了大量的 goroutine 来并行工作，会有比较大的内存消耗，特别是在表或者 Region 数很多的时候，推荐使用内存规格较高的机器来运行 BR 的客户端。如果机器的内存规格较小，建议改用细粒度的 Region 分裂打散策略。
  
     更多信息，请参考[用户文档](/br/br-snapshot-guide.md#恢复快照备份数据)。
     
@@ -201,7 +201,7 @@ TiDB 版本：8.0.0
 
 * PITR 支持 Amazon S3 对象锁定 [#51184](https://github.com/pingcap/tidb/issues/51184) @[RidRisR](https://github.com/RidRisR) **tw@lilin90** <!--1604-->
 
-    Amazon S3 对象锁定功能支持用户通过设置留存期，有效防止备份数据在指定时间内被意外或故意删除，提升了数据的安全性和完整性。从 v6.3.0 起，BR 为快照备份引入了对 Amazon S3 对象锁定功能的支持，为全量备份增加了额外的安全性保障。从 v8.0.0 起，PITR 也引入了对 Amazon S3 对象锁定功能的支持，无论是全量备份还是日志数据备份，都可以通过对象锁定功能提供更可靠的数据保护，进一步加强了数据备份和恢复的安全性，并满足了监管方面的需求。
+    Amazon S3 对象锁定功能支持用户通过设置数据留存期，有效防止备份数据在指定时间内被意外或故意删除，提升了数据的安全性和完整性。从 v6.3.0 起，BR 为快照备份引入了对 Amazon S3 对象锁定功能的支持，为全量备份增加了额外的安全性保障。从 v8.0.0 起，PITR 也引入了对 Amazon S3 对象锁定功能的支持，无论是全量备份还是日志数据备份，都可以通过对象锁定功能提供更可靠的数据保护，进一步加强了数据备份和恢复的安全性，并满足了监管方面的需求。
     
     更多信息，请参考[用户文档](/br/backup-and-restore-storages.md#存储服务其他功能支持)。
     
@@ -260,19 +260,19 @@ TiDB 版本：8.0.0
 
 * TiCDC 支持 Simple 协议 [#9898](https://github.com/pingcap/tiflow/issues/9898) @[3AceShowHand](https://github.com/3AceShowHand) **tw@lilin90** <!--1646-->
 
-    TiCDC 支持了新的 Simple 消息协议，该协议通过在 DDL 和 BOOTSTRAP 事件中嵌入模式信息，实现了动态的消息模式跟踪功能 (in-band schema tracking)。
+    TiCDC 支持了新的 Simple 消息协议，该协议通过在 DDL 和 BOOTSTRAP 事件中嵌入表的 schema 信息，实现了对 schema 信息的动态追踪 (in-band schema tracking)。
 
     更多信息，请参考[用户文档](/ticdc/ticdc-simple-protocol.md)。
 
 * TiCDC 支持 Debezium 协议 [#1799](https://github.com/pingcap/tiflow/issues/1799) @[breezewish](https://github.com/breezewish) **tw@lilin90** <!--1652-->
 
-    TiCDC 现在可以使用一种生成 Debezium 格式的事件消息的协议，将复制事件发布到 Kafka sink。这有助于简化那些当前使用 Debezium 从 MySQL 拉取数据进行下游处理的用户从 MySQL 迁移到 TiDB 的过程。
+    通过 Debezium 协议，TiCDC 可以生成 Debezium 格式的数据变更事件，并将这些事件发送到 Kafka sink。这有助于为当前使用 Debezium 从 MySQL 拉取数据进行下游处理的用户简化从 MySQL 迁移到 TiDB 的过程。
 
     更多信息，请参考[用户文档](/ticdc/ticdc-debezium.md)。
 
 * DM 支持使用用户提供的密钥对源数据库和目标数据库的密码进行加密和解密 [#9492](https://github.com/pingcap/tiflow/issues/9492) @[D3Hunter](https://github.com/D3Hunter) **tw@qiancai** <!--1497-->
 
-    在之前的版本中，DM 使用了一个内置的一个固定秘钥，安全性相对较低。从 v8.0.0 开始，你可以上传并指定一个密钥文件，用于对上下游数据库的密码进行加密和解密操作。此外，你还可以按需替换秘钥文件，以提升数据的安全性。
+    在之前的版本中，DM 使用了一个内置的固定秘钥，安全性相对较低。从 v8.0.0 开始，你可以上传并指定一个密钥文件，用于对上下游数据库的密码进行加密和解密操作。此外，你还可以按需替换秘钥文件，以提升数据的安全性。
 
     更多信息，请参考[用户文档](dm/dm-customized-secret-key.md)。
 
@@ -294,7 +294,7 @@ TiDB 版本：8.0.0
     
 * 全局排序成为正式功能 (GA)，可显著提升 `IMPORT INTO` 任务的导入性能和稳定性 [#45719](https://github.com/pingcap/tidb/issues/45719) @[lance6716](https://github.com/lance6716) **tw@qiancai** <!--1580-->
 
-    在 v7.4.0 以前，当使用[分布式执行框架](/tidb-distributed-execution-framework.md) 执行 `IMPORT INTO` 任务时，由于本地存储空间有限，TiDB 只能对部分数据进行局部排序后再导入到 TiKV。这导致了导入到 TiKV 的数据存在较多的重叠，需要 TiKV 在导入过程中执行额外的 compaction 操作，影响了 TiKV 的性能和稳定性。
+    在 v7.4.0 以前，当使用[分布式执行框架](/tidb-distributed-execution-framework.md)执行 `IMPORT INTO` 任务时，由于本地存储空间有限，TiDB 只能对部分数据进行局部排序后再导入到 TiKV。这导致了导入到 TiKV 的数据存在较多的重叠，需要 TiKV 在导入过程中执行额外的 compaction 操作，影响了 TiKV 的性能和稳定性。
 
     随着 v7.4.0 引入全局排序实验特性，TiDB 支持将需要导入的数据暂时存储在外部存储（如 Amazon S3）中进行全局排序后再导入到 TiKV 中，使 TiKV 无需在导入过程中执行 compaction 操作。全局排序在 v8.0.0 成为正式功能 (GA)，可以降低 TiKV 对资源的额外消耗，显著提升 `IMPORT INTO` 的性能和稳定性。启用全局排序后，单个 `IMPORT INTO` 任务支持导入 40 TiB 以内的数据。
 
@@ -428,7 +428,7 @@ TiDB 版本：8.0.0
         - 支持通过新增的恢复参数 `--load-stats` 控制是否恢复统计信息  [#50568](https://github.com/pingcap/tidb/issues/50568) @[Leavrth](https://github.com/Leavrth)
         - 粗粒度打散 Region 算法支持自适应获取并发参数，提升恢复性能 [#50701](https://github.com/pingcap/tidb/issues/50701) @[3pointer](https://github.com/3pointer)
         - 在 `br` 的命令行帮助信息中显示 `log` 命令 [#50927](https://github.com/pingcap/tidb/issues/50927) @[RidRisR](https://github.com/RidRisR)
-        - 支持在恢复过程中提前分配好 Table ID，从而最大限度复用 Table ID，提升恢复性能 [#51736](https://github.com/pingcap/tidb/issues/51736) @[Leavrth](https://github.com/Leavrth)
+        - 支持在恢复过程中提前分配好 Table ID，从而最大限度地复用 Table ID，提升恢复性能 [#51736](https://github.com/pingcap/tidb/issues/51736) @[Leavrth](https://github.com/Leavrth)
         - 使用 BR 时，禁用 TiDB 内部的 GC memory limit tuner 功能，避免 OOM 问题 [#51078](https://github.com/pingcap/tidb/issues/51078) @[Leavrth](https://github.com/Leavrth)
         - (dup): release-7.5.1.md > 改进提升> Tools> Backup & Restore (BR) - 使用更优的算法，提升数据恢复过程中 SST 文件合并的速度 [#50613](https://github.com/pingcap/tidb/issues/50613) @[Leavrth](https://github.com/Leavrth)
         - (dup): release-7.5.1.md > 改进提升> Tools> Backup & Restore (BR) - 支持在数据恢复过程中批量创建数据库 [#50767](https://github.com/pingcap/tidb/issues/50767) @[Leavrth](https://github.com/Leavrth)
@@ -483,11 +483,11 @@ TiDB 版本：8.0.0
     - 修复对分区表执行 `auto analyze` 可能导致 TiDB panic 的问题 [#51187](https://github.com/pingcap/tidb/issues/51187) @[hi-rustin](https://github.com/hi-rustin)
     - 修复 SQL 语句中 `IN()` 谓词包含的值的个数不同时，可能导致 SQL 绑定不生效的问题 [#51222](https://github.com/pingcap/tidb/issues/51222) @[hawkingrei](https://github.com/hawkingrei)
     - 修复 TiDB 无法正确转换表达式中系统变量类型的问题 [#43527](https://github.com/pingcap/tidb/issues/43527) @[hi-rustin](https://github.com/hi-rustin)
-    - 修复在配置 `force_init_stats` 的情况下，TiDB 没有监听对应端口的问题 [#51473](https://github.com/pingcap/tidb/issues/51473) @[hawkingrei](https://github.com/hawkingrei)
+    - 修复在配置 `force-init-stats` 的情况下，TiDB 没有监听对应端口的问题 [#51473](https://github.com/pingcap/tidb/issues/51473) @[hawkingrei](https://github.com/hawkingrei)
     - 修复在 `determinate` 模式下 (`tidb_opt_objective='determinate'`)，如果查询不包含谓词，可能无法加载统计信息的问题 [#48257](https://github.com/pingcap/tidb/issues/48257) @[time-and-fate](https://github.com/time-and-fate)
     - 修复 `init-stats` 流程可能导致 TiDB panic 以及 `load stats` 流程直接退出的问题 [#51581](https://github.com/pingcap/tidb/issues/51581) @[hawkingrei](https://github.com/hawkingrei)
-    - 修复 `IN()` 谓词中包含 null 时，查询结果错误的问题 [#51560](https://github.com/pingcap/tidb/issues/51560) @[winoros](https://github.com/winoros)
-    - 修复当 DDL 任务中包含多张表时，MDL View 中不显示 blocked DDL 的问题[#47743](https://github.com/pingcap/tidb/issues/47743) @[wjhuang2016](https://github.com/wjhuang2016)
+    - 修复 `IN()` 谓词中包含 `NULL` 时，查询结果错误的问题 [#51560](https://github.com/pingcap/tidb/issues/51560) @[winoros](https://github.com/winoros)
+    - 修复当 DDL 任务中包含多张表时，MDL View 中不显示 blocked DDL 的问题 [#47743](https://github.com/pingcap/tidb/issues/47743) @[wjhuang2016](https://github.com/wjhuang2016)
     - (dup): release-7.5.1.md > 错误修复> TiDB - 修复表的 `ANALYZE` 任务统计的 `processed_rows` 可能超过表的总行数的问题 [#50632](https://github.com/pingcap/tidb/issues/50632) @[hawkingrei](https://github.com/hawkingrei)
     - (dup): release-7.5.1.md > 错误修复> TiDB - 修复当 `HashJoin` 算子落盘失败时 goroutine 可能泄露的问题 [#50841](https://github.com/pingcap/tidb/issues/50841) @[wshwsh12](https://github.com/wshwsh12)
     - (dup): release-7.5.1.md > 错误修复> TiDB - 修复 CTE 查询使用的内存超限时可能会导致 goroutine 泄露的问题 [#50337](https://github.com/pingcap/tidb/issues/50337) @[guo-shaoge](https://github.com/guo-shaoge)
