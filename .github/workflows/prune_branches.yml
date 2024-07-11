@@ -1,0 +1,32 @@
+name: Prune merged preview branches
+
+on:
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+
+  prune_branches:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+    - name: Checkout current repo
+      uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
+    - name: Delete remote branches
+      run: |
+        BRANCHES=($(git branch -r | sed 's/^[[:space:]]*origin\///'))
+        if [ ${#BRANCHES[@]} -gt 0 ]; then
+          ./prune_preview_branches.sh "${BRANCHES[@]}"
+        else
+          echo "No branches to prune."
+        fi
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        DELETE_BRANCHES: "remote"
