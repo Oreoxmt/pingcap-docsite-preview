@@ -24,64 +24,64 @@ TiDB 版本：8.4.0
 <tbody>
   <tr>
     <td rowspan="5">可扩展性和性能</td>
-    <td>实例级执行计划缓存（实验特性）<!-- tw@Oreoxmt 1569 --></td>
+    <td><a href="https://docs.pingcap.com/zh/tidb/v8.4/system-variables#tidb_enable_instance_plan_cache-从-v840-版本开始引入">实例级执行计划缓存</a>（实验特性）**tw@Oreoxmt 1569**</td>
     <td>实例级执行计划缓存允许同一个 TiDB 实例的所有会话共享执行计划缓存，通过在内存中缓存更多执行计划，消除 SQL 编译时间，从而减少 SQL 运行时间，提升 OLTP 系统的性能和吞吐，同时更好地控制内存使用，提升数据库稳定性。</td>
   </tr>
   <tr>
-    <td>分区表全局索引成为正式功能<!-- tw@hfxsd 1961 --></td>
+    <td>分区表全局索引成为正式功能**tw@hfxsd 1961**</td>
     <td>全局索引可以有效提高检索非分区列的效率，并且消除了唯一键必须包含分区键的限制。该功能扩展了 TiDB 分区表的使用场景，避免了数据迁移过程中的一些应用修改工作。</td>
   </tr>
   <tr>
-    <td> TiDB 并行获取 TSO<!-- tw@qiancai 1893 --></td>
+    <td>TiDB 并行获取 TSO**tw@qiancai 1893**</td>
     <td>在高并发场景下，并行获取 TSO 能够有效降低等待获取 TSO 的时间，提升集群的吞吐。</td>
   </tr>
   <tr>
-    <td> 提升管理类 SQL 的执行效率<!-- tw@hfxsd 1941 --></td>
+    <td>提升管理类 SQL 的执行效率**tw@hfxsd 1941**</td>
     <td>在一部分 SaaS 系统中，存在批量创建大量用户，以及定期轮换所有用户密码的需求。TiDB 提升了创建和修改数据库用户的性能，保证操作能在期望的时间窗口。</td>
   </tr>
   <tr>
-    <td> 提升缓存表的查询性能<!-- tw@hfxsd 1965 --></td>
+    <td>提升缓存表的查询性能**tw@hfxsd 1965**</td>
     <td>优化了缓存表索引扫描的查询性能，部分场景可提升 5.4 倍。在需要对小表进行高速查询的场景下，利用缓存表可大幅提升整体性能。</td>
   </tr>
   <tr>
     <td rowspan="4">稳定性与高可用</td>
-    <td>Runaway Queries 支持更多触发条件，并能够切换资源组<!-- tw@hfxsd 1832 --><!-- tw@lilin90 1800 --></td>
+    <td>Runaway Queries 支持更多触发条件，并能够切换资源组**tw@hfxsd 1832 tw@lilin90 1800**</td>
     <td>Runaway Queries 提供了有效的手段来降低突发的 SQL 性能问题对系统产生的影响。v8.4.0 中新增 Coprocessor 处理的 Key 的数量 (<code>PROCESSED_KEYS</code>) 和 Request Unit (<code>RU</code>) 作为识别条件，并可以将识别到的查询置入指定资源组，对 Runaway Queries 做更精确的识别与控制。</td>
   </tr>
   <tr>
-    <td>支持为资源管控的后台任务设置资源使用上限<!-- tw@hfxsd 1909 --></td>
+    <td>支持为资源管控的后台任务设置资源使用上限**tw@hfxsd 1909**</td>
     <td>为资源管控的后台任务设置百分比上限，针对不同业务系统的需求，控制后台任务的消耗，从而将后台任务的消耗限制在一个很低的水平，保证在线业务的服务质量。</td>
   </tr>
   <tr>
-    <td>TiProxy 流量捕获和回放<!-- tw@Oreoxmt 1942 --></td>
+    <td><a href="https://docs.pingcap.com/zh/tidb/v8.4/tiproxy-traffic-replay">TiProxy 流量捕获和回放</a>（实验特性）**tw@Oreoxmt 1942**</td>
     <td>在进行集群升级、迁移或部署变更等重要操作之前，使用 TiProxy 捕获 TiDB 生产集群的真实负载，并在测试的目标集群中重现该工作负载，从而验证性能，确保变更成功。</td>
   </tr>
   <tr>
-    <td>统计信息收集自适应并发度<!-- tw@Oreoxmt 1739 --></td>
+    <td><a href="https://docs.pingcap.com/zh/tidb/v8.4/system-variables#tidb_auto_analyze_concurrency-从-v840-版本开始引入">统计信息收集自适应并发度</a>**tw@Oreoxmt 1739**</td>
     <td>自动统计信息收集会根据节点规模和硬件规格自动确定收集并发度，提高统计信息收集效率，减少手动调优，确保集群性能稳定。</td>
   </tr>
   <tr>
     <td rowspan="2">SQL</td>
-    <td>外键成为正式功能<!-- tw@lilin90 1894 --></td>
+    <td>外键成为正式功能**tw@lilin90 1894**</td>
     <td>支持 MySQL 兼容的外键约束，维护数据一致性，进一步提升了 TiDB 对 MySQL 的兼容能力。</td>
   </tr>
   <tr>
-    <td> 向量搜索功能（实验特性）<!-- tw@qiancai 1898 --></td>
-    <td>加速向量搜索的性能，适用于检索增强生成（RAG）、语义搜索、推荐系统等应用类型。把 TiDB 应用场景扩展到 AI 和 大语言模型（LLM）领域。</td>
+    <td>向量搜索功能（实验特性）**tw@qiancai 1898**</td>
+    <td>向量搜索是一种基于数据语义的搜索方法，可以提供更相关的搜索结果。作为 AI 和大语言模型（LLM）的核心功能之一，向量搜索可用于检索增强生成（Retrieval-Augmented Generation, RAG）、语义搜索、推荐系统等多种场景。</td>
   </tr>
   <tr>
     <td rowspan="2">数据库管理和可观测性</td>
-    <td> 在内存表中显示 TiKV 和 TiDB 的 CPU 时间<!-- tw@hfxsd 1877 --></td>
+    <td>在内存表中显示 TiKV 和 TiDB 的 CPU 时间**tw@hfxsd 1877**</td>
     <td>将 CPU 时间合入系统表中展示，与会话或 SQL 的其他指标并列，方便你从多角度对高 CPU 消耗的操作进行观测，提升诊断效率。尤其适用于诊断实例 CPU 飙升或集群读写热点等场景。</td>
   </tr>
   <tr>
-    <td> 支持对开启了 IMDSv2 服务的 TiKV 实例做备份<!-- tw@hfxsd 1945 --></td>
+    <td>支持对开启了 IMDSv2 服务的 TiKV 实例做备份**tw@hfxsd 1945**</td>
     <td><a href="https://aws.amazon.com/cn/blogs/security/get-the-full-benefits-of-imdsv2-and-disable-imdsv1-across-your-aws-infrastructure/">目前 AWS EC2 的默认元数据服务是 IMDSv2</a>。TiDB 支持从开启了 IMDSv2 的 TiKV 实例中备份数据，协助你更好地在公有云服务中运行 TiDB 集群。</td>
   </tr>
   <tr>
     <td rowspan="1">安全</td>
-    <td> 备份数据加密成为正式功能<!-- tw@qiancai 1920 --></td>
-    <td> 加密数据库备份是一种增强数据安全性的重要措施，既可以保护数据备份中敏感信息，又有助于合规，确保数据在存储和传输中的安全。</td>
+    <td>日志备份数据支持客户端加密（实验特性）**tw@qiancai 1920**</td>
+    <td>在上传日志备份到备份存储之前，你可以对日志备份数据进行加密，确保数据在存储和传输过程中的安全性。</td>
   </tr>
 </tbody>
 </table>
@@ -104,9 +104,9 @@ TiDB 版本：8.4.0
 
     更多信息，请参考[用户文档](/system-variables.md#tidb_tso_client_rpc_mode-从-v840-版本开始引入)。
 
-* 优化 TiDB 的 Hash Join 算子实现效率（实验特性） [#55153](https://github.com/pingcap/tidb/issues/55153) [#53127](https://github.com/pingcap/tidb/issues/53127) @[windtalker](https://github.com/windtalker) @[xzhangxian1008](https://github.com/xzhangxian1008) @[XuHuaiyu](https://github.com/XuHuaiyu) @[wshwsh12](https://github.com/wshwsh12) **tw@qiancai** <!--1633-->
+* 优化 TiDB Hash Join 算子的执行效率（实验特性） [#55153](https://github.com/pingcap/tidb/issues/55153) [#53127](https://github.com/pingcap/tidb/issues/53127) @[windtalker](https://github.com/windtalker) @[xzhangxian1008](https://github.com/xzhangxian1008) @[XuHuaiyu](https://github.com/XuHuaiyu) @[wshwsh12](https://github.com/wshwsh12) **tw@qiancai** <!--1633-->
 
-    在 v8.4.0 版本之前，TiDB 的 Hash Join 算子实现效率不高。从 v8.4.0 开始，TiDB 将对 Hash Join 算子进行重构优化，提升执行效率。在 v8.4.0 版本，该功能为实验特性，只有 INNER JOIN 和 OUTER JOIN 可以使用重构后的高性能 Hash Join 算子。当该功能启用时，执行器会根据高性能 Hash Join 算子对关联操作的支持情况，自动选择是否使用高性能 Hash Join 算子。你可以通过 [tidb_hash_join_version](/system-variables.md#tidb_hash_join_version-从-v840-版本开始引入) 变量控制是否启用高性能 Hash Join 算子。
+    在 v8.4.0 中，TiDB 对 Hash Join 算子的实现方法进行了优化，以提升其执行效率。目前，优化后的 Hash Join 实现方法为实验特性，仅对 Inner Join 和 Outer Join 类型的 Hash Join 生效，且默认关闭。你可以将变量 [tidb_hash_join_version](/system-variables.md#tidb_hash_join_version-从-v840-版本开始引入) 设置为 `optimized` 开启该优化实现方法。开启后，TiDB 在执行 Inner Join 和 Outer Join 类型的 Hash Join 时，将使用优化后的实现方法。
 
     更多信息，请参考[用户文档](/system-variables.md#tidb_hash_join_version-从-v840-版本开始引入)。
 
@@ -128,23 +128,23 @@ TiDB 版本：8.4.0
     - 消除冗余，在相同的内存消耗下缓存更多执行计划。
     - 在实例上分配固定大小的内存区域，更有效地限制内存使用。
 
-    在 v8.4.0 中，实例级执行计划缓存仅支持对查询的执行计划进行缓存，默认关闭。你可以通过系统变量 [`tidb_enable_instance_plan_cache`](/system-variables.md#tidb_enable_instance_plan_cache-从-v840-版本开始引入) 开启该功能，并通过系统变量 [`tidb_instance_plan_cache_max_size`](/system-variables.md#tidb_instance_plan_cache_max_size-从-v840-版本开始引入) 设置其最大内存使用量。开启该功能之前，请关闭关闭会话级别的 [Prepare 语句执行计划缓存](/sql-prepared-plan-cache.md) 和 [非 Prepare 语句执行计划缓存](/sql-non-prepared-plan-cache.md)。
+    在 v8.4.0 中，实例级执行计划缓存仅支持对查询的执行计划进行缓存，默认关闭。你可以通过系统变量 [`tidb_enable_instance_plan_cache`](/system-variables.md#tidb_enable_instance_plan_cache-从-v840-版本开始引入) 开启该功能，并通过系统变量 [`tidb_instance_plan_cache_max_size`](/system-variables.md#tidb_instance_plan_cache_max_size-从-v840-版本开始引入) 设置其最大内存使用量。开启该功能之前，请关闭关闭会话级别的 [Prepare 语句执行计划缓存](/sql-prepared-plan-cache.md)和[非 Prepare 语句执行计划缓存](/sql-non-prepared-plan-cache.md)。
 
     更多信息，请参考[用户文档](/system-variables.md#tidb_enable_instance_plan_cache-从-v840-版本开始引入)。
 
-* TiDB Lightning 的逻辑导入支持 prepare 接口 [#54850](https://github.com/pingcap/tidb/issues/54850) @[dbsid](https://github.com/dbsid) @[qw4990](https://github.com/qw4990) **tw@lilin90** <!--1922-->
+* TiDB Lightning 的逻辑导入支持预处理语句和客户端语句缓存 [#54850](https://github.com/pingcap/tidb/issues/54850) @[dbsid](https://github.com/dbsid) **tw@lilin90** <!--1922-->
 
-    通过开启配置项 `logical-import-prep-stmt`，TiDB Lightning 逻辑导入产生的 SQL 语句将通过 prepare 接口执行，可提升 SQL 执行效率，并有更大机会命中执行计划缓存，提升逻辑导入的速度。
+    通过开启配置项 `logical-import-prep-stmt`，TiDB Lightning 逻辑导入产生的 SQL 语句将通过使用预处理语句和客户端语句缓存，降低 TiDB SQL 解析和编译的成本，提升 SQL 执行效率，并有更大机会命中执行计划缓存，提升逻辑导入的速度。
 
-    更多信息，请参考[用户文档](tidb-lightning/tidb-lightning-configuration.md)。
+    更多信息，请参考[用户文档](/tidb-lightning/tidb-lightning-configuration.md)。
 
-* 分区表的全局索引成为正式功能 (GA) [#45133](https://github.com/pingcap/tidb/issues/45133) @[mjonss](https://github.com/mjonss)@[Defined2014](https://github.com/Defined2014) **tw@hfxsd** <!--1961-->
-#
+* 分区表的全局索引成为正式功能 (GA) [#45133](https://github.com/pingcap/tidb/issues/45133) @[mjonss](https://github.com/mjonss) @[Defined2014](https://github.com/Defined2014) @[jiyfhust](https://github.com/jiyfhust) @[L-maple](https://github.com/L-maple) **tw@hfxsd** <!--1961-->
+
     之前版本的分区表，因为不支持全局索引有较多的限制，比如唯一键必须包含分区表达式中用到的所有列，如果查询条件不带分区键，查询时会扫描所有分区，导致性能较差。从 v7.6.0 开始，引入了系统变量 [`tidb_enable_global_index`](/system-variables.md#tidb_enable_global_index-从-v760-版本开始引入) 用于开启全局索引特性，但该功能当时处于开发中，不够完善，不建议开启。
 
     从 v8.3.0 开始，全局索引作为实验特性正式发布。你可通过关键字 `GLOBAL` 为分区表显式创建一个全局索引，从而去除分区表唯一键必须包含分区表达式中用到的所有列的限制，满足灵活的业务需求。同时基于全局索引也提升了非分区列的查询性能。
 
-    在 v8.4.0 中，全局索引成为正式功能 (GA)。你无需再设置系统变量 [`tidb_enable_global_index`](/system-variables.md#tidb_enable_global_index-从-v760-版本开始引入) 开启全局索引特性，可以直接使用关键字 `GLOBAL` 创建全局索引。
+    在 v8.4.0 中，全局索引成为正式功能 (GA)。你无需再设置系统变量 [`tidb_enable_global_index`](/system-variables.md#tidb_enable_global_index-从-v760-版本开始引入) 开启全局索引特性，可以直接使用关键字 `GLOBAL` 创建全局索引。从 v8.4.0 开始，该系统变量被废弃，并总是设置为 `ON`。
 
     更多信息，请参考[用户文档](/partitioned-table.md#全局索引)。
 
@@ -186,7 +186,7 @@ TiDB 版本：8.4.0
 
 * 优化资源组资源分配策略 [#50831](https://github.com/pingcap/tidb/issues/50831) @[nolouch](https://github.com/nolouch) **tw@lilin90** <!--1833-->
 
-    TiDB 在 v8.4.0 部分调整了资源分配策略，更好的满足客户对资源管控的预期。
+    TiDB 在 v8.4.0 部分调整了资源分配策略，更好地满足用户对资源管控的预期。
 
     - 控制大查询在运行时的资源分配，避免超出资源组限额。配合 Runaway Queries 的 `COOLDOWN` 动作，识别并降低大查询并发度，降低瞬时资源消耗。
     - 调整默认的优先级调度策略。当不同优先级的任务同时运行时，高优先级的任务获得更多资源。
@@ -212,16 +212,17 @@ TiDB 版本：8.4.0
 
 * 支持向量搜索功能（实验特性） [#54245](https://github.com/pingcap/tidb/issues/54245) [#9032](https://github.com/pingcap/tiflash/issues/9032) @[breezewish](https://github.com/breezewish) @[Lloyd-Pottiger](https://github.com/Lloyd-Pottiger) @[EricZequan](https://github.com/EricZequan) @[zimulala](https://github.com/zimulala) @[JaySon-Huang](https://github.com/JaySon-Huang) **tw@qiancai** <!--1898-->
 
-    向量搜索是一种基于数据语义的搜索方法，旨在提供更相关的搜索结果，是 AI 和大语言模型（LLM）的关键功能之一。通过使用向量索引，数据库能够加速向量搜索的性能，快速基于不同的距离函数查询相似向量，从而支持检索增强生成（Retrieval-Augmented Generation, RAG）、语义搜索、推荐系统等多种应用场景。
-    
-    从 v8.4 版本开始，TiDB 支持向量数据类型和向量索引，具备强大的向量搜索能力。TiDB 的向量数据类型最多可支持 16383 维度，并提供多种距离函数支持，包括 L2 距离（欧式距离）、余弦距离、负内积和 L1 距离（曼哈顿距离）。
-    
-    在使用时，用户只需创建包含向量类型的表并插入数据，即可执行向量搜索查询，也可进行向量数据与传统关系数据的混合查询。
-    值得注意的是，TiDB 的向量索引依赖于 TiFlash，因此，在使用向量索引之前，需要确保 TiDB 集群中已添加 TiFlash 节点。
+    向量搜索是一种基于数据语义的搜索方法，可以提供更相关的搜索结果。作为 AI 和大语言模型（LLM）的核心功能之一，向量搜索可用于检索增强生成（Retrieval-Augmented Generation, RAG）、语义搜索、推荐系统等多种场景。
+
+    从 v8.4.0 开始，TiDB 支持[向量数据类型](vector-search-data-types.md)和[向量搜索索引](vector-search-index.md)，具备强大的向量搜索能力。TiDB 的向量数据类型最多可支持 16383 维度，并支持多种[距离函数](/vector-search-functions-and-operators.md#向量函数)，包括 L2 距离（欧式距离）、余弦距离、负内积和 L1 距离（曼哈顿距离）。
+
+    在使用时，你只需要创建包含向量数据类型的表，并插入向量数据，即可执行向量搜索查询，也可进行向量数据与传统关系数据的混合查询。此外，你可以创建并利用向量搜索索引来提升向量搜索的性能。
+
+    需要注意的是，TiDB 的向量搜索索引依赖于 TiFlash。因此，在使用向量搜索索引之前，需要确保 TiDB 集群中已部署 TiFlash 节点。
 
     更多信息，请参考[用户文档](/vector-search-overview.md)。
 
-* TiDB 外键约束检查功能成为正式功能 (GA) [#55861](链接) @[GitHub ID-TBD](https://github.com/pingcap/tidb/issues/55861) **tw@lilin90** <!--1894-->
+* TiDB 外键约束检查成为正式功能 (GA) [#55861](https://github.com/pingcap/tidb/issues/55861) @[YangKeao](https://github.com/YangKeao) **tw@lilin90** <!--1894-->
 
     从 v6.6.0 开始，TiDB 支持通过系统变量 [`foreign_key_checks`](/system-variables.md#foreign_key_checks) 做外键约束检查，但一直为实验特性。v8.4.0 对外键特性在更多场景做了覆盖测试，提升了稳定性和性能，因此从 v8.4.0 开始，外键功能成为正式功能 (GA)。
 
@@ -239,17 +240,21 @@ TiDB 版本：8.4.0
 
 ### 数据库管理
 
-* PITR adds client-side log backup data encryption support (experimental) [#55834](https://github.com/pingcap/tidb/issues/55834) @[Tristan1900](https://github.com/Tristan1900) **tw@qiancai** <!--1920-->
+* 日志备份数据支持客户端加密（实验特性）[#55834](https://github.com/pingcap/tidb/issues/55834) @[Tristan1900](https://github.com/Tristan1900) **tw@qiancai** <!--1920-->
 
-    Previously only the data from a snapshot based backup could be encrypted (on the client side) with a data key provided by the user. With this feature, log backups may now also be encrypted, ensuring that the confidentiality of information within the backup data is secured.
+    在之前的版本中，仅快照备份数据支持客户端加密。从 v8.4.0 起，日志备份数据也支持客户端加密。在上传日志备份到备份存储之前，你可以选择以下方式之一对日志备份数据进行加密，从而提高备份数据的安全性：
+    
+    - 使用自定义的固定密钥加密
+    - 使用本地磁盘的主密钥加密
+    - 使用 KMS（密钥管理服务）的主密钥加密
 
-    For more information, see [documentation](doc-link).
+    更多信息，请参考[用户文档](/br/br-pitr-manual.md#加密日志备份数据)。
 
-* BR reduces requires storage permissions for restores [#55870](https://github.com/pingcap/tidb/issues/55870) @[Leavrth](https://github.com/Leavrth) **tw@Oreoxmt** <!--1943-->
+* BR 降低了从云存储服务系统恢复数据的权限要求 [#55870](https://github.com/pingcap/tidb/issues/55870) @[Leavrth](https://github.com/Leavrth) **tw@Oreoxmt** <!--1943-->
 
-    Previously, when BR was restoring data, checkpoint information about the progress of the restore was recorded in the location hosting the backup data. These restore checkpoints enabled restoration to be quickly resumed if it was interrupted. With this feature, the restore checkpoints are now stored in the target TiDB cluster. This means that BR only requires read access to the backup dataset location for restores.
+    在 v8.4.0 之前，BR 在恢复过程中将恢复进度的检查点信息存储在备份数据位置。这些检查点使中断的恢复操作能够快速恢复。从 v8.4.0 开始，BR 将恢复检查点信息存储在目标 TiDB 集群中。这意味着 BR 在恢复时只需要对备份目录的读取权限。
 
-    For more information, see [documentation](doc-link).
+    更多信息，请参考[用户文档](/br/backup-and-restore-storages.md#鉴权)。
 
 ### 可观测性
 
@@ -265,9 +270,9 @@ TiDB 版本：8.4.0
     
     更多信息，请参考[用户文档](/information-schema/information-schema-processlist.md)和[用户文档](information-schema/information-schema-slow-query.md)。
 
-* TOP SQL 支持按表或数据库维度查看聚合结果 [#55540](https://github.com/pingcap/tidb/issues/55540) @[nolouch](https://github.com/nolouch) **tw@lilin90** <!--1878-->
+* Top SQL 支持按表或数据库维度查看聚合结果 [#55540](https://github.com/pingcap/tidb/issues/55540) @[nolouch](https://github.com/nolouch) **tw@lilin90** <!--1878-->
 
-    在 v8.4.0 之前，[TOP SQL](/dashboard/top-sql.md) 以 SQL 为单位来聚合 CPU 时间。如果 CPU 时间不是由少数几个 SQL 贡献，按 SQL 聚合并不能有效发现问题。从 v8.4.0 开始，你可以选择 **By TABLE** 或者 **By DB** 聚合 CPU 时间。在多系统融合的场景下，新的聚合方式能够更有效地识别来自某个特定系统的负载变化，提升问题诊断的效率。
+    在 v8.4.0 之前，[Top SQL](/dashboard/top-sql.md) 以 SQL 为单位来聚合 CPU 时间。如果 CPU 时间不是由少数几个 SQL 贡献，按 SQL 聚合并不能有效发现问题。从 v8.4.0 开始，你可以选择 **By TABLE** 或者 **By DB** 聚合 CPU 时间。在多系统融合的场景下，新的聚合方式能够更有效地识别来自某个特定系统的负载变化，提升问题诊断的效率。
 
     更多信息，请参考[用户文档](/dashboard/top-sql.md)。
 
@@ -281,17 +286,19 @@ TiDB 版本：8.4.0
 
 ### 数据迁移
 
-* TiCDC claim check nows supports raw value format [#11396](https://github.com/pingcap/tiflow/issues/11396) @[3AceShowHand](https://github.com/3AceShowHand) **tw@Oreoxmt** <!--1919-->
+* TiCDC Claim-Check 支持仅发送Kafka 消息的 `value` 部分到外部存储 [#11396](https://github.com/pingcap/tiflow/issues/11396) @[3AceShowHand](https://github.com/3AceShowHand) **tw@Oreoxmt** <!--1919-->
 
-    When TiCDC used the claim check capability to handle large messages it included both the Key and the Value are encoded and stored in the external storage system. With the new raw value option, TiCDC can now be configured to store the value format only in the external storage system, using the protocol encoding.
+    在 v8.4.0 之前，使用 Claim-Check 功能处理大型消息时（将 `large-message-handle-option` 设置为 `claim-check`），TiCDC 会将 `key` 和 `value` 都编码并存储在外部存储系统中。
 
-    For more information, see [documentation](ticdc-sink-to-kafka.md#send-large-messages-to-external-storage).
+    从 v8.4.0 开始，TiCDC 支持仅将 Kafka 消息的 `value` 部分发送到外部存储，该功能仅适用于非 Open Protocol 协议。你可以通过设置 `claim-check-raw-value` 参数控制是否开启该功能。
 
-* TiCDC introduces new row checksum to verify old values after Add and Drop Column operations [#10969](https://github.com/pingcap/tiflow/issues/10969) @[3AceShowHand](https://github.com/3AceShowHand) **tw@Oreoxmt** <!--1917-->
+    更多信息，请参考[用户文档](/ticdc/ticdc-sink-to-kafka.md#只发送-value-部分到外部存储)。
 
-    Starting from v8.4.0, TiDB and TiCDC introduce Checksum V2 to address issues with Checksum V1 in verifying old values in Update or Delete events after Add Column or Drop Column operations. For new clusters created in v8.4.0 or later, or clusters upgraded to v8.4.0, TiDB uses Checksum V2 by default when single-row data checksum verification is enabled. TiCDC supports handling both Checksum V1 and V2. This change only affects TiDB and TiCDC internal implementation and does not impact checksum calculation methods for downstream Kafka consumers.
+* TiCDC 引入 Checksum V2 算法校验 Update 或 Delete 事件中 Old Value 数据 [#10969](https://github.com/pingcap/tiflow/issues/10969) @[3AceShowHand](https://github.com/3AceShowHand) **tw@Oreoxmt** <!--1917-->
+
+    从 v8.4.0 开始，TiDB 和 TiCDC 引入 Checksum V2 算法，解决了 Checksum V1 在执行 Add Column 或 Drop Column 后无法正确校验 Update 或 Delete 事件中 Old Value 数据的问题。对于 v8.4.0 及之后新创建的集群，或从之前版本升级到 v8.4.0 的集群，启用单行数据 Checksum 正确性校验功能后，TiDB 默认使用 Checksum V2 算法进行 Checksum 计算和校验。TiCDC 支持同时处理 V1 和 V2 两种 Checksum。该变更仅影响 TiDB 和 TiCDC 内部实现，不影响下游 Kafka consumer 的 Checksum 计算校验方法。
   
-    For more information, see [documentation](/ticdc-integrity-check.md).
+    更多信息，请参考[用户文档](/ticdc/ticdc-integrity-check.md)。
 
 ## 兼容性变更
 
@@ -368,13 +375,14 @@ TiDB 版本：8.4.0
 + TiDB
   - 优化扫描大量数据时构造 BatchCop Task 的效率 [#55915](https://github.com/pingcap/tidb/issues/55915) [#55413](https://github.com/pingcap/tidb/issues/55413) @[wshwsh12](https://github.com/wshwsh12) **tw@caiqian** <!--1902-->
   - 优化 MEMDB 实现，降低事务中的写操作延时与 TiDB CPU 使用 [#55287](https://github.com/pingcap/tidb/issues/55287) @[you06](https://github.com/you06) **tw@hfxsd** <!--1892-->
-  - 优化 BULK 模式 DML 的执行性能 [#50215](https://github.com/pingcap/tidb/issues/50215) @[ekexium](https://github.com/ekexium) **tw@qiancai** <!--1860-->
+  - 优化系统变量 `tidb_dml_type` 为 `"bulk"` 时 DML 语句的执行性能 [#50215](https://github.com/pingcap/tidb/issues/50215) @[ekexium](https://github.com/ekexium) **tw@qiancai** <!--1860-->
   - 支持使用 [Optimizer Fix Control 47400](/optimizer-fix-controls.md#47400-从-v840-版本开始引入) 控制是否将优化器为 `estRows` 估算的最小值限制为 `1`，与 Oracle 和 DB2 等数据库的行为保持一致 [#47400](https://github.com/pingcap/tidb/issues/47400) @[terry1purcell](https://github.com/terry1purcell) **tw@Oreoxmt** <!--1929-->
-  - 为日志表 [`mysql.tidb_runaway_queries`](/mysql-schema/mysql-schema.md#runaway-queries-相关系统表) 增加写入控制，降低并发大量写入引发的开销 [#issue号](链接) @[HuSharp](https://github.com/HuSharp) <!--1908--> **tw@lilin90** 
+  - 为日志表 [`mysql.tidb_runaway_queries`](/mysql-schema/mysql-schema.md#runaway-queries-相关系统表) 增加写入控制，降低大量并发写入引发的开销 [#54434](https://github.com/pingcap/tidb/issues/54434) @[HuSharp](https://github.com/HuSharp) <!--1908--> **tw@lilin90** 
   - 当内表上有 `Selection` 或 `Projection` 算子时默认支持 Index Join [#issue号](链接) @[winoros](https://github.com/winoros) **tw@Oreoxmt** <!--1709-->
   - 在某些场景下减少 `DELETE` 操作从 TiKV 获取的列信息数量，降低 `DELETE` 操作的资源开销 [#38911](https://github.com/pingcap/tidb/issues/38911) @[winoros](https://github.com/winoros) **tw@Oreoxmt** <!--1798-->
   - 优化自动收集统计信息任务优先级队列的运行效率 [#49972](https://github.com/pingcap/tidb/issues/49972) @[Rustin170506](https://github.com/Rustin170506) **tw@Oreoxmt** <!--1935-->
   - 自动统计信息收集根据部署规模和硬件规格决定执行和扫描的并发度 [#issue号](链接) @[hawkingrei](https://github.com/hawkingrei) **tw@Oreoxmt** <!--1739-->
+
 + TiKV
 
   - Region 的默认值由 96 MiB 提升到 256 MiB，避免 Region 数量过多导致额外开销 [#17309](https://github.com/tikv/tikv/issues/17309) [LykxSassinator](https://github.com/LykxSassinator) **tw@hfxsd** <!--1925-->
@@ -383,7 +391,7 @@ TiDB 版本：8.4.0
 
 + PD
 
-  - `Lightning` 导入过程中，允许 PD 做 `evict-leader` 调度来避免阻断 TiKV 的 offline 进程 [#issue号](链接) @[okJiang](https://github.com/okJiang) **tw@qiancai**  <!--1852-->  
+  -  支持 TiKV 节点在 TiDB Lightning 导入数据期间优雅下线 (graceful offline) [#7853](https://github.com/tikv/pd/issues/7853) @[okJiang](https://github.com/okJiang) **tw@qiancai**  <!--1852-->  
 
 + TiFlash
 
@@ -391,8 +399,7 @@ TiDB 版本：8.4.0
 
     + Backup & Restore (BR)
 
-      - 集群恢复时同时设置 `split-table=false` 和 `split-region-on-table=false`，优化 region 的分配策略 [#53532](https://github.com/pingcap/tidb/issues/53532) @[Leavrth](https://github.com/Leavrth) 
-      **tw@qiancai** <!--1914-->
+      - 当集群的 `split-table` 和 `split-region-on-table` 配置项为默认值 `false` 时，BR 在恢复数据到该集群的过程中不会按照 table 分裂 Region，以提升恢复速度 [#53532](https://github.com/pingcap/tidb/issues/53532) @[Leavrth](https://github.com/Leavrth) **tw@qiancai** <!--1914-->
       - 默认不支持使用 SQL 语句 `RESTORE` 全量恢复数据到非空集群 [#55087](https://github.com/pingcap/tidb/issues/55087) @[BornChanger](https://github.com/BornChanger) **tw@Oreoxmt** <!--1711-->
 
     + TiCDC
