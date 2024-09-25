@@ -45,8 +45,8 @@ Quick access: [Quick start](https://docs.pingcap.com/tidb/v8.4/quick-start-with-
   </tr>
   <tr>
     <td rowspan="4">Reliability and Availability</td>
-    <td> Support more triggers for runaway queries and provide the ability to switch resource groups<!-- tw@hfxsd 1832 --><!-- tw@lilin90 1800 --></td>
-    <td>Runaway Queries offer an effective way to mitigate the impact of unexpected SQL performance issues on systems. The new version introduces <CODE>PROCESSED_KEYS</CODE> and <CODE>RU</CODE> as identifying conditions, allowing identified queries to be placed into a specified resource group for more precise identification and control of runaway queries.</td>
+    <td> Support more triggers for runaway queries, and support switching resource groups<!-- tw@hfxsd 1832 --><!-- tw@lilin90 1800 --></td>
+    <td>Runaway Queries offer an effective way to mitigate the impact of unexpected SQL performance issues on systems. TiDB v8.4.0 introduces the number of keys processed by the Coprocessor (<CODE>PROCESSED_KEYS</CODE>) and request units (<CODE>RU</CODE>) as identifying conditions, and puts identified queries into the specified resource group for more precise identification and control of runaway queries.</td>
   </tr>
   <tr>
     <td> Support setting resource usage caps for background tasks for resource control <!-- tw@hfxsd 1909 --></td>
@@ -62,19 +62,15 @@ Quick access: [Quick start](https://docs.pingcap.com/tidb/v8.4/quick-start-with-
   </tr>
   <tr>
     <td rowspan="2">SQL</td>
-    <td> 外键成为正式功能<!-- tw@lilin90 1894 --></td>
-    <td>支持 MySQL 兼容的外键约束，维护数据一致性，进一步提升了 TiDB 对 MySQL 的兼容能力。</td>
+    <td>Foreign keys (GA)<!-- tw@lilin90 1894 --></td>
+    <td>Support MySQL-compatible foreign key constraints to maintain data consistency and further enhance TiDB's compatibility with MySQL.</td>
   </tr>
   <tr>
     <td> 向量搜索功能（实验特性）<!-- tw@qiancai 1898 --></td>
     <td>加速向量搜索的性能，适用于检索增强生成（RAG）、语义搜索、推荐系统等应用类型。把 TiDB 应用场景扩展到 AI 和 大语言模型（LLM）领域。</td>
   </tr>
   <tr>
-    <td rowspan="3">数据库管理和可观测性</td>
-    <td> 持久化内存表到 Workload Repository（实验特性）<!-- tw@lilin90 1823 --></td>
-    <td> 持久化内存表中的运行指标和状态信息，是观测性的重要增强，能极大提升过往问题诊断和追溯的效率，并为未来的自动化运维，提供了数据集支持。 围绕 Workload Repository 构建报告、诊断、推荐一体化的能力，会成为未来提升 TiDB 易用性的重要组成。</td>
-  </tr>
-  <tr>
+    <td rowspan="2">DB Operations and Observability</td>
     <td> Display TiKV and TiDB CPU times in memory tables<!-- tw@hfxsd 1877 --></td>
     <td>CPU times are now integrated into a system table and displayed alongside other session or SQL metrics, allowing for easier observation of operations with high CPU consumption from multiple perspectives, improving diagnostic efficiency. This is particularly useful for diagnosing instances with CPU spikes or read/write hotspots in the cluster.</td>
   </tr>
@@ -123,13 +119,13 @@ Quick access: [Quick start](https://docs.pingcap.com/tidb/v8.4/quick-start-with-
 
     For more information, see [documentation](/system-variables.md#tidb_enable_instance_plan_cache-new-in-v840).
 
-* Partitioned tables support global indexes (GA) [#45133](https://github.com/pingcap/tidb/issues/45133) @[mjonss](https://github.com/mjonss) @[Defined2014](https://github.com/Defined2014) @[jiyfhust](https://github.com/jiyfhust) @[L-maple](https://github.com/L-maple)
+* Partitioned tables support global indexes (GA) [#45133](https://github.com/pingcap/tidb/issues/45133) @[mjonss](https://github.com/mjonss) @[Defined2014](https://github.com/Defined2014) @[jiyfhust](https://github.com/jiyfhust) @[L-maple](https://github.com/L-maple) **tw@hfxsd** <!--1961-->
 
     In previous versions of partitioned tables, some limitations exist because global indexes are not supported. For example, the unique key must use every column in the table's partitioning expression. If the query condition does not use the partitioning key, the query will scan all partitions, resulting in poor performance. Starting from v7.6.0, the system variable [`tidb_enable_global_index`](/system-variables.md#tidb_enable_global_index-new-in-v760) is introduced to enable the global index feature. But this feature was under development at that time and it is not recommended to enable it.
 
     Starting with v8.3.0, the global index feature is released as an experimental feature. You can explicitly create a global index for a partitioned table with the keyword `Global` to remove the restriction that the unique key must use every column in the table's partitioning expression, to meet flexible business needs. Global indexes also enhance the performance of queries that do not include partition keys.
 
-    In v8.4.0, this feature becomes generally available (GA). You can directly use the keyword `GLOBAL` to create a global index, instead of setting the system variable [`tidb_enable_global_index`](/system-variables.md#tidb_enable_global_index-new-in-v760) to enable the global index feature.
+    In v8.4.0, this feature becomes generally available (GA). You must use the keyword `GLOBAL` to create a global index, instead of setting the system variable [`tidb_enable_global_index`](/system-variables.md#tidb_enable_global_index-new-in-v760) to enable the global index feature. From v8.4.0 this system variable is deprecated and is always `ON`.
 
     For more information, see [documentation](/partitioned-table.md#global-indexes).
 
@@ -272,9 +268,9 @@ Quick access: [Quick start](https://docs.pingcap.com/tidb/v8.4/quick-start-with-
 
 | Variable name | Change type | Description |
 |--------|------------------------------|------|
-|        |                              |      |
-|        |                              |      |
-|        |                              |      |
+| tidb_enable_table_partition | Deprecated | Always set to `ON`. Table partitioning has been GA since v5.1 and this experimental flag, if set to `OFF`, would cause create table with partitioning, just parse and ignore the partitioning clause. |
+| tidb_enable_list_partition | Deprecated | Always set to ON. List partitioning has been GA since v6.1 |
+| tidb_enable_global_index | Deprecated | Always set to `ON`. Global Index for partitioned tables is GA since v8.4.0, and needs explicit `GLOBAL` IndexOption to be used, so this system variable is no longer needed. |
 |        |                              |      |
 
 ### Configuration file parameters
