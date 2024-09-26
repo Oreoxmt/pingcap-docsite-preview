@@ -61,11 +61,7 @@ Quick access: [Quick start](https://docs.pingcap.com/tidb/v8.4/quick-start-with-
     <td>Automatic statistics collection determines the collection concurrency based on node scale and hardware specifications. This improves statistics collection efficiency, reduces manual tuning, and ensures stable cluster performance.</td>
   </tr>
   <tr>
-    <td rowspan="2">SQL</td>
-    <td>Foreign keys (GA)**tw@lilin90 1894**</td>
-    <td>Support MySQL-compatible foreign key constraints to maintain data consistency and further enhance TiDB's compatibility with MySQL.</td>
-  </tr>
-  <tr>
+    <td rowspan="1">SQL</td>
     <td><a href="https://docs.pingcap.com/tidb/v8.4/vector-search-overview">Vector search (experimental)</a>**tw@qiancai 1898**</td>
     <td>Vector search is a search method based on data semantics, which provides more relevant search results. As one of the core functions of AI and large language models (LLMs), vector search can be used in various scenarios such as Retrieval-Augmented Generation (RAG), semantic search, and recommendation systems.</td>
   </tr>
@@ -80,8 +76,8 @@ Quick access: [Quick start](https://docs.pingcap.com/tidb/v8.4/quick-start-with-
   </tr>
   <tr>
     <td rowspan="1">Security</td>
-    <td><a href="https://docs.pingcap.com/tidb/v8.4/br-pitr-manual#encrypt-log-backup-data">Client-side encryption of log backups</a>**tw@qiancai 1920**</td>
-    <td>Before uploading a log backup to your backup storage, you can encrypt the backup data to ensure its security during storage and transmission.</td>
+    <td><a href="https://docs.pingcap.com/tidb/v8.4/br-pitr-manual#encrypt-log-backup-data">Client-side encryption of log backup data</a>**tw@qiancai 1920**</td>
+    <td>Before uploading log backup data to your backup storage, you can encrypt the backup data to ensure its security during storage and transmission.</td>
   </tr>
 </tbody>
 </table>
@@ -114,7 +110,7 @@ Quick access: [Quick start](https://docs.pingcap.com/tidb/v8.4/quick-start-with-
 
 * Optimize the execution efficiency of the hash join operator for TiDB (experimental) [#55153](https://github.com/pingcap/tidb/issues/55153) [#53127](https://github.com/pingcap/tidb/issues/53127) @[windtalker](https://github.com/windtalker) @[xzhangxian1008](https://github.com/xzhangxian1008) @[XuHuaiyu](https://github.com/XuHuaiyu) @[wshwsh12](https://github.com/wshwsh12) **tw@qiancai** <!--1633-->
 
-    In v8.4.0, TiDB introduces an optimized implementation of the hash join operator to improve its execution efficiency. Currently, this optimized implementation is experimental, disabled by default, and applies only to inner join and outer join operations. To enable this optimized method, configure the [tidb_hash_join_version](/system-variables.md#tidb_hash_join_version-new-in-v840) system variable to `optimized`.
+    In v8.4.0, TiDB introduces an optimized implementation of the hash join operator to improve its execution efficiency. Currently, this optimized implementation of hash join applies only to inner join and outer join operations and is disabled by default. To enable this optimized implementation, configure the [tidb_hash_join_version](/system-variables.md#tidb_hash_join_version-new-in-v840) system variable to `optimized`.
 
     For more information, see [documentation](/system-variables.md#tidb_hash_join_version-new-in-v840).
 
@@ -236,12 +232,6 @@ Quick access: [Quick start](https://docs.pingcap.com/tidb/v8.4/quick-start-with-
 
     For more information, see [documentation](/vector-search-overview.md).
 
-* The TiDB foreign key feature becomes generally available (GA) [#55861](https://github.com/pingcap/tidb/issues/55861) @[YangKeao](https://github.com/YangKeao) **tw@lilin90** <!--1894-->
-
-    Starting from v6.6.0, TiDB supports foreign key constraints using the system variable [`foreign_key_checks`](/system-variables.md#foreign_key_checks), but it has been an experimental feature. In v8.4.0, the foreign key feature has been extensively tested in more scenarios to improve stability and performance. Therefore, starting from v8.4.0, the foreign key feature becomes generally available (GA).
-
-    For more information, see [documentation](/foreign-key.md).
-
 * Support the `gb18030` character set and the `gb18030_bin` and `gb18030_chinese_ci` collations [#17470](https://github.com/tikv/tikv/issues/17470) [#55791](https://github.com/pingcap/tidb/issues/55791) @[cbcwestwolf](https://github.com/cbcwestwolf) **tw@lilin90** <!--1962-->
 
     Starting from v8.4.0, TiDB supports the `gb18030` character set to ensure that TiDB can better handle Chinese-related data storage and query requirements. This character set is a standard widely used for Chinese character encoding.
@@ -254,13 +244,13 @@ Quick access: [Quick start](https://docs.pingcap.com/tidb/v8.4/quick-start-with-
 
 ### DB operations
 
-* BR supports client-side encryption of log backups (experimental) [55834](https://github.com/pingcap/tidb/issues/55834) @[Tristan1900](https://github.com/Tristan1900) **tw@qiancai** <!--1920-->
+* BR supports client-side encryption of log backup data (experimental) [55834](https://github.com/pingcap/tidb/issues/55834) @[Tristan1900](https://github.com/Tristan1900) **tw@qiancai** <!--1920-->
 
-     In earlier TiDB versions, only snapshot backups can be encrypted on the client side. Starting from v8.4.0, log backups can also be encrypted on the client side. Before uploading a log backup to your backup storage, you can encrypt the backup data to ensure its security via one of the following methods:
+     In earlier TiDB versions, only snapshot backup data can be encrypted on the client side. Starting from v8.4.0, log backup data can also be encrypted on the client side. Before uploading log backup data to your backup storage, you can encrypt the backup data to ensure its security via one of the following methods:
 
     - Encrypt using a custom fixed key
-    - Encrypt using the main key from the local disk
-    - Encrypt using the main key from a Key Management Service (KMS)
+    - Encrypt using a master key stored on a local disk
+    - Encrypt using a master key managed by a Key Management Service (KMS)
 
   For more information, see [documentation](/br/br-pitr-manual.md#encrypt-log-backup-data).
 
@@ -385,7 +375,7 @@ Quick access: [Quick start](https://docs.pingcap.com/tidb/v8.4/quick-start-with-
     - Spport Index Join by default when the inner table has `Selection` or `Projection` operators on it [#issue号](链接) @[winoros](https://github.com/winoros) **tw@Oreoxmt** <!--1709-->
     - Reduce the number of column details fetched from TiKV for `DELETE` operations in certain scenarios, lowering the resource overhead of these operations [#38911](https://github.com/pingcap/tidb/issues/38911) @[winoros](https://github.com/winoros) **tw@Oreoxmt** <!--1798-->
     - Improve the efficiency of the priority queue for automatic statistics collection tasks [#49972](https://github.com/pingcap/tidb/issues/49972) @[Rustin170506](https://github.com/Rustin170506) **tw@Oreoxmt** <!--1935-->
-    - Improve automatic statistics collection by determining the collection concurrency based on node scale and hardware specifications [#issue号](链接) @[hawkingrei](https://github.com/hawkingrei) **tw@Oreoxmt** <!--1739-->
+    - Improve automatic statistics collection by determining the collection concurrency based on node scale and hardware specifications [#53460](https://github.com/pingcap/tidb/issues/53460) @[hawkingrei](https://github.com/hawkingrei) **tw@Oreoxmt** <!--1739-->
 
 + TiKV
 
