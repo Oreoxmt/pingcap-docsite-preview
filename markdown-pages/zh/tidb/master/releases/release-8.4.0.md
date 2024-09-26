@@ -318,7 +318,7 @@ TiDB 版本：8.4.0
 | [`tidb_enable_list_partition`](/system-variables.md#tidb_enable_list_partition-从-v50-版本开始引入) | 废弃 | 从 v8.4.0 开始，该变量被废弃。其值将固定为默认值 `ON`，即默认启用 [List 分区](/partitioned-table.md#list-分区)。 |
 | [`tidb_enable_table_partition`](/system-variables.md#tidb_enable_table_partition) | 废弃 |  从 v8.4.0 开始，该变量被废弃。其值将固定为默认值 `ON`，即默认启用[分区表](/partitioned-table.md)。|
 | [`tidb_opt_prefer_range_scan`](/system-variables.md#tidb_opt_prefer_range_scan-从-v50-版本开始引入) | 修改 |  从 v8.4.0 开始，此变量的默认值从 `OFF` 更改为 `ON`。对于没有统计信息的表（伪统计信息）或空表（零统计信息），优化器将优先选择区间扫描而不是全表扫描。|
-| [`tidb_scatter_region`](/system-variables.md#tidb_scatter_region) | 修改 |  原先为布尔型，仅支持开启或关闭，且开启后新建的表的 Region 只支持表级别打散。从 v8.4.0 开始，增加 `SESSION` 作用域，类型由布尔型变更为枚举型，默认值由原来的 `OFF` 变更为 <code>``</code>，并增加了可选值 `TABLE` 和 `GLOBAL`。支持集群级别的打算策略，避免快速批量建表时由于 Region 分布不均匀导致 TiKV OOM 的问题。|
+| [`tidb_scatter_region`](/system-variables.md#tidb_scatter_region) | 修改 |  原先为布尔型，仅支持开启或关闭，且开启后新建的表的 Region 只支持表级别打散。从 v8.4.0 开始，增加 `SESSION` 作用域，类型由布尔型变更为枚举型，默认值由原来的 `OFF` 变更为 ``，并增加了可选值 `TABLE` 和 `GLOBAL`。支持集群级别的打算策略，避免快速批量建表时由于 Region 分布不均匀导致 TiKV OOM 的问题。|
 | [`tidb_enable_inl_join_inner_multi_pattern`](/system-variables.md#tidb_enable_inl_join_inner_multi_pattern-从-v700-版本开始引入) |   修改  |   默认值改为 `ON`。当内表上有 `Selection` 或 `Projection` 算子时默认支持 Index Join  |
 | [`tidb_enable_instance_plan_cache`](/system-variables.md#tidb_enable_instance_plan_cache-从-v840-版本开始引入)| 新增 | 这个变量控制是否开启 Instance Plan Cache 功能。 |
 | [`tidb_instance_plan_cache_max_size`](/system-variables.md#tidb_instance_plan_cache_max_size-从-v840-版本开始引入) | 新增 | 这个变量控制 Instance Plan Cache 的目标内存大小，超过这个大小则触发清理。|
@@ -326,6 +326,7 @@ TiDB 版本：8.4.0
 | [`tidb_shard_row_id_bits`](/system-variables.md#tidb_shard_row_id_bits-从-v840-版本开始引入) | 新增 | 在 v8.4.0 之前，要设置新建表的默认行 ID 的分片位数，需要在每个 `CREATE TABLE` 或 `ALTER TABLE` 的 SQL 语句里声明 `SHARD_ROW_ID_BITS`，一旦需要同样配置的表数量较多，操作复杂。为解决这些问题，引入了该变量。你可以在 `GLOBAL` 或 `SESSION` 级别设置该系统变量，提升易用性。  |
 |  [tidb_tso_client_rpc_mode](/system-variables.md#tidb_tso_client_rpc_mode-从-v840-版本开始引入)      |         新增                     |   原有的 TSO 请求为同步模式。现在引入 TSO 请求的异步批处理模式，并提供不同的并发能力。异步模式可以降低获取 TSO 的延迟，但可能会增加 PD 的负载。  |
 |  [tidb_hash_join_version](/system-variables.md#tidb_hash_join_version-从-v840-版本开始引入)     |         新增                     |   原有的 TiDB Hash Join 算法效率不佳，引入新的 HashJoin 版本，实现更加高效的计算  |
+|tidb_schema_cache_size|修改|默认值从 0 修改为 536870912 即 512 MiB，表示默认开启该功能，且最小值允许设置为 67108864 即 64 MiB |
 
 ### 配置文件参数
 
