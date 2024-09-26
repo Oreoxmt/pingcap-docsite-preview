@@ -32,12 +32,8 @@ TiDB 版本：8.4.0
     <td>全局索引可以有效提高检索非分区列的效率，并且消除了唯一键必须包含分区键的限制。该功能扩展了 TiDB 分区表的使用场景，避免了数据迁移过程中的一些应用修改工作。</td>
   </tr>
   <tr>
-    <td>TiDB 并行获取 TSO**tw@qiancai 1893**</td>
+    <td><a href="https://docs.pingcap.com/zh/tidb/v8.4/system-variables#tidb_tso_client_rpc_mode-从-v840-版本开始引入">TiDB 并行获取 TSO</a>**tw@qiancai 1893**</td>
     <td>在高并发场景下，并行获取 TSO 能够有效降低等待获取 TSO 的时间，提升集群的吞吐。</td>
-  </tr>
-  <tr>
-    <td>提升管理类 SQL 的执行效率**tw@hfxsd 1941**</td>
-    <td>在一部分 SaaS 系统中，存在批量创建大量用户，以及定期轮换所有用户密码的需求。TiDB 提升了创建和修改数据库用户的性能，保证操作能在期望的时间窗口。</td>
   </tr>
   <tr>
     <td>提升缓存表的查询性能**tw@hfxsd 1965**</td>
@@ -61,12 +57,8 @@ TiDB 版本：8.4.0
     <td>自动统计信息收集会根据节点规模和硬件规格自动确定收集并发度，提高统计信息收集效率，减少手动调优，确保集群性能稳定。</td>
   </tr>
   <tr>
-    <td rowspan="2">SQL</td>
-    <td>外键成为正式功能**tw@lilin90 1894**</td>
-    <td>支持 MySQL 兼容的外键约束，维护数据一致性，进一步提升了 TiDB 对 MySQL 的兼容能力。</td>
-  </tr>
-  <tr>
-    <td>向量搜索功能（实验特性）**tw@qiancai 1898**</td>
+    <td rowspan="1">SQL</td>
+    <td>><a href="https://docs.pingcap.com/zh/tidb/v8.4/vector-search-overview">向量搜索功能（实验特性）</a>**tw@qiancai 1898**</td>
     <td>向量搜索是一种基于数据语义的搜索方法，可以提供更相关的搜索结果。作为 AI 和大语言模型（LLM）的核心功能之一，向量搜索可用于检索增强生成（Retrieval-Augmented Generation, RAG）、语义搜索、推荐系统等多种场景。</td>
   </tr>
   <tr>
@@ -80,7 +72,7 @@ TiDB 版本：8.4.0
   </tr>
   <tr>
     <td rowspan="1">安全</td>
-    <td>日志备份数据支持客户端加密（实验特性）**tw@qiancai 1920**</td>
+    <td><a href="https://docs.pingcap.com/zh/tidb/v8.4/br-pitr-manual#加密日志备份数据">日志备份数据支持客户端加密（实验特性）</a>**tw@qiancai 1920**</td>
     <td>在上传日志备份到备份存储之前，你可以对日志备份数据进行加密，确保数据在存储和传输过程中的安全性。</td>
   </tr>
 </tbody>
@@ -119,10 +111,6 @@ TiDB 版本：8.4.0
 
   更多信息，请参考[用户文档](/functions-and-operators/expressions-pushed-down.md)。
 
-* 提升批量创建用户和修改用户密码操作的性能，提升达数百倍 [#55604](https://github.com/pingcap/tidb/pull/55604) @[wjhuang2016](https://github.com/wjhuang2016) **tw@hfxsd** <!--1941-->
-
-    在 SaaS 场景下，你可能需要在指定时间内批量创建大量用户、以及定期轮换所有用户密码。从 v8.4.0 开始，提升了批量创建用户、批量修改用户密码的性能，而且你可以通过增加会话连接数来提升并发，提升性能，从而大幅缩短该场景下的执行时间。
-
 * 实例级执行计划缓存（实验特性）[#54057](https://github.com/pingcap/tidb/issues/54057) @[qw4990](https://github.com/qw4990) **tw@Oreoxmt** <!--1569-->
 
     TiDB v8.4.0 引入实例级执行计划缓存作为实验特性。该功能允许同一个 TiDB 实例的所有会话共享执行计划缓存，能够大幅降低 TiDB 的时延、提升集群吞吐、减少执行计划突变的可能性、保持集群性能的稳定，是 TiDB 改善性能和稳定性的重要改进。相比会话级执行计划缓存，实例级执行计划缓存具有以下优势：
@@ -150,9 +138,9 @@ TiDB 版本：8.4.0
 
     更多信息，请参考[用户文档](/partitioned-table.md#全局索引)。
 
-* 优化了缓存表在部分场景下的查询性能 [#43249](https://github.com/pingcap/tidb/issues/43249) @[tiancaiamao](https://github.com/tiancaiamao) **tw@hfxsd** <!--1965-->
+* 优化缓存表在部分场景下的查询性能 [#43249](https://github.com/pingcap/tidb/issues/43249) @[tiancaiamao](https://github.com/tiancaiamao) **tw@hfxsd** <!--1965-->
 
-    优化了缓存表的查询性能，在使用 `IndexLookup` 执行 `SELECT ... LIMIT 1` 时，性能最高提升 5.4 倍。同时，提升了 `IndexLookupReader` 在全表扫描和主键查询场景下的性能。
+    优化缓存表的查询性能，在使用 `IndexLookup` 执行 `SELECT ... LIMIT 1` 时，性能最高提升 5.4 倍。同时，提升 `IndexLookupReader` 在全表扫描和主键查询场景下的性能。
 
 ### 稳定性
 
@@ -220,15 +208,9 @@ TiDB 版本：8.4.0
 
     在使用时，你只需要创建包含向量数据类型的表，并插入向量数据，即可执行向量搜索查询，也可进行向量数据与传统关系数据的混合查询。
 
-    此外，你可以创建并利用向量搜索索引来提升向量搜索的性能。需要注意的是，TiDB 的向量搜索索引依赖于 TiFlash。因此，在使用向量搜索索引之前，需要确保 TiDB 集群中已部署 TiFlash 节点。
+    此外，你可以创建并利用向量搜索索引来提升向量搜索的性能。需要注意的是，TiDB 的向量搜索索引依赖于 TiFlash。在使用向量搜索索引之前，需要确保 TiDB 集群中已部署 TiFlash 节点。
 
     更多信息，请参考[用户文档](/vector-search-overview.md)。
-
-* TiDB 外键约束检查成为正式功能 (GA) [#55861](https://github.com/pingcap/tidb/issues/55861) @[YangKeao](https://github.com/YangKeao) **tw@lilin90** <!--1894-->
-
-    从 v6.6.0 开始，TiDB 支持通过系统变量 [`foreign_key_checks`](/system-variables.md#foreign_key_checks) 做外键约束检查，但一直为实验特性。v8.4.0 对外键特性在更多场景做了覆盖测试，提升了稳定性和性能，因此从 v8.4.0 开始，外键功能成为正式功能 (GA)。
-
-    更多信息，请参考[用户文档](/foreign-key.md)。
 
 * 支持字符集 `gb18030` 和排序规则 `gb18030_bin` 和 `gb18030_chinese_ci` [#17470](https://github.com/tikv/tikv/issues/17470) [#55791](https://github.com/pingcap/tidb/issues/55791) @[cbcwestwolf](https://github.com/cbcwestwolf) **tw@lilin90** <!--1962-->
 
@@ -244,7 +226,7 @@ TiDB 版本：8.4.0
 
 * 日志备份数据支持客户端加密（实验特性）[#55834](https://github.com/pingcap/tidb/issues/55834) @[Tristan1900](https://github.com/Tristan1900) **tw@qiancai** <!--1920-->
 
-    在之前的版本中，仅快照备份数据支持客户端加密。从 v8.4.0 起，日志备份数据也支持客户端加密。在上传日志备份到备份存储之前，你可以选择以下方式之一对日志备份数据进行加密，从而提高备份数据的安全性：
+    在之前的版本中，仅快照备份数据支持客户端加密。从 v8.4.0 起，日志备份数据也支持客户端加密。在上传日志备份到备份存储之前，你可以选择以下方式之一对日志备份数据进行加密，从而确保备份数据的安全性：
     
     - 使用自定义的固定密钥加密
     - 使用本地磁盘的主密钥加密
@@ -320,14 +302,14 @@ TiDB 版本：8.4.0
 | [`tidb_enable_list_partition`](/system-variables.md#tidb_enable_list_partition-从-v50-版本开始引入) | 废弃 | 从 v8.4.0 开始，该变量被废弃。其值将固定为默认值 `ON`，即默认启用 [List 分区](/partitioned-table.md#list-分区)。 |
 | [`tidb_enable_table_partition`](/system-variables.md#tidb_enable_table_partition) | 废弃 |  从 v8.4.0 开始，该变量被废弃。其值将固定为默认值 `ON`，即默认启用[分区表](/partitioned-table.md)。|
 | [`tidb_opt_prefer_range_scan`](/system-variables.md#tidb_opt_prefer_range_scan-从-v50-版本开始引入) | 修改 |  从 v8.4.0 开始，此变量的默认值从 `OFF` 更改为 `ON`。对于没有统计信息的表（伪统计信息）或空表（零统计信息），优化器将优先选择区间扫描而不是全表扫描。|
-| [`tidb_scatter_region`](/system-variables.md#tidb_scatter_region) | 修改 |  原先为布尔型，仅支持开启或关闭，且开启后新建的表的 Region 只支持表级别打散。从 v8.4.0 开始，增加 `SESSION` 作用域，类型由布尔型变更为枚举型，默认值由原来的 `OFF` 变更为 ``，并增加了可选值 `TABLE` 和 `GLOBAL`。支持集群级别的打算策略，避免快速批量建表时由于 Region 分布不均匀导致 TiKV OOM 的问题。|
+| [`tidb_scatter_region`](/system-variables.md#tidb_scatter_region) | 修改 |  原先为布尔型，仅支持开启或关闭，且开启后新建的表的 Region 只支持表级别打散。从 v8.4.0 开始，增加 `SESSION` 作用域，类型由布尔型变更为枚举型，默认值由原来的 `OFF` 变更为空，并增加了可选值 `TABLE` 和 `GLOBAL`。支持集群级别的打算策略，避免快速批量建表时由于 Region 分布不均匀导致 TiKV OOM 的问题。|
 | [`tidb_enable_inl_join_inner_multi_pattern`](/system-variables.md#tidb_enable_inl_join_inner_multi_pattern-从-v700-版本开始引入) |   修改  |   默认值改为 `ON`。当内表上有 `Selection` 或 `Projection` 算子时默认支持 Index Join  |
 | [`tidb_enable_instance_plan_cache`](/system-variables.md#tidb_enable_instance_plan_cache-从-v840-版本开始引入)| 新增 | 这个变量控制是否开启 Instance Plan Cache 功能。 |
 | [`tidb_instance_plan_cache_max_size`](/system-variables.md#tidb_instance_plan_cache_max_size-从-v840-版本开始引入) | 新增 | 这个变量控制 Instance Plan Cache 的目标内存大小，超过这个大小则触发清理。|
 | [`tidb_pre_split_regions`](/system-variables.md#tidb_pre_split_regions-从-v840-版本开始引入)   | 新增 | 在 v8.4.0 之前，要设置新建表的默认行分裂分片数，需要在每个 `CREATE TABLE` SQL 语句里声明 `PRE_SPLIT_REGIONS`，一旦需要同样配置的表数量较多，操作复杂。为解决这些问题，引入了该变量。你可以在 `GLOBAL` 或 `SESSION` 级别设置该系统变量，提升易用性。  |
 | [`tidb_shard_row_id_bits`](/system-variables.md#tidb_shard_row_id_bits-从-v840-版本开始引入) | 新增 | 在 v8.4.0 之前，要设置新建表的默认行 ID 的分片位数，需要在每个 `CREATE TABLE` 或 `ALTER TABLE` 的 SQL 语句里声明 `SHARD_ROW_ID_BITS`，一旦需要同样配置的表数量较多，操作复杂。为解决这些问题，引入了该变量。你可以在 `GLOBAL` 或 `SESSION` 级别设置该系统变量，提升易用性。  |
 |  [tidb_tso_client_rpc_mode](/system-variables.md#tidb_tso_client_rpc_mode-从-v840-版本开始引入)      |         新增                     |   原有的 TSO 请求为同步模式。现在引入 TSO 请求的异步批处理模式，并提供不同的并发能力。异步模式可以降低获取 TSO 的延迟，但可能会增加 PD 的负载。  |
-|  [tidb_hash_join_version](/system-variables.md#tidb_hash_join_version-从-v840-版本开始引入)     |         新增                     |   原有的 TiDB Hash Join 算法效率不佳，引入新的 HashJoin 版本，实现更加高效的计算  |
+| [tidb_hash_join_version](/system-variables.md#tidb_hash_join_version-从-v840-版本开始引入) | 新增 | 控制 TiDB 在执行 Hash Join 算子时是否使用优化后的实现方法。默认值为 `legacy`，代表不使用优化后的实现方法。若设置为 `optimized`，TiDB 在执行 Hash Join 算子时将使用优化后的实现方法，以提升 Hash Join 性能。 |
 |tidb_schema_cache_size|修改|默认值从 0 修改为 536870912 即 512 MiB，表示默认开启该功能，且最小值允许设置为 67108864 即 64 MiB |
 
 ### 配置文件参数
@@ -384,7 +366,7 @@ TiDB 版本：8.4.0
   - 当内表上有 `Selection` 或 `Projection` 算子时默认支持 Index Join [#issue号](链接) @[winoros](https://github.com/winoros) **tw@Oreoxmt** <!--1709-->
   - 在某些场景下减少 `DELETE` 操作从 TiKV 获取的列信息数量，降低 `DELETE` 操作的资源开销 [#38911](https://github.com/pingcap/tidb/issues/38911) @[winoros](https://github.com/winoros) **tw@Oreoxmt** <!--1798-->
   - 优化自动收集统计信息任务优先级队列的运行效率 [#49972](https://github.com/pingcap/tidb/issues/49972) @[Rustin170506](https://github.com/Rustin170506) **tw@Oreoxmt** <!--1935-->
-  - 自动统计信息收集根据部署规模和硬件规格决定执行和扫描的并发度 [#issue号](链接) @[hawkingrei](https://github.com/hawkingrei) **tw@Oreoxmt** <!--1739-->
+  - 自动统计信息收集根据节点规模和硬件规格自动确定执行和扫描的并发度 [#53460](https://github.com/pingcap/tidb/issues/53460) @[hawkingrei](https://github.com/hawkingrei) **tw@Oreoxmt** <!--1739-->
 
 + TiKV
 
