@@ -332,13 +332,31 @@ Quick access: [Quick start](https://docs.pingcap.com/tidb/v8.4/quick-start-with-
 | -------- | -------- | -------- | -------- |
 | TiKV | [`pessimistic-txn.in-memory-peer-size-limit`](/tikv-configuration-file.md#in-memory-peer-size-limit-new-in-v840) | Newly added | Controls the memory usage limit for in-memory pessimistic locks in a Region. When this limit is exceeded, TiKV writes pessimistic locks persistently. |
 | TiKV | [`pessimistic-txn.in-memory-instance-size-limit`](/tikv-configuration-file.md#in-memory-instance-size-limit-new-in-v840) | Newly added | Controls the memory usage limit for in-memory pessimistic locks in a TiKV instance. When this limit is exceeded, TiKV writes pessimistic locks persistently. |
+| TiKV | [`raft-engine.spill-dir`](/tikv-configuration-file.md#spill-dir-new-in-v840) | Newly added | Controls the secondary directory where TiKV instances store Raft log files for supporting multi-disk storage of Raft log files. |
+| TiKV | [`resource-control.priority-ctl-strategy`](/tikv-configuration-file.md#priority-ctl-strategy-new-in-v840) | Newly added | Controls the management policies for low priority tasks.TiKV ensures that higher priority tasks are executed first by adding flow control to low priority tasks. |
+| PD | [`cert-allowed-cn`](/enable-tls-between-components.md#verify-component-callers-identity) | Modified | Starting from v8.4.0, configuring multiple `Common Names` is supported. Before v8.4.0, only one `Common Name` can be set. |
+| PD | [`max-merge-region-keys`](/pd-configuration-file.md#max-merge-region-keys) | Modified | Starting from v8.4.0, the default value is changed to `540000`. Before v8.4.0, the default value is `200000`. |
+| PD | [`max-merge-region-size`](/pd-configuration-file.md#max-merge-region-size) | Modified | Starting from v8.4.0, the default value is changed to `54`. Before v8.4.0, the default value is `20`. |
+| TiFlash | [`storage.format_version`](/tiflash/tiflash-configuration.md) | Modified | Changes the default TiFlash storage format version from `5` to `7` to support vector index creation and storage. Due to this format change, TiFlash clusters upgraded to v8.4.0 or a later version do not support in-place downgrading to earlier versions. |
 | TiDB Lightning | [`logical-import-prep-stmt`](/tidb-lightning/tidb-lightning-configuration.md) | Newly added | In Logical Import Mode, this parameter controls whether to use prepared statements and statement cache to improve performance. The default value is `false`. |
 | TiCDC | [`claim-check-raw-value`](/ticdc/ticdc-sink-to-kafka.md#send-the-value-field-to-external-storage-only) | Newly added | Controls whether TiCDC sends only the `value` field of Kafka messages to external storage. This feature is only applicable to non-Open Protocol scenarios. |
 | TiDB Binlog | [`--enable-binlog`](/command-line-flags-for-tidb-configuration.md#--enable-binlog) | Deleted | In v8.4.0, [TiDB Binlog](https://docs.pingcap.com/tidb/v8.3/tidb-binlog-overview) is removed. This parameter controls whether to enable TiDB binlog generation or not, and is deleted starting from v8.4.0. |
+| BR | [`--log.crypter.method`](/br/br-pitr-manual.md#encrypt-the-log-backup-data) | Newly added | Specifies the encryption algorithm for log backup data, which can be `aes128-ctr`, `aes192-ctr`, or `aes256-ctr`. The default value is `plaintext`, indicating that data is not encrypted. |
+| BR | [`--log.crypter.key`](/br/br-pitr-manual.md#encrypt-the-log-backup-data) | Newly added | Specifies the encryption key in hexadecimal string format for log backup data. It is a 128-bit (16 bytes) key for the algorithm `aes128-ctr`, a 24-byte key for the algorithm `aes192-ctr`, and a 32-byte key for the algorithm `aes256-ctr`. |
+| BR | [`--log.crypter.key-file`](/br/br-pitr-manual.md#encrypt-the-log-backup-data) | Newly added | Specifies the the key file for log backup data. You can directly pass in the file path where the key is stored as a parameter without passing in the `crypter.key`. |
+| BR | [`--master-key-crypter-method`](/br/br-pitr-manual.md#encrypt-the-log-backup-data) | Newly added | Specifies the encryption algorithm based on the master key for log backup data, which can be `aes128-ctr`, `aes192-ctr`, or `aes256-ctr`. The default value is `plaintext`, indicating that data is not encrypted. |
+| BR | [`--master-key`](/br/br-pitr-manual.md#encrypt-the-log-backup-data) | Newly added | Specifies the master key for log backup data. It can be a master key stored on a local disk or a master key managed by a cloud Key Management Service (KMS). |
 
 ### System tables
 
 ## Offline package changes
+
+Starting from v8.4.0, the following contents are removed from the `TiDB-community-toolkit` [binary package](/binary-package.md):
+
+- `pump-{version}-linux-{arch}.tar.gz`
+- `drainer-{version}-linux-{arch}.tar.gz`
+- `binlogctl`
+- `arbiter`
 
 ## Removed features
 
