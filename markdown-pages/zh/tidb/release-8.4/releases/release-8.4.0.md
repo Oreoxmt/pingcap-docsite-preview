@@ -297,19 +297,19 @@ TiDB 版本：8.4.0
 | [`tidb_enable_global_index`](/system-variables.md#tidb_enable_global_index-从-v760-版本开始引入) | 废弃 | 从 v8.4.0 开始，该变量被废弃。其值将固定为默认值 `ON`，即默认启用[全局索引](/partitioned-table.md#全局索引)。你只需在执行 `CREATE TABLE` 或 `ALTER TABLE` 时在对应的列加上关键字 `GLOBAL` 即可创建全局索引。 |
 | [`tidb_enable_list_partition`](/system-variables.md#tidb_enable_list_partition-从-v50-版本开始引入) | 废弃 | 从 v8.4.0 开始，该变量被废弃。其值将固定为默认值 `ON`，即默认启用 [List 分区](/partitioned-table.md#list-分区)。 |
 | [`tidb_enable_table_partition`](/system-variables.md#tidb_enable_table_partition) | 废弃 |  从 v8.4.0 开始，该变量被废弃。其值将固定为默认值 `ON`，即默认启用[分区表](/partitioned-table.md)。|
+| [`tidb_scatter_region`](/system-variables.md#tidb_scatter_region) | 修改 |  原先为布尔型，仅支持开启或关闭，且开启后新建的表的 Region 只支持表级别打散。从 v8.4.0 开始，增加 `SESSION` 作用域，类型由布尔型变更为枚举型，默认值由原来的 `OFF` 变更为空，并增加了可选值 `TABLE` 和 `GLOBAL`。支持集群级别的打散策略，避免快速批量建表时由于 Region 分布不均匀导致 TiKV OOM 的问题。|
 | [`tidb_schema_cache_size`](/system-variables.md#tidb_schema_cache_size-从-v800-版本开始引入) | 修改 | 默认值从 `0` 修改为 `536870912` 即 512 MiB，表示默认开启该功能，且最小值允许设置为 `67108864` 即 64 MiB。 |
 | [`tidb_opt_prefer_range_scan`](/system-variables.md#tidb_opt_prefer_range_scan-从-v50-版本开始引入) | 修改 |  从 v8.4.0 开始，此变量的默认值从 `OFF` 更改为 `ON`。对于没有统计信息的表（伪统计信息）或空表（零统计信息），优化器将优先选择区间扫描而不是全表扫描。|
-| [`tidb_scatter_region`](/system-variables.md#tidb_scatter_region) | 修改 |  原先为布尔型，仅支持开启或关闭，且开启后新建的表的 Region 只支持表级别打散。从 v8.4.0 开始，增加 `SESSION` 作用域，类型由布尔型变更为枚举型，默认值由原来的 `OFF` 变更为空，并增加了可选值 `TABLE` 和 `GLOBAL`。支持集群级别的打算策略，避免快速批量建表时由于 Region 分布不均匀导致 TiKV OOM 的问题。|
 | [`tidb_enable_inl_join_inner_multi_pattern`](/system-variables.md#tidb_enable_inl_join_inner_multi_pattern-从-v700-版本开始引入) | 修改 | 默认值从 `OFF` 修改为 `ON`。从 v8.4.0 开始，当内表上有 `Selection`、`Projection` 或 `Aggregation` 算子时默认支持 Index Join。 |
 | [`tidb_analyze_partition_concurrency`](/system-variables.md#tidb_analyze_partition_concurrency) | 修改 | 取值范围从 `[1, 18446744073709551615]` 修改为 `[1, 128]`。|
 | [`tidb_auto_analyze_concurrency`](/system-variables.md#tidb_auto_analyze_concurrency-从-v840-版本开始引入)| 新增 | 设置单个自动统计信息收集任务内部的并发度。在 v8.4.0 之前的版本中，该并发度固定为 `1`。你可以根据集群资源情况提高该并发度，从而加快统计信息收集任务的执行速度。 |
 | [`tidb_enable_instance_plan_cache`](/system-variables.md#tidb_enable_instance_plan_cache-从-v840-版本开始引入)| 新增 | 控制是否开启 Instance Plan Cache 功能。 |
+| [`tidb_hash_join_version`](/system-variables.md#tidb_hash_join_version-从-v840-版本开始引入) | 新增 | 控制 TiDB 是否使用 Hash Join 算子的优化版。默认值为 `legacy`，代表不使用优化版。若设置为 `optimized`，TiDB 在执行 Hash Join 算子时将使用其优化版，以提升 Hash Join 性能。 |
 | [`tidb_instance_plan_cache_max_size`](/system-variables.md#tidb_instance_plan_cache_max_size-从-v840-版本开始引入) | 新增 | 设置 Instance Plan Cache 的最大内存使用量。|
 | [`tidb_instance_plan_cache_reserved_percentage`](/system-variables.md#tidb_instance_plan_cache_reserved_percentage-从-v840-版本开始引入) | 新增 | 控制内存驱逐后 Instance Plan Cache 的空闲内存百分比。|
 | [`tidb_pre_split_regions`](/system-variables.md#tidb_pre_split_regions-从-v840-版本开始引入)   | 新增 | 在 v8.4.0 之前，要设置新建表默认的行分裂分片数，需要在每个 `CREATE TABLE` SQL 语句里声明 `PRE_SPLIT_REGIONS`，一旦需要同样配置的表数量较多，操作复杂。为解决这些问题，引入了该变量。你可以在 `GLOBAL` 或 `SESSION` 级别设置该系统变量，提升易用性。  |
 | [`tidb_shard_row_id_bits`](/system-variables.md#tidb_shard_row_id_bits-从-v840-版本开始引入) | 新增 | 在 v8.4.0 之前，要设置新建表默认的行 ID 的分片数，需要在每个 `CREATE TABLE` 或 `ALTER TABLE` 的 SQL 语句里声明 `SHARD_ROW_ID_BITS`，一旦需要同样配置的表数量较多，操作复杂。为解决这些问题，引入了该变量。你可以在 `GLOBAL` 或 `SESSION` 级别设置该系统变量，提升易用性。  |
 | [`tidb_tso_client_rpc_mode`](/system-variables.md#tidb_tso_client_rpc_mode-从-v840-版本开始引入) | 新增 | 设置 TiDB 向 PD 发送 TSO RPC 请求时使用的模式。这里的模式将用于控制 TSO RPC 请求是否并行，调节获取 TS 时消耗在请求攒批阶段的时间，从而在某些场景中减少执行查询时等待 TS 阶段的时间。 |
-| [`tidb_hash_join_version`](/system-variables.md#tidb_hash_join_version-从-v840-版本开始引入) | 新增 | 控制 TiDB 是否使用 Hash Join 算子的优化版。默认值为 `legacy`，代表不使用优化版。若设置为 `optimized`，TiDB 在执行 Hash Join 算子时将使用其优化版，以提升 Hash Join 性能。 |
 
 ### 配置参数
 
@@ -322,8 +322,8 @@ TiDB 版本：8.4.0
 | TiKV | [`sst-max-size`](/tikv-configuration-file.md#sst-max-size) | 修改 | 从 v8.4.0 开始，默认值修改为 `"384MiB"`。在 v8.4.0 之前，默认值为 `"144MiB"`。 |
 | TiKV | [`pessimistic-txn.in-memory-peer-size-limit`](/tikv-configuration-file.md#in-memory-peer-size-limit-从-v840-版本开始引入) | 新增 | 控制单个 Region 内存悲观锁的内存使用上限。超过此限制时，悲观锁将回退到持久化方式写入磁盘。|
 | TiKV | [`pessimistic-txn.in-memory-instance-size-limit`](/tikv-configuration-file.md#in-memory-instance-size-limit-从-v840-版本开始引入) | 新增 | 控制单个 TiKV 实例内存悲观锁的内存使用上限。超过此限制时，悲观锁将回退到持久化方式写入磁盘。|
-|  TiKV        |   [`raft-engine.spill-dir`](/tikv-configuration-file.md#spill-dir-从-v840-版本开始引入)      |   新增       |   该配置文件参数用于指定 TiKV 实例存储 Raft 日志文件的辅助目录，用于支持多盘存储 Raft 日志文件      |
-| TiKV         |    [`resource-control.priority-ctl-strategy`](/tikv-configuration-file.md#priority-ctl-strategy-从-v840-版本开始引入)      |  新增      |   该配置文件参数用于配置低优先级任务的管控策略。TiKV 通过对低优先级的任务添加流量控制来确保优先执行更高优先级的任务。     |
+| TiKV | [`raft-engine.spill-dir`](/tikv-configuration-file.md#spill-dir-从-v840-版本开始引入) | 新增 | 该配置文件参数用于指定 TiKV 实例存储 Raft 日志文件的辅助目录，用于支持多盘存储 Raft 日志文件。|
+| TiKV | [`resource-control.priority-ctl-strategy`](/tikv-configuration-file.md#priority-ctl-strategy-从-v840-版本开始引入) | 新增 | 该配置文件参数用于配置低优先级任务的管控策略。TiKV 通过对低优先级的任务添加流量控制来确保优先执行更高优先级的任务。|
 | PD | [`cert-allowed-cn`](/enable-tls-between-components.md#认证组件调用者身份) | 修改 | 从 v8.4.0 开始，支持设置多个 `Common Name`。在 v8.4.0 之前，只能设置一个 `Common Name`。 |
 | PD | [`max-merge-region-keys`](/pd-configuration-file.md#max-merge-region-keys) | 修改 | 从 v8.4.0 开始，默认值修改为 `540000`。在 v8.4.0 之前，默认值为 `200000`。 |
 | PD | [`max-merge-region-size`](/pd-configuration-file.md#max-merge-region-size) | 修改 | 从 v8.4.0 开始，默认值修改为 `54`。在 v8.4.0 之前，默认值为 `20`。 |
@@ -371,7 +371,7 @@ TiDB 版本：8.4.0
     * 计划在后续版本重新设计[执行计划绑定的自动演进](/sql-plan-management.md#自动演进绑定-baseline-evolution)，相关的变量和行为会发生变化。
     * TiDB 在 v8.0.0 引入了系统变量 [`tidb_enable_parallel_hashagg_spill`](/system-variables.md#tidb_enable_parallel_hashagg_spill-从-v800-版本开始引入)，用于控制 TiDB 是否支持并行 HashAgg 进行落盘。在未来版本中，系统变量 [`tidb_enable_parallel_hashagg_spill`](/system-variables.md#tidb_enable_parallel_hashagg_spill-从-v800-版本开始引入) 将被废弃。
     * TiDB Lightning 参数 [`conflict.max-record-rows`](/tidb-lightning/tidb-lightning-configuration.md#tidb-lightning-任务配置) 计划在未来版本中废弃，并在后续版本中删除。该参数将由 [`conflict.threshold`](/tidb-lightning/tidb-lightning-configuration.md#tidb-lightning-任务配置) 替代，即记录的冲突记录数和单个导入任务允许出现的冲突记录数的上限数保持一致。
-
+   * 从 v6.3.0 开始，分区表默认使用[动态裁剪模式](/partitioned-table.md#动态裁剪模式)，相比静态裁剪模式，动态裁剪模式支持 IndexJoin、Plan Cache 等特性，性能表现更好。在未来版本中，静态裁剪模式将被废弃。
 ## 改进提升
 
 + TiDB <!--tw@Oreoxmt: 11 notes-->
