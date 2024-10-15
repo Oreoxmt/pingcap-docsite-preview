@@ -343,7 +343,7 @@ Quick access: [Quick start](https://docs.pingcap.com/tidb/v8.4/quick-start-with-
 | TiKV | [`raft-engine.spill-dir`](/tikv-configuration-file.md#spill-dir-new-in-v840) | Newly added | Controls the secondary directory where TiKV instances store Raft log files for supporting multi-disk storage of Raft log files. |
 | TiKV | [`resource-control.priority-ctl-strategy`](/tikv-configuration-file.md#priority-ctl-strategy-new-in-v840) | Newly added | Controls the management policies for low priority tasks. TiKV ensures that higher priority tasks are executed first by adding flow control to low priority tasks. |
 | PD | [`cert-allowed-cn`](/enable-tls-between-components.md#verify-component-callers-identity) | Modified | Starting from v8.4.0, configuring multiple `Common Names` is supported. Before v8.4.0, only one `Common Name` can be set. |
-| PD | [`max-merge-region-keys`](/pd-configuration-file.md#max-merge-region-keys) | Modified | Changes the default value from `200000` to `540000`. 
+| PD | [`max-merge-region-keys`](/pd-configuration-file.md#max-merge-region-keys) | Modified | Changes the default value from `200000` to `540000`. |
 | PD | [`max-merge-region-size`](/pd-configuration-file.md#max-merge-region-size) | Modified | Changes the default value from `20` to `54`. |
 | TiFlash | [`storage.format_version`](/tiflash/tiflash-configuration.md) | Modified | Changes the default TiFlash storage format version from `5` to `7` to support vector index creation and storage. Due to this format change, TiFlash clusters upgraded to v8.4.0 or a later version do not support in-place downgrading to earlier versions. |
 | TiDB Lightning | [`logical-import-prep-stmt`](/tidb-lightning/tidb-lightning-configuration.md) | Newly added | In Logical Import Mode, this parameter controls whether to use prepared statements and statement cache to improve performance. The default value is `false`. |
@@ -390,7 +390,7 @@ Starting from v8.4.0, the following contents are removed from the `TiDB-communit
     * In v8.0.0, TiDB introduces the [`tidb_enable_parallel_hashagg_spill`](/system-variables.md#tidb_enable_parallel_hashagg_spill-new-in-v800) system variable to control whether TiDB supports disk spill for the concurrent HashAgg algorithm. In future versions, the [`tidb_enable_parallel_hashagg_spill`](/system-variables.md#tidb_enable_parallel_hashagg_spill-new-in-v800) system variable will be deprecated.
     * The TiDB Lightning parameter [`conflict.max-record-rows`](/tidb-lightning/tidb-lightning-configuration.md#tidb-lightning-task) is planned for deprecation in a future release and will be subsequently removed. This parameter will be replaced by [`conflict.threshold`](/tidb-lightning/tidb-lightning-configuration.md#tidb-lightning-task), which means that the maximum number of conflicting records is consistent with the maximum number of conflicting records that can be tolerated in a single import task.
    * Starting from v6.3.0, partitioned tables use [dynamic pruning mode](/partitioned-table.md#dynamic-pruning-mode) by default. Compared with static pruning mode, dynamic pruning mode supports features such as IndexJoin and plan cache with better performance. Therefore, static pruning mode will be deprecated.
-   
+
 ## Improvements
 
 + TiDB <!--tw@Oreoxmt: 11 notes-->
@@ -460,22 +460,21 @@ Starting from v8.4.0, the following contents are removed from the `TiDB-communit
 
 ## Bug fixes
 
-
 + TiDB <!--tw@lilin90: the following 13 notes-->
 
-    - 修复在设置 `tidb_restricted_read_only` 变量为 `true` 的时候有概率死锁的问题 [#53822](https://github.com/pingcap/tidb/issues/53822) [#55373](https://github.com/pingcap/tidb/issues/55373) @[Defined2014](https://github.com/Defined2014)
-    - 修复 TiDB graceful shutdown 时不等待 auto commit 事务完成的问题 [#55464](https://github.com/pingcap/tidb/issues/55464) @[YangKeao](https://github.com/YangKeao)
-    - 修复在 TTL 任务执行过程中降低 `tidb_ttl_delete_worker_count` 的值导致任务不会完成的问题 [#55561](https://github.com/pingcap/tidb/issues/55561) @[lcwangchao](https://github.com/lcwangchao)
-    - 修复一张表索引中包含生成列时，`ANALYZE` 这张表可能报错 “Unknown column 'column_name' in 'expression'” 的问题 [#55438](https://github.com/pingcap/tidb/issues/55438) @[hawkingrei](https://github.com/hawkingrei)
-    - 废弃统计信息相关的无用配置，减少冗余代码 [#55043](https://github.com/pingcap/tidb/issues/55043) @[Rustin170506](https://github.com/Rustin170506)
-    - 修复执行一条包含关联子查询和 CTE 的查询时，TiDB 可能 hang 住或返回错误结果的问题 [#55551](https://github.com/pingcap/tidb/issues/55551) @[guo-shaoge](https://github.com/guo-shaoge)
-    - 修复禁用 `lite-init-stats` 可能导致统计信息同步加载失败的问题 [#54532](https://github.com/pingcap/tidb/issues/54532) @[hawkingrei](https://github.com/hawkingrei)
-    - 修复当 `UPDATE` 或 `DELETE` 语句包含 Recursive CTE 时，语句可能报错或不生效的问题 [#55666](https://github.com/pingcap/tidb/issues/55666) @[time-and-fate](https://github.com/time-and-fate)
-    - 修复当一条 SQL Binding 涉及窗口函数时，有一定概率不生效的问题 [#55981](https://github.com/pingcap/tidb/issues/55981) @[winoros](https://github.com/winoros)
-    - 修复统计信息初始化时，使用非二进制排序规则的字符串类型列的统计信息可能无法正常加载的问题 [#55684](https://github.com/pingcap/tidb/issues/55684) @[winoros](https://github.com/winoros)
-    - 修复查询条件为 `column IS NULL` 访问唯一索引的时候，优化器将行数错误地估算为 1 的问题 [#56116](https://github.com/pingcap/tidb/issues/56116) @[hawkingrei](https://github.com/hawkingrei)
-    - 修复了当查询包含形如 `(... AND ...) OR (... AND ...) ...` 的过滤条件时，优化器没有使用最优的多列统计信息进行行数估算的问题。 [#54323](https://github.com/pingcap/tidb/issues/54323) @[time-and-fate](https://github.com/time-and-fate)
-    - 修复当一个查询有 Index Merge 执行计划可用时，`read_from_storage` hint 可能不生效的问题 [#56217](https://github.com/pingcap/tidb/issues/56217) @[AilinKid](https://github.com/AilinKid)
+    - Fix the issue that a deadlock might occur when the `tidb_restricted_read_only` variable is set to `true` [#53822](https://github.com/pingcap/tidb/issues/53822) [#55373](https://github.com/pingcap/tidb/issues/55373) @[Defined2014](https://github.com/Defined2014)
+    - Fix the issue that TiDB does not wait for auto-commit transactions to complete when shutting down gracefully [#55464](https://github.com/pingcap/tidb/issues/55464) @[YangKeao](https://github.com/YangKeao)
+    - Fix the issue that reducing the value of `tidb_ttl_delete_worker_count` during TTL job execution makes the job fail to complete [#55561](https://github.com/pingcap/tidb/issues/55561) @[lcwangchao](https://github.com/lcwangchao)
+    - Fix the issue that if the index of a table contains generated columns, an `Unknown column 'column_name' in 'expression'` error might occur when collecting statistics for the table via the `ANALYZE` statement [#55438](https://github.com/pingcap/tidb/issues/55438) @[hawkingrei](https://github.com/hawkingrei)
+    - Deprecate unnecessary configurations related to statistics to reduce redundant code [#55043](https://github.com/pingcap/tidb/issues/55043) @[Rustin170506](https://github.com/Rustin170506)
+    - Fix the issue that TiDB might hang or return incorrect results when executing a query containing a correlated subquery and CTE [#55551](https://github.com/pingcap/tidb/issues/55551) @[guo-shaoge](https://github.com/guo-shaoge)
+    - Fix the issue that disabling `lite-init-stats` might cause statistics to fail to load synchronously [#54532](https://github.com/pingcap/tidb/issues/54532) @[hawkingrei](https://github.com/hawkingrei)
+    - Fix the issue that when an `UPDATE` or `DELETE` statement contains a recursive CTE, the statement might report an error or not take effect [#55666](https://github.com/pingcap/tidb/issues/55666) @[time-and-fate](https://github.com/time-and-fate)
+    - Fix the issue that a SQL binding containing window functions might not take effect in some cases [#55981](https://github.com/pingcap/tidb/issues/55981) @[winoros](https://github.com/winoros)
+    - Fix the issue that statistics for string columns with non-binary collations might fail to load when initializing statistics [#55684](https://github.com/pingcap/tidb/issues/55684) @[winoros](https://github.com/winoros)
+    - Fix the issue that the optimizer incorrectly estimates the number of rows as 1 when accessing a unique index with the query condition `column IS NULL` [#56116](https://github.com/pingcap/tidb/issues/56116) @[hawkingrei](https://github.com/hawkingrei)
+    - Fix the issue that the optimizer does not use the best multi-column statistics information for row count estimation when the query contains filter conditions like `(... AND ...) OR (... AND ...) ...` [#54323](https://github.com/pingcap/tidb/issues/54323) @[time-and-fate](https://github.com/time-and-fate)
+    - Fix the issue that the `read_from_storage` hint might not take effect when the query has an available Index Merge execution plan [#56217](https://github.com/pingcap/tidb/issues/56217) @[AilinKid](https://github.com/AilinKid)
     <!--tw@hfxsd: the following 13 notes-->
     - (dup): release-6.5.11.md > 错误修复> TiDB - 修复 `IndexNestedLoopHashJoin` 中存在数据竞争的问题 [#49692](https://github.com/pingcap/tidb/issues/49692) @[solotzg](https://github.com/solotzg)
     - (dup): release-6.5.11.md > 错误修复> TiDB - 修复 `INFORMATION_SCHEMA.STATISTICS` 表中 `SUB_PART` 值为空的问题 [#55812](https://github.com/pingcap/tidb/issues/55812) @[Defined2014](https://github.com/Defined2014)
