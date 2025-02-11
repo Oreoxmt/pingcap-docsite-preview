@@ -92,11 +92,11 @@ TiDB Lightning has two configuration classes: "global" and "task", and they have
 
 #### `max-error`
 
-- The maximum number of non-fatal errors to tolerate before stopping TiDB Lightning. Non-fatal errors are localized to a few rows, and ignoring those rows allows the import process to continue.
+- The maximum number of non-fatal errors to tolerate before stopping TiDB Lightning.
+- Non-fatal errors are localized to a few rows, and ignoring those rows allows the import process to continue.
 - Setting this to N means that TiDB Lightning will stop as soon as possible when the (N+1)-th error is encountered.
 - The skipped rows will be inserted into tables inside the `task info` schema on the target TiDB, which can be configured below.
 - Default value: `MaxInt64` bytes, that is, `9223372036854775807` bytes.
-max-error = 0
 
 #### `task-info-schema-name`
 
@@ -238,7 +238,7 @@ Specifies certificates and keys for TLS connections within the cluster.
 
 > **Warning:**
 >
-> The `duplicate-resolution` parameter is deprecated starting from v8.0.0 and will be removed in a future release. For more information, see [ The old version of conflict detection](/tidb-lightning/tidb-lightning-physical-import-mode-usage.md#the-old-version-of-conflict-detection-deprecated-in-v800).
+> The `duplicate-resolution` parameter is deprecated starting from v8.0.0 and will be removed in a future release. For more information, see [The old version of conflict detection](/tidb-lightning/tidb-lightning-physical-import-mode-usage.md#the-old-version-of-conflict-detection-deprecated-in-v800).
 
 - Controls whether to detect and resolve duplicate records (unique key conflict) in the physical import mode.
 - Default value: `'none'`
@@ -647,7 +647,7 @@ Sets other TiDB session variables
 
 #### `checksum-via-sql`
 
-- Specifies whether the ADMIN CHECKSUM TABLE <table> operation is executed via TiDB.
+- Specifies whether the `ADMIN CHECKSUM TABLE <table>` operation is executed via TiDB.
 - Default value: `"false"`
 - Value options:
     - `"false"`: the `ADMIN CHECKSUM TABLE <table>` command is sent to TiKV for execution via TiDB Lightning.
