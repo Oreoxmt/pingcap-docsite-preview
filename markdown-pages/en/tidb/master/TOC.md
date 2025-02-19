@@ -82,23 +82,23 @@
       - [Stale Read](/develop/dev-guide-use-stale-read.md)
     - [HTAP Queries](/develop/dev-guide-hybrid-oltp-and-olap-queries.md)
   - Vector Search
-    - [Overview](/vector-search/vector-search-overview.md)
+    - [Overview](/vector-search-overview.md)
     - Get Started
-      - [Get Started with SQL](/vector-search/vector-search-get-started-using-sql.md)
-      - [Get Started with Python](/vector-search/vector-search-get-started-using-python.md)
+      - [Get Started with SQL](/vector-search-get-started-using-sql.md)
+      - [Get Started with Python](/vector-search-get-started-using-python.md)
     - Integrations
-      - [Overview](/vector-search/vector-search-integration-overview.md)
+      - [Overview](/vector-search-integration-overview.md)
       - AI Frameworks
-        - [LlamaIndex](/vector-search/vector-search-integrate-with-llamaindex.md)
-        - [Langchain](/vector-search/vector-search-integrate-with-langchain.md)
+        - [LlamaIndex](/vector-search-integrate-with-llamaindex.md)
+        - [Langchain](/vector-search-integrate-with-langchain.md)
       - Embedding Models/Services
-        - [Jina AI](/vector-search/vector-search-integrate-with-jinaai-embedding.md)
+        - [Jina AI](/vector-search-integrate-with-jinaai-embedding.md)
       - ORM Libraries
-        - [SQLAlchemy](/vector-search/vector-search-integrate-with-sqlalchemy.md)
-        - [peewee](/vector-search/vector-search-integrate-with-peewee.md)
-        - [Django](/vector-search/vector-search-integrate-with-django-orm.md)
-    - [Improve Performance](/vector-search/vector-search-improve-performance.md)
-    - [Limitations](/vector-search/vector-search-limitations.md)
+        - [SQLAlchemy](/vector-search-integrate-with-sqlalchemy.md)
+        - [peewee](/vector-search-integrate-with-peewee.md)
+        - [Django](/vector-search-integrate-with-django-orm.md)
+    - [Improve Performance](/vector-search-improve-performance.md)
+    - [Limitations](/vector-search-limitations.md)
   - Transaction
     - [Overview](/develop/dev-guide-transaction-overview.md)
     - [Optimistic and Pessimistic Transactions](/develop/dev-guide-optimistic-and-pessimistic-transaction.md)
@@ -262,10 +262,7 @@
     - [Primary-Secondary DR](/dr-secondary-cluster.md)
     - [Multi-Replica Cluster DR](/dr-multi-replica.md)
     - [BR-based DR](/dr-backup-restore.md)
-  - Resource Manager
-    - [Use Resource Control to Achieve Resource Group Limitation and Flow Control](/tidb-resource-control-ru-groups.md)
-    - [Manage Runaway Queries](/tidb-resource-control-runaway-queries.md)
-    - [Manage Background Tasks](/tidb-resource-control-background-tasks.md)
+  - [Resource Control](/tidb-resource-control.md)
   - [Configure Time Zone](/configure-time-zone.md)
   - [Daily Checklist](/daily-check.md)
   - [Maintain TiFlash](/tiflash/maintain-tiflash.md)
@@ -373,6 +370,7 @@
       - [SQL Plan Management](/sql-plan-management.md)
       - [The Blocklist of Optimization Rules and Expression Pushdown](/blocklist-control-plan.md)
       - [Optimizer Fix Controls](/optimizer-fix-controls.md)
+    - [Index Advisor](/index-advisor.md)
 - Tutorials
   - [Multiple Availability Zones in One Region Deployment](/multi-data-centers-in-one-city-deployment.md)
   - [Three Availability Zones in Two Regions Deployment](/three-data-centers-in-two-cities-deployment.md)
@@ -400,7 +398,6 @@
   - [Use Load Base Split](/configure-load-base-split.md)
   - [Use Store Limit](/configure-store-limit.md)
   - [DDL Execution Principles and Best Practices](/ddl-introduction.md)
-  - [Batch Processing](/batch-processing.md)
   - Use PD Microservices
     - [PD Microservices Overview](/pd-microservices.md)
     - [Scale PD Microservice Nodes Using TiUP](/scale-microservices-using-tiup.md)
@@ -689,7 +686,6 @@
     - [Introduction](/tidb-distributed-execution-framework.md)
     - [TiDB Global Sort](/tidb-global-sort.md)
   - [System Variables](/system-variables.md)
-  - [System Variable Reference](/system-variable-reference.md)
   - [Server Status Variables](/status-variables.md)
   - Configuration File Parameters
     - [tidb-server](/tidb-configuration-file.md)
@@ -896,7 +892,7 @@
       - [Date and Time Types](/data-type-date-and-time.md)
       - [String Types](/data-type-string.md)
       - [JSON Type](/data-type-json.md)
-      - [Vector Types](/vector-search/vector-search-data-types.md)
+      - [Vector Types](/vector-search-data-types.md)
     - Functions and Operators
       - [Overview](/functions-and-operators/functions-and-operators-overview.md)
       - [Type Conversion in Expression Evaluation](/functions-and-operators/type-conversion-in-expression-evaluation.md)
@@ -910,7 +906,7 @@
       - [Encryption and Compression Functions](/functions-and-operators/encryption-and-compression-functions.md)
       - [Locking Functions](/functions-and-operators/locking-functions.md)
       - [Information Functions](/functions-and-operators/information-functions.md)
-      - [Vector Functions and Operators](/vector-search/vector-search-functions-and-operators.md)
+      - [Vector Functions and Operators](/vector-search-functions-and-operators.md)
       - JSON Functions
         - [Overview](/functions-and-operators/json-functions.md)
         - [Functions That Create JSON](/functions-and-operators/json-functions/json-functions-create.md)
@@ -931,7 +927,7 @@
       - [TiDB Specific Functions](/functions-and-operators/tidb-functions.md)
       - [Comparisons between Functions and Syntax of Oracle and TiDB](/oracle-functions-to-tidb.md)
     - [Clustered Indexes](/clustered-indexes.md)
-    - [Vector Index](/vector-search/vector-search-index.md)
+    - [Vector Index](/vector-search-index.md)
     - [Constraints](/constraints.md)
     - [Generated Columns](/generated-columns.md)
     - [SQL Mode](/sql-mode.md)
@@ -942,7 +938,6 @@
       - [Optimistic Transactions](/optimistic-transaction.md)
       - [Pessimistic Transactions](/pessimistic-transaction.md)
       - [Non-Transactional DML Statements](/non-transactional-dml.md)
-      - [Pipelined DML](/pipelined-dml.md)
     - [Views](/views.md)
     - [Partitioning](/partitioned-table.md)
     - [Temporary Tables](/temporary-tables.md)
@@ -1082,7 +1077,6 @@
   - [TiDB Versioning](/releases/versioning.md)
   - [TiDB Installation Packages](/binary-package.md)
   - v8.5
-    - [8.5.1](/releases/release-8.5.1.md)
     - [8.5.0](/releases/release-8.5.0.md)
   - v8.4
     - [8.4.0-DMR](/releases/release-8.4.0.md)
