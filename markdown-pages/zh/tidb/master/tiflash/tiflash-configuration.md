@@ -38,9 +38,7 @@ summary: TiFlash 配置参数包括 PD 调度参数和 TiFlash 配置参数。PD
 
 #### `listen_host`
 
-- TiFlash TCP/HTTP 等辅助服务的监听 host。建议配置成 0.0.0.0，即监听本机所有 IP 地址。
-
-<!-- 示例值：`"0.0.0.0"` -->
+- TiFlash TCP/HTTP 等辅助服务的监听 host。建议配置成 `"0.0.0.0"`，即监听本机所有 IP 地址。
 
 #### `tcp_port`
 
@@ -52,14 +50,12 @@ summary: TiFlash 配置参数包括 PD 调度参数和 TiFlash 配置参数。PD
 #### `mark_cache_size`
 
 - 数据块元信息的内存 cache 大小限制，通常不需要修改。
-
-<!-- 示例值：`1073741824` -->
+- 默认值：`1073741824`
 
 #### `minmax_index_cache_size`
 
 - 数据块 min-max 索引的内存 cache 大小限制，通常不需要修改。
-
-<!-- 示例值：`1073741824` -->
+- 默认值：`1073741824`
 
 #### `delta_index_cache_size`
 
@@ -69,15 +65,17 @@ summary: TiFlash 配置参数包括 PD 调度参数和 TiFlash 配置参数。PD
 #### `path`
 
 - TiFlash 数据的存储路径。如果有多个目录，以英文逗号分隔。
-- 从 v4.0.9 版本开始，不推荐使用 `path` 及 `path_realtime_mode` 参数。推荐使用 `storage` 下的配置项代替，这样在多盘部署的场景下能更好地利用节点性能。
-- 从 v5.2.0 版本开始，如果要使用配置项 `storage.io_rate_limit`，需要同时将 TiFlash 的数据存储路径设置为 `storage.main.dir`。
-- 当 `storage` 配置项存在的情况下，`path` 和 `path_realtime_mode` 两个配置会被忽略。
+- 从 v4.0.9 版本开始，不推荐使用 [`path`](#path) 及 [`path_realtime_mode`](#path_realtime_mode) 参数。推荐使用 [`storage`](#storage-从-v409-版本开始引入) 下的配置项代替，这样在多盘部署的场景下能更好地利用节点性能。
+- 从 v5.2.0 版本开始，如果要使用配置项 [`storage.io_rate_limit`](#storageio_rate_limit-从-v520-版本开始引入)，需要同时将 TiFlash 的数据存储路径设置为 [`storage.main.dir`](#dir)。
+- 当 `storage` 配置项存在的情况下，[`path`](#path) 及 [`path_realtime_mode`](#path_realtime_mode) 两个配置会被忽略。
 
 <!-- 示例值：`"/tidb-data/tiflash-9000"` 或 `"/ssd0/tidb-data/tiflash,/ssd1/tidb-data/tiflash,/ssd2/tidb-data/tiflash"` -->
 
 #### `path_realtime_mode`
 
 - 如果设为 `true`，且 `path` 配置了多个目录，表示在第一个目录存放最新数据，在其他目录存放较旧的数据。
+- 从 v4.0.9 版本开始，不推荐使用 [`path`](#path) 及 [`path_realtime_mode`](#path_realtime_mode) 参数。推荐使用 [`storage`](#storage-从-v409-版本开始引入) 下的配置项代替，这样在多盘部署的场景下能更好地利用节点性能。
+- 当 `storage` 配置项存在的情况下，[`path`](#path) 及 [`path_realtime_mode`](#path_realtime_mode) 两个配置会被忽略。
 - 默认值：`false`
 
 #### `tmp_path`
@@ -107,31 +105,28 @@ summary: TiFlash 配置参数包括 PD 调度参数和 TiFlash 配置参数。PD
 
 ##### `dir`
 
-- 用于存储主要的数据，该目录列表中的数据占总数据的 90% 以上。
-
-<!-- 示例值：`[ "/tidb-data/tiflash-9000" ]` 或 `[ "/ssd0/tidb-data/tiflash", "/ssd1/tidb-data/tiflash" ]` -->
+- 用于存储主要的数据，例如 `[ "/tidb-data/tiflash-9000" ]` 或 `[ "/ssd0/tidb-data/tiflash", "/ssd1/tidb-data/tiflash" ]`。
+- 该目录列表中的数据占总数据的 90% 以上。
 
 ##### `capacity`
 
-- `storage.main.dir` 存储目录列表中每个目录的最大可用容量。
+- [`storage.main.dir`](#dir) 存储目录列表中每个目录的最大可用容量。例如 `[10737418240, 10737418240]`。
 - 在未定义配置项，或者列表中全为 `0` 时，会使用目录所在的硬盘容量。
 - 以 byte 为单位。目前不支持如 "10GB" 的设置。
 - `capacity` 列表的长度应当与 `dir` 列表长度保持一致。
-
-<!-- 示例值：`[10737418240, 10737418240]` -->
 
 #### storage.latest
 
 ##### `dir`
 
 - 用于存储最新的数据，大约占总数据量的 10% 以内，需要较高的 IOPS。
-- 默认情况该项可留空。在未配置或者为空列表的情况下，会使用 `storage.main.dir` 的值。
+- 默认情况该项可留空。在未配置或者为空列表的情况下，会使用 [`storage.main.dir`](#dir) 的值。
 
 <!-- 示例值：`[]` -->
 
 ##### `capacity`
 
-- `storage.latest.dir` 存储目录列表中，每个目录的最大可用容量。
+- [`storage.latest.dir`](#dir) 存储目录列表中，每个目录的最大可用容量。
 
 <!-- 示例值：`[10737418240, 10737418240]` -->
 
@@ -150,17 +145,15 @@ summary: TiFlash 配置参数包括 PD 调度参数和 TiFlash 配置参数。PD
 
 - I/O 限流功能限制下的读流量总带宽。
 - 分别用 `max_read_bytes_per_sec` 和 `max_write_bytes_per_sec` 两个配置项控制读写带宽限制，适用于一些读写带宽限制分开计算的云盘，例如 Google Cloud 上的 persistent disk。
-- 当 `max_bytes_per_sec` 配置不为 `0` 时，优先使用 `max_bytes_per_sec`。
-
-<!-- 示例值：`0` -->
+- 当 `max_bytes_per_sec` 配置不为 `0` 时，优先使用 [`max_bytes_per_sec`](#max_bytes_per_sec)。
+- 默认值：`0`
 
 ##### `max_write_bytes_per_sec`
 
 - I/O 限流功能限制下的写流量总带宽。
 - 分别用 `max_read_bytes_per_sec` 和 `max_write_bytes_per_sec` 两个配置项控制读写带宽限制，适用于一些读写带宽限制分开计算的云盘，例如 Google Cloud 上的 persistent disk。
-- 当 `max_bytes_per_sec` 配置不为 `0` 时，优先使用 `max_bytes_per_sec`。
-
-<!-- 示例值：`0` -->
+- 当 `max_bytes_per_sec` 配置不为 `0` 时，优先使用 [`max_bytes_per_sec`](#max_bytes_per_sec)。
+- 默认值：`0`
 
 ##### `foreground_write_weight`
 
@@ -196,9 +189,8 @@ summary: TiFlash 配置参数包括 PD 调度参数和 TiFlash 配置参数。PD
 
 - TiFlash 支持根据当前的 I/O 负载情况自动调整各种 I/O 类型的限流带宽，有可能会超过设置的权重。
 - `auto_tune_sec` 表示自动调整的执行间隔，单位为秒。设为 `0` 表示关闭自动调整。
+- 默认值：`5`
 - 单位：秒
-
-<!-- 示例值：`5` -->
 
 #### storage.s3
 
@@ -228,7 +220,7 @@ summary: TiFlash 配置参数包括 PD 调度参数和 TiFlash 配置参数。PD
 
 ##### `dir`
 
-- TiFlash Compute Node 的本地数据缓存目录。
+- 存算分离模式下，TiFlash Compute Node 的本地数据缓存目录。
 
 <!-- 示例值：`"/data1/tiflash/cache"` -->
 
@@ -257,19 +249,19 @@ summary: TiFlash 配置参数包括 PD 调度参数和 TiFlash 配置参数。PD
 - 当 TiFlash 缓存的 Region 行数或者大小超过 `compact_log_min_rows` 或 `compact_log_min_bytes` 任一阈值时，TiFlash 将执行来自 TiKV 的 CompactLog 命令，并进行落盘。
 - 建议保持默认值。
 
-<!-- 示例值：`40960` (40k) -->
+<!-- 示例值：`40960` -->
 
 ##### `compact_log_min_bytes` <span class="version-mark">从 v5.0 版本开始引入</span>
 
 - 当 TiFlash 缓存的 Region 行数或者大小超过 `compact_log_min_rows` 或 `compact_log_min_bytes` 任一阈值时，TiFlash 将执行来自 TiKV 的 CompactLog 命令，并进行落盘。
 - 建议保持默认值。
 
-<!-- 示例值：`33554432` (32MB) -->
+<!-- 示例值：`33554432` -->
 
 ##### `disaggregated_mode`
 
 - 该配置只针对存算分离模式生效，详细请参考 [TiFlash 存算分离架构与 S3 支持](/tiflash/tiflash-disaggregated-and-s3.md)。
-- 可选值：`tiflash_write`、`tiflash_compute`
+- 可选值：`"tiflash_write"`、`"tiflash_compute"`
 
 #### flash.proxy
 
@@ -291,7 +283,7 @@ summary: TiFlash 配置参数包括 PD 调度参数和 TiFlash 配置参数。PD
 ##### `advertise-status-addr`
 
 - 外部访问 status-addr 的地址，不填则默认使用 `status-addr` 的值。
-- 当集群部署在多个节点时，需要保证 `advertise-addr` 的地址可以从其他节点连接。 <!-- TODO: `advertise-addr` or `advertise-status-addr`)
+- 当集群部署在多个节点时，需要保证 `advertise-status-addr` 的地址可以从其他节点连接。
 
 ##### `engine-addr`
 
@@ -319,7 +311,7 @@ summary: TiFlash 配置参数包括 PD 调度参数和 TiFlash 配置参数。PD
 
 #### logger
 
-以下参数只对 `tiflash.log`、`tiflash_error.log` 生效。TiFlash Proxy 的日志参数配置需要在 `tiflash-learner.toml` 中指定。
+以下参数只对 `tiflash.log`、`tiflash_error.log` 生效。TiFlash Proxy 的日志参数配置需要在 [`tiflash-learner.toml`](#配置文件-tiflash-learnertoml) 中指定。
 
 ##### `level`
 
@@ -353,9 +345,7 @@ summary: TiFlash 配置参数包括 PD 调度参数和 TiFlash 配置参数。PD
 
 ##### `pd_addr`
 
-- PD 服务地址。多个地址以逗号隔开。
-
-<!-- 示例值：`"10.0.1.11:2379,10.0.1.12:2379,10.0.1.13:2379"` -->
+- PD 的地址。当指定多个地址时，需要用逗号 `,` 分隔。例如 `"10.0.1.11:2379,10.0.1.12:2379,10.0.1.13:2379"`。
 
 #### status
 
@@ -377,7 +367,7 @@ summary: TiFlash 配置参数包括 PD 调度参数和 TiFlash 配置参数。PD
 ##### `max_threads`
 
 - `max_threads` 指的是执行一个 MMP Task 的内部线程并发度。当值为 `0` 时，TiFlash 执行 MMP Task 的线程并发度为 CPU 核数。
-- 该参数只有在系统变量 `tidb_max_tiflash_threads` 设置为 `-1` 时才会生效。
+- 该参数只有在系统变量 [`tidb_max_tiflash_threads`](/system-variables.md#tidb_max_tiflash_threads-从-v610-版本开始引入) 设置为 `-1` 时才会生效。
 - 默认值：`0`
 
 ##### `max_memory_usage`
@@ -473,7 +463,7 @@ summary: TiFlash 配置参数包括 PD 调度参数和 TiFlash 配置参数。PD
 
 ##### `task_scheduler_active_set_soft_limit` <span class="version-mark">从 v6.4.0 版本开始引入</span>
 
--用于 MinTSO 调度器，表示一个 TiFlash 实例中最多可同时运行的查询数量。关于 MinTSO 调度器，详见 https://docs.pingcap.com/zh/tidb/dev/tiflash-mintso-scheduler
+-用于 MinTSO 调度器，表示一个 TiFlash 实例中最多可同时运行的查询数量。关于 MinTSO 调度器，详见 [TiFlash MinTSO 调度器](/tiflash/tiflash-mintso-scheduler.md)。
 - 默认值：`0`，即两倍的 vCPU 数量
 
 #### security <span class="version-mark">从 v4.0.5 版本开始引入</span>
@@ -492,7 +482,7 @@ summary: TiFlash 配置参数包括 PD 调度参数和 TiFlash 配置参数。PD
 
 ##### `ca_path`
 
-- 包含可信 SSL CA 列表的文件路径。如果你设置了该值，`cert_path` 和 `key_path` 中的路径也需要填写。
+- 包含可信 SSL CA 列表的文件路径。如果你设置了该值，[`cert_path`](#cert_path) 和 [`key_path`](#key_path) 中的路径也需要填写。
 
 <!-- 示例值：`"/path/to/ca.pem"` -->
 
@@ -512,7 +502,7 @@ summary: TiFlash 配置参数包括 PD 调度参数和 TiFlash 配置参数。PD
 
 `tiflash-learner.toml` 中的功能参数和 TiKV 基本一致，可以参照 [TiKV 配置](/tikv-configuration-file.md)来进行配置。下面只列了常用的部分参数。需要注意的是：
 
-- 相对于 TiKV，TiFlash Proxy 新增了 `raftstore.snap-handle-pool-size` 参数。
+- 相对于 TiKV，TiFlash Proxy 新增了 [`raftstore.snap-handle-pool-size`](#snap-handle-pool-size-从-v400-版本开始引入) 参数。
 - `key` 为 `engine` 的 `label` 是保留项，不可手动配置。
 
 #### log
@@ -553,7 +543,7 @@ summary: TiFlash 配置参数包括 PD 调度参数和 TiFlash 配置参数。PD
 
 <!-- 示例值：`4` -->
 
-##### `snap-handle-pool-size`  <span class="version-mark">从 v4.0.0 版本开始引入</span>
+##### `snap-handle-pool-size` <span class="version-mark">从 v4.0.0 版本开始引入</span>
 
 - 控制处理 snapshot 的线程数。设为 `0` 则关闭多线程优化。
 - TiFlash Proxy 特有参数，从 v4.0.0 版本开始引入。
@@ -561,7 +551,7 @@ summary: TiFlash 配置参数包括 PD 调度参数和 TiFlash 配置参数。PD
 
 #### security
 
-##### `redact-info-log`  <span class="version-mark">从 v5.0 版本开始引入</span>
+##### `redact-info-log` <span class="version-mark">从 v5.0 版本开始引入</span>
 
 - 控制是否开启日志脱敏。
 - 默认值为 `false`
@@ -576,7 +566,7 @@ summary: TiFlash 配置参数包括 PD 调度参数和 TiFlash 配置参数。PD
 
 - 数据文件的加密方法。选择 `"plaintext"` 以外的值则表示启用加密功能。此时必须指定主密钥。
 - 默认值：`"plaintext"`，即默认不开启加密功能。
-- 可选值：`"aes128-ctr"`、`"aes192-ctr"`、`"aes256-ctr"`、`"sm4-ctr"`（仅 v6.4.0 及之后版本）和 `"plaintext"`
+- 可选值：`"aes128-ctr"`、`"aes192-ctr"`、`"aes256-ctr"`、`"sm4-ctr"` 和 `"plaintext"`。其中，`"sm4-ctr"` 从 v6.4.0 开始支持。
 
 ##### `data-key-rotation-period`
 
