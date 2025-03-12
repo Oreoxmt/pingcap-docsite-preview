@@ -85,7 +85,7 @@ The most efficient way to identify resource-intensive SQL statements is by using
 
 #### SQL Statements page
 
-In [TiDB Dashboard](dashboard/dashboard-overview.md), navigate to the [**SQL Statements** page](/dashboard/dashboard-statement-list.md) to identify the following:
+In [TiDB Dashboard](/dashboard/dashboard-overview.md), navigate to the [**SQL Statements** page](/dashboard/dashboard-statement-list.md) to identify the following:
 
 - The SQL statement with the highest total latency, which is the statement that takes the longest time to execute across multiple executions.
 - The number of times each SQL statement has been executed, which helps identify statements with the highest execution frequency.
@@ -97,7 +97,7 @@ TiDB normalizes SQL statements into templates by replacing literals and bind var
 
 #### Slow Queries page
 
-In [TiDB Dashboard](dashboard/dashboard-overview.md), navigate to the [**Slow Queries** page](/dashboard/dashboard-slow-query.md) to find the following:
+In [TiDB Dashboard](/dashboard/dashboard-overview.md), navigate to the [**Slow Queries** page](/dashboard/dashboard-slow-query.md) to find the following:
 
 - The slowest SQL queries.
 - The SQL query that reads the most data from TiKV.
@@ -137,13 +137,13 @@ This guide provides practical advice for beginners on optimizing SQL queries in 
     - [How TiDB builds an execution plan](#how-tidb-builds-an-execution-plan)
     - [Generate and display execution plans](#generate-and-display-execution-plans)
     - [Read execution plans: first child first](#read-execution-plans-first-child-first)
-    - [Identify and understand bottlenecks in execution plans](#identify-and-understand-bottlenecks-in-execution-plans)
-- [Index strategies in TiDB](#index-strategies-in-tidb)
+    - [Identify bottlenecks in execution plans](#identify-bottlenecks-in-execution-plans)
+- [Index strategy in TiDB](#index-strategy-in-tidb)
     - [Composite index strategy guidelines](#composite-index-strategy-guidelines)
     - [The cost of indexing](#the-cost-of-indexing)
     - [SQL tuning with a covering index](#sql-tuning-with-a-covering-index)
     - [SQL tuning with a composite index involving sorting](#sql-tuning-with-a-composite-index-involving-sorting)
-    - [SQL tuning with a composite index for efficient filtering and sorting](#sql-tuning-with-a-composite-index-for-efficient-filtering-and-sorting)
+    - [SQL tuning with composite indexes for efficient filtering and sorting]#sql-tuning-with-composite-indexes-for-efficient-filtering-and-sorting
 - [When to use TiFlash](#when-to-use-tiflash)
     - [Analytical query](#analytical-query)
     - [SaaS arbitrary filtering workloads](#saas-arbitrary-filtering-workloads)
@@ -279,7 +279,7 @@ A SQL statement undergoes three main optimization stages in the TiDB optimizer:
 
 ##### 1. Pre-processing
 
-During pre-processing, TiDB determines whether the SQL statement can be executed using [`Point_Get`](/explain-indexes#point_get-and-batch_point_get) or [`Batch_Point_Get`](/explain-indexes#point_get-and-batch_point_get). These operations use a primary or unique key to read directly from TiKV through an exact key lookup. If a plan qualifies for `Point_Get` or `Batch_Point_Get`, the optimizer skips the logical transformation and cost-based optimization steps because direct key lookup is the most efficient way to access the row.
+During pre-processing, TiDB determines whether the SQL statement can be executed using [`Point_Get`](/explain-indexes.md#point_get-and-batch_point_get) or [`Batch_Point_Get`](/explain-indexes.md#point_get-and-batch_point_get). These operations use a primary or unique key to read directly from TiKV through an exact key lookup. If a plan qualifies for `Point_Get` or `Batch_Point_Get`, the optimizer skips the logical transformation and cost-based optimization steps because direct key lookup is the most efficient way to access the row.
 
 The following is an example of a `Point_Get` query:
 
