@@ -7,7 +7,7 @@ REPO_URL="https://github.com/pingcap/docs-staging"
 CLONE_DIR="temp/docs-staging"
 
 # Files to sync from the repository
-SYNC_FILES=("TOC.md" "_index.md" "_docHome.md")
+SYNC_FILES=("TOC*.md" "_index.md" "_docHome.md")
 SYNC_JSON_FILE="docs.json"
 
 # Get the current script's directory and change to it
