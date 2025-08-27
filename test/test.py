@@ -1,4 +1,5 @@
 import os
+import sys
 import time
 import tomllib
 from concurrent.futures import ThreadPoolExecutor
@@ -98,7 +99,7 @@ class TestRunner:
                 future.result()
         self.report.end_time = time.time()
 
-    def analyze(self) -> str:
+    def analyze(self) -> tuple[bool, str]:
         """
         Analyze test results and generate a report.
         """
@@ -120,11 +121,15 @@ class TestRunner:
             result += f"❌ Test {test} failed\n"
         result += f"Tests passed: {success_count} of {total_count} {duration:.2f}s\n"
         result += "-" * terminal_width
-        return result
+        if failed_count > 0:
+            return False, result
+        return True, result
 
 
 if __name__ == "__main__":
     runner = TestRunner()
     runner.run()
-    conclusion = runner.analyze()
+    is_success, conclusion = runner.analyze()
     print(conclusion)
+    if not is_success:
+        sys.exit(1)
