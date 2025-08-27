@@ -72,7 +72,7 @@ hide_commit: true
 
 <LearningPath label="监控" icon="cloud6">
 
-[使用 Prometheus 和 Grafana](https://docs.pingcap.com/zh/tidb/v7.1/tidb-monitoring-framework)
+[使用 Prometheus、Grafana 和 TiDB Dashboard](https://docs.pingcap.com/zh/tidb/v7.1/tidb-monitoring-framework)
 
 [监控 API](https://docs.pingcap.com/zh/tidb/v7.1/tidb-monitoring-api)
 
@@ -113,8 +113,6 @@ hide_commit: true
 [Backup & Restore (BR)](https://docs.pingcap.com/zh/tidb/v7.1/backup-and-restore-overview)
 
 [PingCAP Clinic](https://docs.pingcap.com/zh/tidb/v7.1/clinic-introduction)
-
-[TiUniManager](https://docs.pingcap.com/zh/tidb/v7.1/tiunimanager-overview)
 
 </LearningPath>
 

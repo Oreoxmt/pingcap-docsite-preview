@@ -17,10 +17,10 @@
     -   [TiDB SQLを学ぶ](/basic-sql-operations.md)
     -   [HTAPを学ぶ](/explore-htap.md)
     -   [サンプルデータベースのインポート](/import-example-data.md)
--   発展
+-   開発する
     -   [概要](/develop/dev-guide-overview.md)
     -   クイックスタート
-        -   [TiDB Cloud(Serverless Tier) で TiDBクラスタを構築する](/develop/dev-guide-build-cluster-in-cloud.md)
+        -   [TiDB サーバーレスクラスタを構築する](/develop/dev-guide-build-cluster-in-cloud.md)
         -   [TiDB の CRUD SQL](/develop/dev-guide-tidb-crud-sql.md)
     -   アプリケーション例
         -   Java
@@ -37,7 +37,25 @@
             -   [PyMySQL](/develop/dev-guide-sample-application-python-pymysql.md)
             -   [SQLアルケミー](/develop/dev-guide-sample-application-python-sqlalchemy.md)
             -   [ピーピー](/develop/dev-guide-sample-application-python-peewee.md)
+            -   [ジャンゴ](/develop/dev-guide-sample-application-python-django.md)
+        -   Node.js
+            -   [ノードmysql2](/develop/dev-guide-sample-application-nodejs-mysql2.md)
+            -   [mysql.js](/develop/dev-guide-sample-application-nodejs-mysqljs.md)
+            -   [プリズマ](/develop/dev-guide-sample-application-nodejs-prisma.md)
+            -   [続編](/develop/dev-guide-sample-application-nodejs-sequelize.md)
+            -   [TypeORM](/develop/dev-guide-sample-application-nodejs-typeorm.md)
+            -   [Next.js](/develop/dev-guide-sample-application-nextjs.md)
+            -   [AWSラムダ](/develop/dev-guide-sample-application-aws-lambda.md)
+        -   ルビー
+            -   [mysql2](/develop/dev-guide-sample-application-ruby-mysql2.md)
+            -   [レール](/develop/dev-guide-sample-application-ruby-rails.md)
     -   TiDB に接続する
+        -   GUIデータベースツール
+            -   [JetBrains データグリップ](/develop/dev-guide-gui-datagrip.md)
+            -   [Dビーバー](/develop/dev-guide-gui-dbeaver.md)
+            -   [VSコード](/develop/dev-guide-gui-vscode-sqltools.md)
+            -   [MySQL ワークベンチ](/develop/dev-guide-gui-mysql-workbench.md)
+            -   [ナビキャット](/develop/dev-guide-gui-navicat.md)
         -   [Driverまたは ORM を選択してください](/develop/dev-guide-choose-driver-or-orm.md)
         -   [TiDB に接続する](/develop/dev-guide-connect-to-tidb.md)
         -   [接続プールと接続パラメータ](/develop/dev-guide-connection-parameters.md)
@@ -69,7 +87,7 @@
         -   [楽観的なトランザクションと悲観的なトランザクション](/develop/dev-guide-optimistic-and-pessimistic-transaction.md)
         -   [トランザクションの制限](/develop/dev-guide-transaction-restraints.md)
         -   [トランザクションエラーの処理](/develop/dev-guide-transaction-troubleshoot.md)
-    -   最適化
+    -   最適化する
         -   [概要](/develop/dev-guide-optimize-sql-overview.md)
         -   [SQL性能チューニング](/develop/dev-guide-optimize-sql.md)
         -   [性能チューニングのベストプラクティス](/develop/dev-guide-optimize-sql-best-practices.md)
@@ -86,8 +104,6 @@
         -   ガイドライン
             -   [オブジェクトの命名規則](/develop/dev-guide-object-naming-guidelines.md)
             -   [SQL開発仕様](/develop/dev-guide-sql-development-specification.md)
-        -   レガシードキュメント
-            -   [ジャンゴの場合](/develop/dev-guide-outdated-for-django.md)
     -   クラウドネイティブ開発環境
         -   [Gitpod](/develop/dev-guide-playground-gitpod.md)
     -   サードパーティのサポート
@@ -96,14 +112,14 @@
         -   [ProxySQL 統合ガイド](/develop/dev-guide-proxysql-integration.md)
         -   [Amazon AppFlow 統合ガイド](/develop/dev-guide-aws-appflow-integration.md)
 -   デプロイ
-    -   [ソフトウェアとハードウェアの要件](/hardware-and-software-requirements.md)
+    -   [ソフトウェアとハ​​ードウェアの要件](/hardware-and-software-requirements.md)
     -   [環境コンフィグレーションチェックリスト](/check-before-deployment.md)
     -   クラスタトポロジの計画
         -   [最小限のトポロジー](/minimal-deployment-topology.md)
-        -   [TiFlashトポロジー](/tiflash-deployment-topology.md)
-        -   [TiCDC トポロジー](/ticdc-deployment-topology.md)
+        -   [TiFlashトポロジ](/tiflash-deployment-topology.md)
+        -   [TiCDC トポロジ](/ticdc-deployment-topology.md)
         -   [TiDBBinlogトポロジ](/tidb-binlog-deployment-topology.md)
-        -   [TiSpark トポロジー](/tispark-deployment-topology.md)
+        -   [TiSpark トポロジ](/tispark-deployment-topology.md)
         -   [クロス DC トポロジ](/geo-distributed-deployment-topology.md)
         -   [ハイブリッド トポロジ](/hybrid-deployment-topology.md)
     -   インストールして開始する
@@ -117,10 +133,11 @@
 -   移行する
     -   [概要](/migration-overview.md)
     -   [移行ツール](/migration-tools.md)
+    -   [インポートのベストプラクティス](/tidb-lightning/data-import-best-practices.md)
     -   移行シナリオ
         -   [Auroraからの移行](/migrate-aurora-to-tidb.md)
-        -   [小規模なデータセットの MySQL を移行する](/migrate-small-mysql-to-tidb.md)
-        -   [大規模なデータセットの MySQL を移行する](/migrate-large-mysql-to-tidb.md)
+        -   [MySQL から小規模なデータセットを移行する](/migrate-small-mysql-to-tidb.md)
+        -   [MySQL から大規模なデータセットを移行する](/migrate-large-mysql-to-tidb.md)
         -   [小規模なデータセットの MySQL シャードを移行およびマージする](/migrate-small-mysql-shards-to-tidb.md)
         -   [大規模なデータセットの MySQL シャードを移行およびマージする](/migrate-large-mysql-shards-to-tidb.md)
         -   [CSV ファイルからの移行](/migrate-from-csv-files-to-tidb.md)
@@ -133,7 +150,7 @@
         -   [より多くの列を含むダウンストリーム テーブルに移行する](/migrate-with-more-columns-downstream.md)
         -   [Binlogイベントのフィルタリング](/filter-binlog-event.md)
         -   [SQL式を使用したDMLイベントのフィルタリング](/filter-dml-event.md)
--   統合
+-   統合する
     -   [概要](/integration-overview.md)
     -   統合シナリオ
         -   [Confluent および Snowflake との統合](/ticdc/integrate-confluent-using-ticdc.md)
@@ -189,6 +206,7 @@
     -   [監視フレームワークの概要](/tidb-monitoring-framework.md)
     -   [モニタリングAPI](/tidb-monitoring-api.md)
     -   [監視サービスのデプロイ](/deploy-monitoring-services.md)
+    -   [アップグレード監視サービス](/upgrade-monitoring-services.md)
     -   [Grafana スナップショットのエクスポート](/exporting-grafana-snapshots.md)
     -   [TiDBクラスタのアラート ルール](/alert-rules.md)
     -   [TiFlashアラート ルール](/tiflash/tiflash-alert-rules.md)
@@ -216,13 +234,17 @@
         -   [Top SQLを使用して負荷の高いクエリを特定する](/dashboard/top-sql.md)
         -   [ログを使用して負荷の高いクエリを特定する](/identify-expensive-queries.md)
         -   [クラスタのオンサイト情報の保存と復元](/sql-plan-replayer.md)
+        -   [TiKV のステイル読み取りとsafe-tsを理解する](/troubleshoot-stale-read.md)
     -   [サポートリソース](/support.md)
 -   性能チューニング
     -   チューニングガイド
         -   [性能チューニングの概要](/performance-tuning-overview.md)
         -   [パフォーマンスの分析とチューニング](/performance-tuning-methods.md)
         -   [OLTP シナリオの性能チューニングの実践](/performance-tuning-practices.md)
+        -   [TiFlash のパフォーマンス分析方法](/tiflash-performance-tuning-methods.md)
+        -   [TiCDC のパフォーマンス分析方法](/ticdc-performance-tuning-methods.md)
         -   [レイテンシの内訳](/latency-breakdown.md)
+        -   [パブリック クラウドにおける TiDB のベスト プラクティス](/best-practices-on-public-cloud.md)
     -   コンフィグレーションのチューニング
         -   [オペレーティング システムのパフォーマンスを調整する](/tune-operating-system.md)
         -   [TiDB メモリを調整する](/configure-memory-usage.md)
@@ -276,6 +298,7 @@
             -   [オプティマイザーのヒント](/optimizer-hints.md)
             -   [SQL計画管理](/sql-plan-management.md)
             -   [最適化ルールと式プッシュダウンのブロックリスト](/blocklist-control-plan.md)
+            -   [オプティマイザー修正コントロール](/optimizer-fix-controls.md)
 -   チュートリアル
     -   [1 つのリージョンでの複数のアベイラビリティーゾーンの展開](/multi-data-centers-in-one-city-deployment.md)
     -   [2 つのリージョンに 3 つのアベイラビリティーゾーンを展開](/three-data-centers-in-two-cities-deployment.md)
@@ -294,7 +317,7 @@
         -   [高度な同時書き込み](/best-practices/high-concurrency-best-practices.md)
         -   [グラファナの監視](/best-practices/grafana-monitor-best-practices.md)
         -   [PD スケジューリング](/best-practices/pd-scheduling-best-practices.md)
-        -   [大規模な領域を使用した TiKV性能チューニング](/best-practices/massive-regions-best-practices.md)
+        -   [大規模領域を使用した TiKV性能チューニング](/best-practices/massive-regions-best-practices.md)
         -   [3 ノードのハイブリッド展開](/best-practices/three-nodes-hybrid-deployment.md)
         -   [3 つのデータセンター展開におけるローカル読み取り](/best-practices/three-dc-local-read.md)
         -   [UUIDを使用する](/best-practices/uuid.md)
@@ -355,7 +378,7 @@
                 -   [tiup cluster import](/tiup/tiup-component-cluster-import.md)
                 -   [tiup cluster list](/tiup/tiup-component-cluster-list.md)
                 -   [tiup クラスターのメタバックアップ](/tiup/tiup-component-cluster-meta-backup.md)
-                -   [tiup クラスター メタ リストア](/tiup/tiup-component-cluster-meta-restore.md)
+                -   [tiup クラスターのメタ復元](/tiup/tiup-component-cluster-meta-restore.md)
                 -   [tiup cluster patch](/tiup/tiup-component-cluster-patch.md)
                 -   [tiup cluster prune](/tiup/tiup-component-cluster-prune.md)
                 -   [tiup cluster reload](/tiup/tiup-component-cluster-reload.md)
@@ -487,7 +510,7 @@
             -   例
                 -   [DMを使用してデータを移行する](/dm/migrate-data-using-dm.md)
                 -   [データ移行タスクの作成](/dm/quick-start-create-task.md)
-                -   [シャード結合シナリオにおけるデータ移行のベスト プラクティス](/dm/shard-merge-best-practices.md)
+                -   [シャードマージシナリオにおけるデータ移行のベストプラクティス](/dm/shard-merge-best-practices.md)
             -   トラブルシューティング
                 -   [FAQ](/dm/dm-faq.md)
                 -   [エラーの処理](/dm/dm-error-handling.md)
@@ -518,7 +541,7 @@
         -   参照
             -   [コンフィグレーションファイル](/tidb-lightning/tidb-lightning-configuration.md)
             -   [コマンドラインフラグ](/tidb-lightning/tidb-lightning-command-line-full.md)
-            -   [モニタリング](/tidb-lightning/monitor-tidb-lightning.md)
+            -   [監視](/tidb-lightning/monitor-tidb-lightning.md)
             -   [ウェブインターフェース](/tidb-lightning/tidb-lightning-web-interface.md)
             -   [FAQ](/tidb-lightning/tidb-lightning-faq.md)
             -   [用語集](/tidb-lightning/tidb-lightning-glossary.md)
@@ -534,8 +557,10 @@
                 -   [ストレージ サービスへのデータのレプリケーション](/ticdc/ticdc-sink-to-cloud-storage.md)
             -   [変更フィードの管理](/ticdc/ticdc-manage-changefeed.md)
             -   [ログフィルター](/ticdc/ticdc-filter.md)
+            -   [DDLレプリケーション](/ticdc/ticdc-ddl.md)
             -   [双方向レプリケーション](/ticdc/ticdc-bidirectional-replication.md)
             -   [単一行データのデータ整合性検証](/ticdc/ticdc-integrity-check.md)
+            -   [TiDB アップストリーム/ダウンストリーム クラスターのデータ整合性検証](/ticdc/ticdc-upstream-downstream-check.md)
         -   監視と警告
             -   [モニタリングメトリクスの概要](/ticdc/ticdc-summary-monitor.md)
             -   [モニタリングメトリクスの詳細](/ticdc/monitor-ticdc.md)
@@ -551,7 +576,9 @@
                 -   [TiCDC CSV プロトコル](/ticdc/ticdc-csv.md)
             -   [TiCDC オープン API v2](/ticdc/ticdc-open-api-v2.md)
             -   [TiCDC オープン API v1](/ticdc/ticdc-open-api.md)
-            -   [ストレージ シンク コンシューマの開発ガイド](/ticdc/ticdc-storage-consumer-dev-guide.md)
+            -   TiCDC データ消費量
+                -   [Avro に基づく TiCDC 行データ チェックサム検証](/ticdc/ticdc-avro-checksum-verification.md)
+                -   [ストレージ シンク コンシューマの開発ガイド](/ticdc/ticdc-storage-consumer-dev-guide.md)
             -   [互換性](/ticdc/ticdc-compatibility.md)
         -   [トラブルシューティング](/ticdc/troubleshoot-ticdc.md)
         -   [よくある質問](/ticdc/ticdc-faq.md)
@@ -587,14 +614,14 @@
         -   [概要](/sync-diff-inspector/sync-diff-inspector-overview.md)
         -   [異なるスキーマ/テーブル名のテーブルのデータチェック](/sync-diff-inspector/route-diff.md)
         -   [シャーディングシナリオでのデータチェック](/sync-diff-inspector/shard-diff.md)
-        -   [TiDB アップストリーム/ダウンストリーム クラスターのデータ チェック](/sync-diff-inspector/upstream-downstream-diff.md)
         -   [DM レプリケーション シナリオでのデータ チェック](/sync-diff-inspector/dm-diff.md)
 -   参照
     -   クラスタアーキテクチャ
         -   [概要](/tidb-architecture.md)
-        -   [保管所](/tidb-storage.md)
+        -   [ストレージ](/tidb-storage.md)
         -   [コンピューティング](/tidb-computing.md)
         -   [スケジュール設定](/tidb-scheduling.md)
+        -   [TSO](/tso.md)
     -   ストレージ エンジン - TiKV
         -   [TiKVの概要](/tikv-overview.md)
         -   [RocksDB の概要](/storage-engine/rocksdb-overview.md)
@@ -725,7 +752,7 @@
             -   [`EXECUTE`](/sql-statements/sql-statement-execute.md)
             -   [`EXPLAIN ANALYZE`](/sql-statements/sql-statement-explain-analyze.md)
             -   [`EXPLAIN`](/sql-statements/sql-statement-explain.md)
-            -   [`FLASHBACK CLUSTER TO TIMESTAMP`](/sql-statements/sql-statement-flashback-to-timestamp.md)
+            -   [`FLASHBACK CLUSTER`](/sql-statements/sql-statement-flashback-cluster.md)
             -   [`FLASHBACK DATABASE`](/sql-statements/sql-statement-flashback-database.md)
             -   [`FLASHBACK TABLE`](/sql-statements/sql-statement-flashback-table.md)
             -   [`FLUSH PRIVILEGES`](/sql-statements/sql-statement-flush-privileges.md)
@@ -779,9 +806,7 @@
             -   [`SHOW ERRORS`](/sql-statements/sql-statement-show-errors.md)
             -   [`SHOW [FULL] FIELDS FROM`](/sql-statements/sql-statement-show-fields-from.md)
             -   [`SHOW GRANTS`](/sql-statements/sql-statement-show-grants.md)
-            -   [`SHOW INDEX [FROM|IN]`](/sql-statements/sql-statement-show-index.md)
             -   [`SHOW INDEXES [FROM|IN]`](/sql-statements/sql-statement-show-indexes.md)
-            -   [`SHOW KEYS [FROM|IN]`](/sql-statements/sql-statement-show-keys.md)
             -   [`SHOW MASTER STATUS`](/sql-statements/sql-statement-show-master-status.md)
             -   [`SHOW PLACEMENT`](/sql-statements/sql-statement-show-placement.md)
             -   [`SHOW PLACEMENT FOR`](/sql-statements/sql-statement-show-placement-for.md)
@@ -957,7 +982,8 @@
     -   [テレメトリー](/telemetry.md)
     -   [エラーコード](/error-codes.md)
     -   [テーブルフィルター](/table-filter.md)
-    -   [トポロジーラベルごとにレプリカをスケジュールする](/schedule-replicas-by-topology-labels.md)
+    -   [トポロジ ラベルごとにレプリカをスケジュールする](/schedule-replicas-by-topology-labels.md)
+    -   [外部ストレージ サービスの URI 形式](/external-storage-uri.md)
     -   内部コンポーネント
         -   [TiDB バックエンド タスク分散実行フレームワーク](/tidb-distributed-execution-framework.md)
 -   よくある質問
@@ -978,12 +1004,19 @@
     -   [TiDB のバージョン管理](/releases/versioning.md)
     -   [TiDB インストール パッケージ](/binary-package.md)
     -   v7.1
+        -   [7.1.3](/releases/release-7.1.3.md)
+        -   [7.1.2](/releases/release-7.1.2.md)
+        -   [7.1.1](/releases/release-7.1.1.md)
         -   [7.1.0](/releases/release-7.1.0.md)
     -   v7.0
         -   [7.0.0-DMR](/releases/release-7.0.0.md)
     -   v6.6
         -   [6.6.0-DMR](/releases/release-6.6.0.md)
     -   v6.5
+        -   [6.5.6](/releases/release-6.5.6.md)
+        -   [6.5.5](/releases/release-6.5.5.md)
+        -   [6.5.4](/releases/release-6.5.4.md)
+        -   [6.5.3](/releases/release-6.5.3.md)
         -   [6.5.2](/releases/release-6.5.2.md)
         -   [6.5.1](/releases/release-6.5.1.md)
         -   [6.5.0](/releases/release-6.5.0.md)
@@ -994,6 +1027,7 @@
     -   v6.2
         -   [6.2.0-DMR](/releases/release-6.2.0.md)
     -   v6.1
+        -   [6.1.7](/releases/release-6.1.7.md)
         -   [6.1.6](/releases/release-6.1.6.md)
         -   [6.1.5](/releases/release-6.1.5.md)
         -   [6.1.4](/releases/release-6.1.4.md)

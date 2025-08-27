@@ -4,6 +4,7 @@
 - [TiDB on Kubernetes 文档](https://docs.pingcap.com/zh/tidb-in-kubernetes/dev)
 - 关于 TiDB Operator
   - [简介](tidb-operator-overview.md)
+  - [v1.6 新特性](whats-new-in-v1.6.md)
 - [快速上手](get-started.md)
 - 部署
   - 自托管的 Kubernetes
@@ -18,9 +19,9 @@
     - [Amazon EKS](deploy-on-aws-eks.md)
     - [Google Cloud GKE](deploy-on-gcp-gke.md)
     - [Azure AKS](deploy-on-azure-aks.md)
-    - [阿里云 ACK](deploy-on-alibaba-cloud.md)
   - [在 ARM64 机器上部署 TiDB 集群](deploy-cluster-on-arm64.md)
   - [部署 TiDB HTAP 存储引擎 TiFlash](deploy-tiflash.md)
+  - [部署 TiDB 负载均衡 TiProxy](deploy-tiproxy.md)
   - 跨多个 Kubernetes 集群部署 TiDB 集群
     - [构建多个网络互通的 AWS EKS 集群](build-multi-aws-eks.md)
     - [构建多个网络互通的 GKE 集群](build-multi-gcp-gke.md)
@@ -60,18 +61,24 @@
     - [备份与恢复 CR 介绍](backup-restore-cr.md)
     - [远程存储访问授权](grant-permissions-to-remote-storage.md)
     - 使用 Amazon S3 兼容的存储
-      - [使用 BR 备份 TiDB 集群数据到兼容 S3 的存储](backup-to-aws-s3-using-br.md)
-      - [使用 BR 恢复 S3 兼容存储上的备份数据](restore-from-aws-s3-using-br.md)
-      - [使用 Dumpling 备份 TiDB 集群数据到兼容 S3 的存储](backup-to-s3.md)
-      - [使用 TiDB Lightning 恢复 S3 兼容存储上的备份数据](restore-from-s3.md)
+      - [使用 BR 备份 TiDB 集群数据到兼容 Amazon S3 的存储](backup-to-aws-s3-using-br.md)
+      - [使用 BR 恢复 Amazon S3 兼容存储上的备份数据](restore-from-aws-s3-using-br.md)
+      - [使用 Dumpling 备份 TiDB 集群数据到兼容 Amazon S3 的存储](backup-to-s3-using-job.md)
+      - [使用 TiDB Lightning 恢复 Amazon S3 兼容存储上的备份数据](restore-from-s3-using-job.md)
+      - [使用 Dumpling 备份 TiDB 集群数据到兼容 Amazon S3 的存储（已弃用）](backup-to-s3.md)
+      - [使用 TiDB Lightning 恢复 Amazon S3 兼容存储上的备份数据（已弃用）](restore-from-s3.md)
     - 使用 Google Cloud Storage
       - [使用 BR 备份 TiDB 集群数据到 GCS](backup-to-gcs-using-br.md)
       - [使用 BR 恢复 GCS 上的备份数据](restore-from-gcs-using-br.md)
-      - [使用 Dumpling 备份 TiDB 集群数据到 GCS](backup-to-gcs.md)
-      - [使用 TiDB Lightning 恢复 GCS 上的备份数据](restore-from-gcs.md)
+      - [使用 Dumpling 备份 TiDB 集群数据到 GCS](backup-to-gcs-using-job.md)
+      - [使用 TiDB Lightning 恢复 GCS 上的备份数据](restore-from-gcs-using-job.md)
+      - [使用 Dumpling 备份 TiDB 集群数据到 GCS（已弃用）](backup-to-gcs.md)
+      - [使用 TiDB Lightning 恢复 GCS 上的备份数据（已弃用）](restore-from-gcs.md)
     - 使用 Azure Blob Storage
-      - [使用 BR 备份 TiDB 集群数据到 Azblob](backup-to-azblob-using-br.md)
-      - [使用 BR 恢复 Azblob 上的备份数据](restore-from-azblob-using-br.md)
+      - [使用 BR 备份 TiDB 集群数据到 Azure Blob Storage](backup-to-azblob-using-br.md)
+      - [使用 BR 恢复 Azure Blob Storage 上的备份数据](restore-from-azblob-using-br.md)
+      - [使用 Dumpling 备份 TiDB 集群数据到 Azure Blob Storage](backup-to-blob-using-job.md)
+      - [使用 TiDB Lightning 恢复 Azure Blob Storage 的备份数据](restore-from-blob-using-job.md)
     - 使用持久卷
       - [使用 BR 备份 TiDB 集群数据到持久卷](backup-to-pv-using-br.md)
       - [使用 BR 恢复持久卷上的备份数据](restore-from-pv-using-br.md)
@@ -112,11 +119,10 @@
     - [增强型 StatefulSet 控制器](advanced-statefulset.md)
     - [准入控制器](enable-admission-webhook.md)
   - [Sysbench 性能测试](benchmark-sysbench.md)
-  - [API 参考文档](https://github.com/pingcap/tidb-operator/blob/master/docs/api-references/docs.md)
+  - [API 参考文档](<https://github.com/pingcap/tidb-operator/blob/v1.6.3/docs/api-references/docs.md>)
   - [Cheat Sheet](cheat-sheet.md)
   - [TiDB Operator RBAC 规则](tidb-operator-rbac.md)
   - 工具
-    - [tkctl](use-tkctl.md)
     - [TiDB Toolkit](tidb-toolkit.md)
   - 配置
     - [tidb-drainer chart 配置](configure-tidb-binlog-drainer.md)
@@ -124,9 +130,23 @@
   - [Kubernetes 监控与告警](monitor-kubernetes.md)
   - [PingCAP Clinic 数据采集范围说明](clinic-data-collection.md)
 - 版本发布历史
+  - v1.6
+    - [1.6.3](releases/release-1.6.3.md)
+    - [1.6.2](releases/release-1.6.2.md)
+    - [1.6.1](releases/release-1.6.1.md)
+    - [1.6 GA](releases/release-1.6.0.md)
+    - [1.6.0-beta.1](releases/release-1.6.0-beta.1.md)
   - v1.5
+    - [1.5.5](releases/release-1.5.5.md)
+    - [1.5.4](releases/release-1.5.4.md)
+    - [1.5.3](releases/release-1.5.3.md)
+    - [1.5.2](releases/release-1.5.2.md)
+    - [1.5.1](releases/release-1.5.1.md)
+    - [1.5 GA](releases/release-1.5.0.md)
     - [1.5.0-beta.1](releases/release-1.5.0-beta.1.md)
   - v1.4
+    - [1.4.7](releases/release-1.4.7.md)
+    - [1.4.6](releases/release-1.4.6.md)
     - [1.4.5](releases/release-1.4.5.md)
     - [1.4.4](releases/release-1.4.4.md)
     - [1.4.3](releases/release-1.4.3.md)

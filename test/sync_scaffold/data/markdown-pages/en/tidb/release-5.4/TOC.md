@@ -1,7 +1,6 @@
 <!-- markdownlint-disable MD007 -->
 <!-- markdownlint-disable MD041 -->
 
-- [Docs Home](https://docs.pingcap.com/)
 - About TiDB
   - [TiDB Introduction](/overview.md)
   - [TiDB 5.4 Release Notes](/releases/release-5.4.0.md)
@@ -56,6 +55,14 @@
     - [Filter Binlog Events](/filter-binlog-event.md)
     - [Filter DML Events Using SQL Expressions](/filter-dml-event.md)
 - Maintain
+  - Security
+    - [Best Practices for TiDB Security Configuration](/best-practices-for-security-configuration.md)
+    - [Enable TLS Between TiDB Clients and Servers](/enable-tls-between-clients-and-servers.md)
+    - [Enable TLS Between TiDB Components](/enable-tls-between-components.md)
+    - [Generate Self-signed Certificates](/generate-self-signed-certificates.md)
+    - [Encryption at Rest](/encryption-at-rest.md)
+    - [Enable Encryption for Disk Spill](/enable-disk-spill-encrypt.md)
+    - [Log Redaction](/log-redaction.md)
   - Upgrade
     - [Use TiUP](/upgrade-tidb-using-tiup.md)
     - [Use TiDB Operator](https://docs.pingcap.com/tidb-in-kubernetes/stable/upgrade-a-tidb-cluster)
@@ -459,13 +466,6 @@
     - [TiKV](/grafana-tikv-dashboard.md)
     - [TiFlash](/tiflash/monitor-tiflash.md)
     - [TiCDC](/ticdc/monitor-ticdc.md)
-  - Secure
-    - [Enable TLS Between TiDB Clients and Servers](/enable-tls-between-clients-and-servers.md)
-    - [Enable TLS Between TiDB Components](/enable-tls-between-components.md)
-    - [Generate Self-signed Certificates](/generate-self-signed-certificates.md)
-    - [Encryption at Rest](/encryption-at-rest.md)
-    - [Enable Encryption for Disk Spill](/enable-disk-spill-encrypt.md)
-    - [Log Redaction](/log-redaction.md)
   - Privileges
     - [Security Compatibility with MySQL](/security-compatibility-with-mysql.md)
     - [Privilege Management](/privilege-management.md)
@@ -747,7 +747,7 @@
         - [Configure SSO](/dashboard/dashboard-session-sso.md)
       - [FAQ](/dashboard/dashboard-faq.md)
   - [Telemetry](/telemetry.md)
-  - [Errors Codes](/error-codes.md)
+  - [Error Codes](/error-codes.md)
   - [Table Filter](/table-filter.md)
   - [Schedule Replicas by Topology Labels](/schedule-replicas-by-topology-labels.md)
 - FAQs

@@ -5,8 +5,8 @@ test_target = "sync_scaffold.sh"
 
 [[sync_scaffold.test_cases]]
 
-name = "Sync scaffold from a commit"
-args = "265874160aec258f9c725b0e940bc803ca558bda"
+name = "(v1.3) Sync scaffold from a commit"
+args = "1542c4e0bbc226c28e16d94d78d4b2de6c7fa666"
 directory = "test/sync_scaffold/"
 
 [sync_pr]

@@ -1,7 +1,6 @@
 <!-- markdownlint-disable MD007 -->
 <!-- markdownlint-disable MD041 -->
 
-- [Docs Home](https://docs.pingcap.com/)
 - About TiDB
   - [TiDB Introduction](/overview.md)
   - [TiDB 7.1 Release Notes](/releases/release-7.1.0.md)
@@ -36,7 +35,25 @@
       - [PyMySQL](/develop/dev-guide-sample-application-python-pymysql.md)
       - [SQLAlchemy](/develop/dev-guide-sample-application-python-sqlalchemy.md)
       - [peewee](/develop/dev-guide-sample-application-python-peewee.md)
+      - [Django](/develop/dev-guide-sample-application-python-django.md)
+    - Node.js
+      - [node-mysql2](/develop/dev-guide-sample-application-nodejs-mysql2.md)
+      - [mysql.js](/develop/dev-guide-sample-application-nodejs-mysqljs.md)
+      - [Prisma](/develop/dev-guide-sample-application-nodejs-prisma.md)
+      - [Sequelize](/develop/dev-guide-sample-application-nodejs-sequelize.md)
+      - [TypeORM](/develop/dev-guide-sample-application-nodejs-typeorm.md)
+      - [Next.js](/develop/dev-guide-sample-application-nextjs.md)
+      - [AWS Lambda](/develop/dev-guide-sample-application-aws-lambda.md)
+    - Ruby
+      - [mysql2](/develop/dev-guide-sample-application-ruby-mysql2.md)
+      - [Rails](/develop/dev-guide-sample-application-ruby-rails.md)
   - Connect to TiDB
+    - GUI Database Tools
+      - [JetBrains DataGrip](/develop/dev-guide-gui-datagrip.md)
+      - [DBeaver](/develop/dev-guide-gui-dbeaver.md)
+      - [VS Code](/develop/dev-guide-gui-vscode-sqltools.md)
+      - [MySQL Workbench](/develop/dev-guide-gui-mysql-workbench.md)
+      - [Navicat](/develop/dev-guide-gui-navicat.md)
     - [Choose Driver or ORM](/develop/dev-guide-choose-driver-or-orm.md)
     - [Connect to TiDB](/develop/dev-guide-connect-to-tidb.md)
     - [Connection Pools and Connection Parameters](/develop/dev-guide-connection-parameters.md)
@@ -85,8 +102,6 @@
     - Guidelines
       - [Object Naming Convention](/develop/dev-guide-object-naming-guidelines.md)
       - [SQL Development Specifications](/develop/dev-guide-sql-development-specification.md)
-    - Legacy Docs
-      - [For Django](/develop/dev-guide-outdated-for-django.md)
   - Cloud Native Development Environment
     - [Gitpod](/develop/dev-guide-playground-gitpod.md)
   - Third-Party Support
@@ -116,10 +131,11 @@
 - Migrate
   - [Overview](/migration-overview.md)
   - [Migration Tools](/migration-tools.md)
+  - [Import Best Practices](/tidb-lightning/data-import-best-practices.md)
   - Migration Scenarios
     - [Migrate from Aurora](/migrate-aurora-to-tidb.md)
-    - [Migrate MySQL of Small Datasets](/migrate-small-mysql-to-tidb.md)
-    - [Migrate MySQL of Large Datasets](/migrate-large-mysql-to-tidb.md)
+    - [Migrate Small Datasets from MySQL](/migrate-small-mysql-to-tidb.md)
+    - [Migrate Large Datasets from MySQL](/migrate-large-mysql-to-tidb.md)
     - [Migrate and Merge MySQL Shards of Small Datasets](/migrate-small-mysql-shards-to-tidb.md)
     - [Migrate and Merge MySQL Shards of Large Datasets](/migrate-large-mysql-shards-to-tidb.md)
     - [Migrate from CSV Files](/migrate-from-csv-files-to-tidb.md)
@@ -138,10 +154,19 @@
     - [Integrate with Confluent and Snowflake](/ticdc/integrate-confluent-using-ticdc.md)
     - [Integrate with Apache Kafka and Apache Flink](/replicate-data-to-kafka.md)
 - Maintain
+  - Security
+    - [Best Practices for TiDB Security Configuration](/best-practices-for-security-configuration.md)
+    - [Enable TLS Between TiDB Clients and Servers](/enable-tls-between-clients-and-servers.md)
+    - [Enable TLS Between TiDB Components](/enable-tls-between-components.md)
+    - [Generate Self-signed Certificates](/generate-self-signed-certificates.md)
+    - [Encryption at Rest](/encryption-at-rest.md)
+    - [Enable Encryption for Disk Spill](/enable-disk-spill-encrypt.md)
+    - [Log Redaction](/log-redaction.md)
   - Upgrade
     - [Use TiUP](/upgrade-tidb-using-tiup.md)
     - [Use TiDB Operator](https://docs.pingcap.com/tidb-in-kubernetes/stable/upgrade-a-tidb-cluster)
     - [TiDB Smooth Upgrade](/smooth-upgrade-tidb.md)
+    - [Migrate and Upgrade a TiDB Cluster](/tidb-upgrade-migration-guide.md)
     - [TiFlash v6.2.0 Upgrade Guide](/tiflash-620-upgrade-guide.md)
   - Scale
     - [Use TiUP (Recommended)](/scale-tidb-using-tiup.md)
@@ -188,6 +213,38 @@
   - [Monitoring Framework Overview](/tidb-monitoring-framework.md)
   - [Monitoring API](/tidb-monitoring-api.md)
   - [Deploy Monitoring Services](/deploy-monitoring-services.md)
+  - [Upgrade Monitoring Services](/upgrade-monitoring-services.md)
+  - TiDB Dashboard
+    - [Overview](/dashboard/dashboard-intro.md)
+    - Maintain
+      - [Deploy](/dashboard/dashboard-ops-deploy.md)
+      - [Reverse Proxy](/dashboard/dashboard-ops-reverse-proxy.md)
+      - [User Management](/dashboard/dashboard-user.md)
+      - [Secure](/dashboard/dashboard-ops-security.md)
+    - [Access](/dashboard/dashboard-access.md)
+    - [Overview Page](/dashboard/dashboard-overview.md)
+    - [Cluster Info Page](/dashboard/dashboard-cluster-info.md)
+    - [Top SQL Page](/dashboard/top-sql.md)
+    - [Key Visualizer Page](/dashboard/dashboard-key-visualizer.md)
+    - [Metrics Relation Graph](/dashboard/dashboard-metrics-relation.md)
+    - SQL Statements Analysis
+      - [SQL Statements Page](/dashboard/dashboard-statement-list.md)
+      - [SQL Details Page](/dashboard/dashboard-statement-details.md)
+    - [Slow Queries Page](/dashboard/dashboard-slow-query.md)
+    - Cluster Diagnostics
+      - [Access Cluster Diagnostics Page](/dashboard/dashboard-diagnostics-access.md)
+      - [View Diagnostics Report](/dashboard/dashboard-diagnostics-report.md)
+      - [Use Diagnostics](/dashboard/dashboard-diagnostics-usage.md)
+    - [Monitoring Page](/dashboard/dashboard-monitoring.md)
+    - [Search Logs Page](/dashboard/dashboard-log-search.md)
+    - [Resource Manager Page](/dashboard/dashboard-resource-manager.md)
+    - Instance Profiling
+      - [Manual Profiling](/dashboard/dashboard-profiling.md)
+      - [Continuous Profiling](/dashboard/continuous-profiling.md)
+    - Session Management and Configuration
+      - [Share Session](/dashboard/dashboard-session-share.md)
+      - [Configure SSO](/dashboard/dashboard-session-sso.md)
+    - [FAQ](/dashboard/dashboard-faq.md)
   - [Export Grafana Snapshots](/exporting-grafana-snapshots.md)
   - [TiDB Cluster Alert Rules](/alert-rules.md)
   - [TiFlash Alert Rules](/tiflash/tiflash-alert-rules.md)
@@ -215,12 +272,15 @@
     - [Identify Expensive Queries Using Top SQL](/dashboard/top-sql.md)
     - [Identify Expensive Queries Using Logs](/identify-expensive-queries.md)
     - [Save and Restore the On-Site Information of a Cluster](/sql-plan-replayer.md)
+    - [Understanding Stale Read and safe-ts in TiKV](/troubleshoot-stale-read.md)
   - [Support Resources](/support.md)
 - Performance Tuning
   - Tuning Guide
     - [Performance Tuning Overview](/performance-tuning-overview.md)
     - [Performance Analysis and Tuning](/performance-tuning-methods.md)
     - [Performance Tuning Practices for OLTP Scenarios](/performance-tuning-practices.md)
+    - [TiFlash Performance Analysis Methods](/tiflash-performance-tuning-methods.md)
+    - [TiCDC Performance Analysis Methods](/ticdc-performance-tuning-methods.md)
     - [Latency Breakdown](/latency-breakdown.md)
     - [TiDB Best Practices on Public Cloud](/best-practices-on-public-cloud.md)
   - Configuration Tuning
@@ -535,14 +595,18 @@
         - [Replicate Data to Storage Services](/ticdc/ticdc-sink-to-cloud-storage.md)
       - [Manage Changefeeds](/ticdc/ticdc-manage-changefeed.md)
       - [Log Filter](/ticdc/ticdc-filter.md)
+      - [DDL Replication](/ticdc/ticdc-ddl.md)
       - [Bidirectional Replication](/ticdc/ticdc-bidirectional-replication.md)
       - [Data Integrity Validation for Single-Row Data](/ticdc/ticdc-integrity-check.md)
+      - [Data Consistency Validation for TiDB Upstream/Downstream Clusters](/ticdc/ticdc-upstream-downstream-check.md)
+      - [TiCDC Behavior in Splitting UPDATE Events](/ticdc/ticdc-split-update-behavior.md)
     - Monitor and Alert
       - [Monitoring Metrics Summary](/ticdc/ticdc-summary-monitor.md)
       - [Monitoring Metrics Details](/ticdc/monitor-ticdc.md)
       - [Alert Rules](/ticdc/ticdc-alert-rules.md)
     - Reference
       - [Architecture](/ticdc/ticdc-architecture.md)
+      - [TiCDC Data Replication Capabilities](/ticdc/ticdc-data-replication-capabilities.md)
       - [TiCDC Server Configurations](/ticdc/ticdc-server-config.md)
       - [TiCDC Changefeed Configurations](/ticdc/ticdc-changefeed-config.md)
       - Output Protocols
@@ -552,7 +616,9 @@
         - [TiCDC CSV Protocol](/ticdc/ticdc-csv.md)
       - [TiCDC Open API v2](/ticdc/ticdc-open-api-v2.md)
       - [TiCDC Open API v1](/ticdc/ticdc-open-api.md)
-      - [Guide for Developing a Storage Sink Consumer](/ticdc/ticdc-storage-consumer-dev-guide.md)
+      - TiCDC Data Consumption
+        - [TiCDC Row Data Checksum Verification Based on Avro](/ticdc/ticdc-avro-checksum-verification.md)
+        - [Guide for Developing a Storage Sink Consumer](/ticdc/ticdc-storage-consumer-dev-guide.md)
       - [Compatibility](/ticdc/ticdc-compatibility.md)
     - [Troubleshoot](/ticdc/troubleshoot-ticdc.md)
     - [FAQs](/ticdc/ticdc-faq.md)
@@ -588,7 +654,6 @@
     - [Overview](/sync-diff-inspector/sync-diff-inspector-overview.md)
     - [Data Check for Tables with Different Schema/Table Names](/sync-diff-inspector/route-diff.md)
     - [Data Check in the Sharding Scenario](/sync-diff-inspector/shard-diff.md)
-    - [Data Check for TiDB Upstream/Downstream Clusters](/sync-diff-inspector/upstream-downstream-diff.md)
     - [Data Check in the DM Replication Scenario](/sync-diff-inspector/dm-diff.md)
 - Reference
   - Cluster Architecture
@@ -596,6 +661,7 @@
     - [Storage](/tidb-storage.md)
     - [Computing](/tidb-computing.md)
     - [Scheduling](/tidb-scheduling.md)
+    - [TSO](/tso.md)
   - Storage Engine - TiKV
     - [TiKV Overview](/tikv-overview.md)
     - [RocksDB Overview](/storage-engine/rocksdb-overview.md)
@@ -615,6 +681,7 @@
     - [TiFlash Late Materialization](/tiflash/tiflash-late-materialization.md)
     - [Spill to Disk](/tiflash/tiflash-spill-disk.md)
     - [Data Validation](/tiflash/tiflash-data-validation.md)
+    - [MinTSO Scheduler](/tiflash/tiflash-mintso-scheduler.md)
     - [Compatibility](/tiflash/tiflash-compatibility.md)
   - [System Variables](/system-variables.md)
   - Configuration File Parameters
@@ -641,13 +708,6 @@
     - [TiFlash](/tiflash/monitor-tiflash.md)
     - [TiCDC](/ticdc/monitor-ticdc.md)
     - [Resource Control](/grafana-resource-control-dashboard.md)
-  - Security
-    - [Enable TLS Between TiDB Clients and Servers](/enable-tls-between-clients-and-servers.md)
-    - [Enable TLS Between TiDB Components](/enable-tls-between-components.md)
-    - [Generate Self-signed Certificates](/generate-self-signed-certificates.md)
-    - [Encryption at Rest](/encryption-at-rest.md)
-    - [Enable Encryption for Disk Spill](/enable-disk-spill-encrypt.md)
-    - [Log Redaction](/log-redaction.md)
   - Privileges
     - [Security Compatibility with MySQL](/security-compatibility-with-mysql.md)
     - [Privilege Management](/privilege-management.md)
@@ -726,7 +786,7 @@
       - [`EXECUTE`](/sql-statements/sql-statement-execute.md)
       - [`EXPLAIN ANALYZE`](/sql-statements/sql-statement-explain-analyze.md)
       - [`EXPLAIN`](/sql-statements/sql-statement-explain.md)
-      - [`FLASHBACK CLUSTER TO TIMESTAMP`](/sql-statements/sql-statement-flashback-to-timestamp.md)
+      - [`FLASHBACK CLUSTER`](/sql-statements/sql-statement-flashback-cluster.md)
       - [`FLASHBACK DATABASE`](/sql-statements/sql-statement-flashback-database.md)
       - [`FLASHBACK TABLE`](/sql-statements/sql-statement-flashback-table.md)
       - [`FLUSH PRIVILEGES`](/sql-statements/sql-statement-flush-privileges.md)
@@ -780,16 +840,14 @@
       - [`SHOW ERRORS`](/sql-statements/sql-statement-show-errors.md)
       - [`SHOW [FULL] FIELDS FROM`](/sql-statements/sql-statement-show-fields-from.md)
       - [`SHOW GRANTS`](/sql-statements/sql-statement-show-grants.md)
-      - [`SHOW INDEX [FROM|IN]`](/sql-statements/sql-statement-show-index.md)
       - [`SHOW INDEXES [FROM|IN]`](/sql-statements/sql-statement-show-indexes.md)
-      - [`SHOW KEYS [FROM|IN]`](/sql-statements/sql-statement-show-keys.md)
       - [`SHOW MASTER STATUS`](/sql-statements/sql-statement-show-master-status.md)
       - [`SHOW PLACEMENT`](/sql-statements/sql-statement-show-placement.md)
       - [`SHOW PLACEMENT FOR`](/sql-statements/sql-statement-show-placement-for.md)
       - [`SHOW PLACEMENT LABELS`](/sql-statements/sql-statement-show-placement-labels.md)
       - [`SHOW PLUGINS`](/sql-statements/sql-statement-show-plugins.md)
       - [`SHOW PRIVILEGES`](/sql-statements/sql-statement-show-privileges.md)
-      - [`SHOW [FULL] PROCESSSLIST`](/sql-statements/sql-statement-show-processlist.md)
+      - [`SHOW PROCESSLIST`](/sql-statements/sql-statement-show-processlist.md)
       - [`SHOW PROFILES`](/sql-statements/sql-statement-show-profiles.md)
       - [`SHOW PUMP STATUS`](/sql-statements/sql-statement-show-pump-status.md)
       - [`SHOW SCHEMAS`](/sql-statements/sql-statement-show-schemas.md)
@@ -923,42 +981,11 @@
         - [`VIEWS`](/information-schema/information-schema-views.md)
       - [`METRICS_SCHEMA`](/metrics-schema.md)
     - [Metadata Lock](/metadata-lock.md)
-  - UI
-    - TiDB Dashboard
-      - [Overview](/dashboard/dashboard-intro.md)
-      - Maintain
-        - [Deploy](/dashboard/dashboard-ops-deploy.md)
-        - [Reverse Proxy](/dashboard/dashboard-ops-reverse-proxy.md)
-        - [User Management](/dashboard/dashboard-user.md)
-        - [Secure](/dashboard/dashboard-ops-security.md)
-      - [Access](/dashboard/dashboard-access.md)
-      - [Overview Page](/dashboard/dashboard-overview.md)
-      - [Cluster Info Page](/dashboard/dashboard-cluster-info.md)
-      - [Top SQL Page](/dashboard/top-sql.md)
-      - [Key Visualizer Page](/dashboard/dashboard-key-visualizer.md)
-      - [Metrics Relation Graph](/dashboard/dashboard-metrics-relation.md)
-      - SQL Statements Analysis
-        - [SQL Statements Page](/dashboard/dashboard-statement-list.md)
-        - [SQL Details Page](/dashboard/dashboard-statement-details.md)
-      - [Slow Queries Page](/dashboard/dashboard-slow-query.md)
-      - Cluster Diagnostics
-        - [Access Cluster Diagnostics Page](/dashboard/dashboard-diagnostics-access.md)
-        - [View Diagnostics Report](/dashboard/dashboard-diagnostics-report.md)
-        - [Use Diagnostics](/dashboard/dashboard-diagnostics-usage.md)
-      - [Monitoring Page](/dashboard/dashboard-monitoring.md)
-      - [Search Logs Page](/dashboard/dashboard-log-search.md)
-      - [Resource Manager Page](/dashboard/dashboard-resource-manager.md)
-      - Instance Profiling
-        - [Manual Profiling](/dashboard/dashboard-profiling.md)
-        - [Continuous Profiling](/dashboard/continuous-profiling.md)
-      - Session Management and Configuration
-        - [Share Session](/dashboard/dashboard-session-share.md)
-        - [Configure SSO](/dashboard/dashboard-session-sso.md)
-      - [FAQ](/dashboard/dashboard-faq.md)
   - [Telemetry](/telemetry.md)
-  - [Errors Codes](/error-codes.md)
+  - [Error Codes](/error-codes.md)
   - [Table Filter](/table-filter.md)
   - [Schedule Replicas by Topology Labels](/schedule-replicas-by-topology-labels.md)
+  - [URI Formats of External Storage Services](/external-storage-uri.md)
   - Internal Components
     - [TiDB Backend Task Distributed Execution Framework](/tidb-distributed-execution-framework.md)
 - FAQs
@@ -979,12 +1006,27 @@
   - [TiDB Versioning](/releases/versioning.md)
   - [TiDB Installation Packages](/binary-package.md)
   - v7.1
+    - [7.1.6](/releases/release-7.1.6.md)
+    - [7.1.5](/releases/release-7.1.5.md)
+    - [7.1.4](/releases/release-7.1.4.md)
+    - [7.1.3](/releases/release-7.1.3.md)
+    - [7.1.2](/releases/release-7.1.2.md)
+    - [7.1.1](/releases/release-7.1.1.md)
     - [7.1.0](/releases/release-7.1.0.md)
   - v7.0
     - [7.0.0-DMR](/releases/release-7.0.0.md)
   - v6.6
     - [6.6.0-DMR](/releases/release-6.6.0.md)
   - v6.5
+    - [6.5.12](/releases/release-6.5.12.md)
+    - [6.5.11](/releases/release-6.5.11.md)
+    - [6.5.10](/releases/release-6.5.10.md)
+    - [6.5.9](/releases/release-6.5.9.md)
+    - [6.5.8](/releases/release-6.5.8.md)
+    - [6.5.7](/releases/release-6.5.7.md)
+    - [6.5.6](/releases/release-6.5.6.md)
+    - [6.5.5](/releases/release-6.5.5.md)
+    - [6.5.4](/releases/release-6.5.4.md)
     - [6.5.3](/releases/release-6.5.3.md)
     - [6.5.2](/releases/release-6.5.2.md)
     - [6.5.1](/releases/release-6.5.1.md)
@@ -996,6 +1038,7 @@
   - v6.2
     - [6.2.0-DMR](/releases/release-6.2.0.md)
   - v6.1
+    - [6.1.7](/releases/release-6.1.7.md)
     - [6.1.6](/releases/release-6.1.6.md)
     - [6.1.5](/releases/release-6.1.5.md)
     - [6.1.4](/releases/release-6.1.4.md)

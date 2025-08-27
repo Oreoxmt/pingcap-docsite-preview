@@ -1,7 +1,6 @@
 <!-- markdownlint-disable MD007 -->
 <!-- markdownlint-disable MD041 -->
 
-- [文档中心](https://docs.pingcap.com/zh)
 - 关于 TiDB
   - [TiDB 简介](/overview.md)
   - [TiDB 6.1 Release Notes](/releases/release-6.1.0.md)
@@ -83,7 +82,7 @@
   - 第三方工具支持
     - [TiDB 支持的第三方工具](/develop/dev-guide-third-party-support.md)
     - [已知的第三方工具兼容问题](/develop/dev-guide-third-party-tools-compatibility.md)
-    - [TiDB 与 ProxySQL 集成](/develop/dev-guide-proxysql-integration.md)
+    - [ProxySQL 集成指南](/develop/dev-guide-proxysql-integration.md)
 - 部署标准集群
   - [软硬件环境需求](/hardware-and-software-requirements.md)
   - [环境与系统配置检查](/check-before-deployment.md)
@@ -127,6 +126,14 @@
     - [与 Confluent Cloud 和 Snowflake 进行数据集成](/ticdc/integrate-confluent-using-ticdc.md)
     - [与 Apache Kafka 和 Apache Flink 进行数据集成](/replicate-data-to-kafka.md)
 - 运维操作
+  - 安全加固
+    - [TiDB 安全配置最佳实践](/best-practices-for-security-configuration.md)
+    - [为 TiDB 客户端服务端间通信开启加密传输](/enable-tls-between-clients-and-servers.md)
+    - [为 TiDB 组件间通信开启加密传输](/enable-tls-between-components.md)
+    - [生成自签名证书](/generate-self-signed-certificates.md)
+    - [静态加密](/encryption-at-rest.md)
+    - [为 TiDB 落盘文件开启加密](/enable-disk-spill-encrypt.md)
+    - [日志脱敏](/log-redaction.md)
   - 升级 TiDB 版本
     - [使用 TiUP 升级](/upgrade-tidb-using-tiup.md)
     - [使用 TiDB Operator](https://docs.pingcap.com/zh/tidb-in-kubernetes/stable/upgrade-a-tidb-cluster)
@@ -148,6 +155,7 @@
   - [监控框架概述](/tidb-monitoring-framework.md)
   - [监控 API](/tidb-monitoring-api.md)
   - [手动部署监控](/deploy-monitoring-services.md)
+  - [升级监控组件](/upgrade-monitoring-services.md)
   - [将 Grafana 监控数据导出成快照](/exporting-grafana-snapshots.md)
   - [TiDB 集群报警规则与处理方法](/alert-rules.md)
   - [TiFlash 报警规则与处理方法](/tiflash/tiflash-alert-rules.md)
@@ -164,7 +172,7 @@
   - [TiDB 集群常见问题](/troubleshoot-tidb-cluster.md)
   - [TiDB 集群问题导图](/tidb-troubleshooting-map.md)
   - [热点问题处理](/troubleshoot-hot-spot-issues.md)
-  - [CPU 占用过多导致读写延迟增加](/troubleshoot-cpu-issues.md)
+  - [读写延迟增加](/troubleshoot-cpu-issues.md)
   - [写冲突与写性能下降](/troubleshoot-write-conflicts.md)
   - [磁盘 I/O 过高](/troubleshoot-high-disk-io.md)
   - [锁冲突与 TTL 超时](/troubleshoot-lock-conflicts.md)
@@ -408,9 +416,10 @@
         - [DM-worker 说明](/dm/dm-worker-intro.md)
         - [安全模式](/dm/dm-safe-mode.md)
         - [Relay Log](/dm/relay-log.md)
-        - [DDL 特殊处理说明](/dm/dm-ddl-compatible.md)
       - 运行机制
         - [DML 同步机制](/dm/dm-dml-replication-logic.md)
+        - [高可用机制](/dm/dm-high-availability.md)
+        - [DDL 特殊处理说明](/dm/dm-ddl-compatible.md)
       - 命令行
         - [DM-master & DM-worker](/dm/dm-command-line-flags.md)
       - 配置文件
@@ -580,6 +589,7 @@
     - [使用 MPP 模式](/tiflash/use-tiflash-mpp-mode.md)
     - [TiFlash 支持的计算下推](/tiflash/tiflash-supported-pushdown-calculations.md)
     - [TiFlash 数据校验](/tiflash/tiflash-data-validation.md)
+    - [TiFlash MinTSO 调度器](/tiflash/tiflash-mintso-scheduler.md)
     - [TiFlash 兼容性说明](/tiflash/tiflash-compatibility.md)
   - [系统变量](/system-variables.md)
   - 配置文件参数
@@ -606,13 +616,6 @@
     - [TiKV 面板](/grafana-tikv-dashboard.md)
     - [TiFlash 监控指标](/tiflash/monitor-tiflash.md)
     - [TiCDC 监控指标](/ticdc/monitor-ticdc.md)
-  - 安全加固
-    - [为 TiDB 客户端服务端间通信开启加密传输](/enable-tls-between-clients-and-servers.md)
-    - [为 TiDB 组件间通信开启加密传输](/enable-tls-between-components.md)
-    - [生成自签名证书](/generate-self-signed-certificates.md)
-    - [静态加密](/encryption-at-rest.md)
-    - [为 TiDB 落盘文件开启加密](/enable-disk-spill-encrypt.md)
-    - [日志脱敏](/log-redaction.md)
   - 权限
     - [与 MySQL 安全特性差异](/security-compatibility-with-mysql.md)
     - [权限管理](/privilege-management.md)
@@ -743,7 +746,7 @@
       - [`SHOW PLACEMENT LABELS`](/sql-statements/sql-statement-show-placement-labels.md)
       - [`SHOW PLUGINS`](/sql-statements/sql-statement-show-plugins.md)
       - [`SHOW PRIVILEGES`](/sql-statements/sql-statement-show-privileges.md)
-      - [`SHOW [FULL] PROCESSSLIST`](/sql-statements/sql-statement-show-processlist.md)
+      - [`SHOW PROCESSLIST`](/sql-statements/sql-statement-show-processlist.md)
       - [`SHOW PROFILES`](/sql-statements/sql-statement-show-profiles.md)
       - [`SHOW PUMP STATUS`](/sql-statements/sql-statement-show-pump-status.md)
       - [`SHOW SCHEMAS`](/sql-statements/sql-statement-show-schemas.md)
@@ -810,7 +813,7 @@
     - [分区表](/partitioned-table.md)
     - [临时表](/temporary-tables.md)
     - [缓存表](/cached-tables.md)
-    - 字符集和排序
+    - 字符集和排序规则
       - [概述](/character-set-and-collation.md)
       - [GBK](/character-set-gbk.md)
     - [Placement Rules in SQL](/placement-rules-in-sql.md)
@@ -916,6 +919,7 @@
   - [TiDB 版本规则](/releases/versioning.md)
   - [TiDB 离线包](/binary-package.md)
   - v6.1
+    - [6.1.7](/releases/release-6.1.7.md)
     - [6.1.6](/releases/release-6.1.6.md)
     - [6.1.5](/releases/release-6.1.5.md)
     - [6.1.4](/releases/release-6.1.4.md)

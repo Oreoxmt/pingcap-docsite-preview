@@ -1,7 +1,6 @@
 <!-- markdownlint-disable MD007 -->
 <!-- markdownlint-disable MD041 -->
 
-- [文档中心](https://docs.pingcap.com/zh)
 - 关于 TiDB
   - [TiDB 简介](/overview.md)
   - [TiDB 6.5 Release Notes](/releases/release-6.5.0.md)
@@ -21,12 +20,36 @@
     - [使用 TiDB Serverless 构建 TiDB 集群](/develop/dev-guide-build-cluster-in-cloud.md)
     - [使用 TiDB 的增删改查 SQL](/develop/dev-guide-tidb-crud-sql.md)
   - 示例程序
-    - [Golang](/develop/dev-guide-sample-application-golang.md)
-    - [Java (Spring Boot)](/develop/dev-guide-sample-application-spring-boot.md)
-    - [Java](/develop/dev-guide-sample-application-java.md)
-    - [Python (Django)](/develop/dev-guide-sample-application-django.md)
-    - [Python](/develop/dev-guide-sample-application-python.md)
+    - Java
+      - [JDBC](/develop/dev-guide-sample-application-java-jdbc.md)
+      - [MyBatis](/develop/dev-guide-sample-application-java-mybatis.md)
+      - [Hibernate](/develop/dev-guide-sample-application-java-hibernate.md)
+      - [Spring Boot](/develop/dev-guide-sample-application-java-spring-boot.md)
+    - Go
+      - [Go-MySQL-Driver](/develop/dev-guide-sample-application-golang-sql-driver.md)
+      - [GORM](/develop/dev-guide-sample-application-golang-gorm.md)
+    - Python
+      - [mysqlclient](/develop/dev-guide-sample-application-python-mysqlclient.md)
+      - [MySQL Connector/Python](/develop/dev-guide-sample-application-python-mysql-connector.md)
+      - [PyMySQL](/develop/dev-guide-sample-application-python-pymysql.md)
+      - [SQLAlchemy](/develop/dev-guide-sample-application-python-sqlalchemy.md)
+      - [peewee](/develop/dev-guide-sample-application-python-peewee.md)
+      - [Django](/develop/dev-guide-sample-application-python-django.md)
+    - Node.js
+      - [node-mysql2](/develop/dev-guide-sample-application-nodejs-mysql2.md)
+      - [mysql.js](/develop/dev-guide-sample-application-nodejs-mysqljs.md)
+      - [Prisma](/develop/dev-guide-sample-application-nodejs-prisma.md)
+      - [Sequelize](/develop/dev-guide-sample-application-nodejs-sequelize.md)
+      - [TypeORM](/develop/dev-guide-sample-application-nodejs-typeorm.md)
+      - [Next.js](/develop/dev-guide-sample-application-nextjs.md)
+      - [AWS Lambda](/develop/dev-guide-sample-application-aws-lambda.md)
+    - Ruby
+      - [mysql2](/develop/dev-guide-sample-application-ruby-mysql2.md)
+      - [Rails](/develop/dev-guide-sample-application-ruby-rails.md)
   - 连接到 TiDB
+    - GUI 数据库工具
+      - [MySQL Workbench](/develop/dev-guide-gui-mysql-workbench.md)
+      - [Navicat](/develop/dev-guide-gui-navicat.md)
     - [选择驱动或 ORM 框架](/develop/dev-guide-choose-driver-or-orm.md)
     - [连接到 TiDB](/develop/dev-guide-connect-to-tidb.md)
     - [连接池与连接参数](/develop/dev-guide-connection-parameters.md)
@@ -53,7 +76,6 @@
       - [Follower Read](/develop/dev-guide-use-follower-read.md)
       - [Stale Read](/develop/dev-guide-use-stale-read.md)
     - [HTAP 查询](/develop/dev-guide-hybrid-oltp-and-olap-queries.md)
-    - [FastScan](/develop/dev-guide-use-fastscan.md)
   - 事务
     - [概览](/develop/dev-guide-transaction-overview.md)
     - [乐观事务和悲观事务](/develop/dev-guide-optimistic-and-pessimistic-transaction.md)
@@ -81,7 +103,7 @@
   - 第三方工具支持
     - [TiDB 支持的第三方工具](/develop/dev-guide-third-party-support.md)
     - [已知的第三方工具兼容问题](/develop/dev-guide-third-party-tools-compatibility.md)
-    - [TiDB 与 ProxySQL 集成](/develop/dev-guide-proxysql-integration.md)
+    - [ProxySQL 集成指南](/develop/dev-guide-proxysql-integration.md)
 - 部署标准集群
   - [软硬件环境需求](/hardware-and-software-requirements.md)
   - [环境与系统配置检查](/check-before-deployment.md)
@@ -126,9 +148,18 @@
     - [与 Confluent Cloud 和 Snowflake 进行数据集成](/ticdc/integrate-confluent-using-ticdc.md)
     - [与 Apache Kafka 和 Apache Flink 进行数据集成](/replicate-data-to-kafka.md)
 - 运维操作
+  - 安全加固
+    - [TiDB 安全配置最佳实践](/best-practices-for-security-configuration.md)
+    - [为 TiDB 客户端服务端间通信开启加密传输](/enable-tls-between-clients-and-servers.md)
+    - [为 TiDB 组件间通信开启加密传输](/enable-tls-between-components.md)
+    - [生成自签名证书](/generate-self-signed-certificates.md)
+    - [静态加密](/encryption-at-rest.md)
+    - [为 TiDB 落盘文件开启加密](/enable-disk-spill-encrypt.md)
+    - [日志脱敏](/log-redaction.md)
   - 升级 TiDB 版本
     - [使用 TiUP 升级](/upgrade-tidb-using-tiup.md)
     - [使用 TiDB Operator](https://docs.pingcap.com/zh/tidb-in-kubernetes/stable/upgrade-a-tidb-cluster)
+    - [迁移升级 TiDB](/tidb-upgrade-migration-guide.md)
     - [TiFlash v6.2 升级帮助](/tiflash-620-upgrade-guide.md)
   - 扩缩容
     - [使用 TiUP（推荐）](/scale-tidb-using-tiup.md)
@@ -173,6 +204,7 @@
   - [监控框架概述](/tidb-monitoring-framework.md)
   - [监控 API](/tidb-monitoring-api.md)
   - [手动部署监控](/deploy-monitoring-services.md)
+  - [升级监控组件](/upgrade-monitoring-services.md)
   - [将 Grafana 监控数据导出成快照](/exporting-grafana-snapshots.md)
   - [TiDB 集群报警规则与处理方法](/alert-rules.md)
   - [TiFlash 报警规则与处理方法](/tiflash/tiflash-alert-rules.md)
@@ -189,7 +221,7 @@
       - [分析慢查询](/analyze-slow-queries.md)
     - [TiDB OOM 故障排查](/troubleshoot-tidb-oom.md)
     - [热点问题处理](/troubleshoot-hot-spot-issues.md)
-    - [CPU 占用过多导致读写延迟增加](/troubleshoot-cpu-issues.md)
+    - [读写延迟增加](/troubleshoot-cpu-issues.md)
     - [写冲突与写性能下降](/troubleshoot-write-conflicts.md)
     - [磁盘 I/O 过高](/troubleshoot-high-disk-io.md)
     - [锁冲突与 TTL 超时](/troubleshoot-lock-conflicts.md)
@@ -200,6 +232,7 @@
     - [使用 Top SQL 定位系统资源消耗过多的查询](/dashboard/top-sql.md)
     - [通过日志定位消耗系统资源多的查询](/identify-expensive-queries.md)
     - [保存和恢复集群现场信息](/sql-plan-replayer.md)
+    - [理解 TiKV 中的 Stale Read 和 safe-ts](/troubleshoot-stale-read.md)
   - [获取支持](/support.md)
 - 性能调优
   - 优化手册
@@ -209,6 +242,7 @@
     - [TiFlash 性能分析方法](/tiflash-performance-tuning-methods.md)
     - [TiCDC 性能分析方法](/ticdc-performance-tuning-methods.md)
     - [延迟的拆解分析](/latency-breakdown.md)
+    - [在公有云上部署 TiDB 的最佳实践](/best-practices-on-public-cloud.md)
   - 配置调优
       - [操作系统性能参数调优](/tune-operating-system.md)
       - [TiDB 内存调优](/configure-memory-usage.md)
@@ -259,6 +293,7 @@
       - [Optimizer Hints](/optimizer-hints.md)
       - [执行计划管理](/sql-plan-management.md)
       - [优化规则及表达式下推的黑名单](/blocklist-control-plan.md)
+      - [Optimizer Fix Controls](/optimizer-fix-controls.md)
 - 教程
   - [单区域多 AZ 部署](/multi-data-centers-in-one-city-deployment.md)
   - [双区域多 AZ 部署](/three-data-centers-in-two-cities-deployment.md)
@@ -445,9 +480,10 @@
         - [DM-worker 说明](/dm/dm-worker-intro.md)
         - [安全模式](/dm/dm-safe-mode.md)
         - [Relay Log](/dm/relay-log.md)
-        - [DDL 特殊处理说明](/dm/dm-ddl-compatible.md)
       - 运行机制
         - [DML 同步机制](/dm/dm-dml-replication-logic.md)
+        - [高可用机制](/dm/dm-high-availability.md)
+        - [DDL 特殊处理说明](/dm/dm-ddl-compatible.md)
       - 命令行
         - [DM-master & DM-worker](/dm/dm-command-line-flags.md)
       - 配置文件
@@ -523,12 +559,16 @@
         - [同步数据到存储服务](/ticdc/ticdc-sink-to-cloud-storage.md)
       - [管理 Changefeed](/ticdc/ticdc-manage-changefeed.md)
       - [日志过滤器](/ticdc/ticdc-filter.md)
+      - [DDL 同步](/ticdc/ticdc-ddl.md)
       - [双向复制](/ticdc/ticdc-bidirectional-replication.md)
+      - [主从集群一致性读和数据校验](/ticdc/ticdc-upstream-downstream-check.md)
+      - [拆分 UPDATE 事件行为说明](/ticdc/ticdc-split-update-behavior.md)
     - 监控告警
       - [监控指标](/ticdc/monitor-ticdc.md)
       - [报警规则](/ticdc/ticdc-alert-rules.md)
     - 参考指南
       - [架构设计与原理](/ticdc/ticdc-architecture.md)
+      - [TiCDC 数据同步能力详解](/ticdc/ticdc-data-replication-capabilities.md)
       - [TiCDC Server 配置参数](/ticdc/ticdc-server-config.md)
       - [TiCDC Changefeed 配置参数](/ticdc/ticdc-changefeed-config.md)
       - 输出数据协议
@@ -576,31 +616,14 @@
     - [概述](/sync-diff-inspector/sync-diff-inspector-overview.md)
     - [不同库名或表名的数据校验](/sync-diff-inspector/route-diff.md)
     - [分库分表场景下的数据校验](/sync-diff-inspector/shard-diff.md)
-    - [TiDB 主从集群的数据校验](/sync-diff-inspector/upstream-downstream-diff.md)
     - [基于 DM 同步场景下的数据校验](/sync-diff-inspector/dm-diff.md)
-  - TiUniManager
-    - [概述](/tiunimanager/tiunimanager-overview.md)
-    - [安装和运维](/tiunimanager/tiunimanager-install-and-maintain.md)
-    - [快速操作](/tiunimanager/tiunimanager-quick-start.md)
-    - 操作指南
-      - [登录与初始化](/tiunimanager/tiunimanager-login-and-initialize.md)
-      - [管理集群资源](/tiunimanager/tiunimanager-manage-host-resources.md)
-      - [管理集群](/tiunimanager/tiunimanager-manage-clusters.md)
-      - [导入与导出数据](/tiunimanager/tiunimanager-import-and-export-data.md)
-      - [管理任务](/tiunimanager/tiunimanager-manage-tasks.md)
-      - [管理系统](/tiunimanager/tiunimanager-manage-system.md)
-    - [FAQ](/tiunimanager/tiunimanager-faq.md)
-    - 发布版本历史
-      - [发布版本汇总](/tiunimanager/tiunimanager-release-notes.md)
-      - [v1.0.2](/tiunimanager/tiunimanager-release-1.0.2.md)
-      - [v1.0.1](/tiunimanager/tiunimanager-release-1.0.1.md)
-      - [v1.0.0](/tiunimanager/tiunimanager-release-1.0.0.md)
 - 参考指南
   - 架构
     - [概述](/tidb-architecture.md)
     - [存储](/tidb-storage.md)
     - [计算](/tidb-computing.md)
     - [调度](/tidb-scheduling.md)
+    - [TSO](/tso.md)
   - 存储引擎 TiKV
     - [TiKV 简介](/tikv-overview.md)
     - [RocksDB 简介](/storage-engine/rocksdb-overview.md)
@@ -612,9 +635,11 @@
     - [使用 TiDB 读取 TiFlash](/tiflash/use-tidb-to-read-tiflash.md)
     - [使用 TiSpark 读取 TiFlash](/tiflash/use-tispark-to-read-tiflash.md)
     - [使用 MPP 模式](/tiflash/use-tiflash-mpp-mode.md)
+    - [使用 FastScan 功能](/tiflash/use-fastscan.md)
     - [TiFlash 支持的计算下推](/tiflash/tiflash-supported-pushdown-calculations.md)
     - [TiFlash 查询结果物化](/tiflash/tiflash-results-materialization.md)
     - [TiFlash 数据校验](/tiflash/tiflash-data-validation.md)
+    - [TiFlash MinTSO 调度器](/tiflash/tiflash-mintso-scheduler.md)
     - [TiFlash 兼容性说明](/tiflash/tiflash-compatibility.md)
   - [系统变量](/system-variables.md)
   - 配置文件参数
@@ -641,13 +666,6 @@
     - [TiKV 面板](/grafana-tikv-dashboard.md)
     - [TiFlash 监控指标](/tiflash/monitor-tiflash.md)
     - [TiCDC 监控指标](/ticdc/monitor-ticdc.md)
-  - 安全加固
-    - [为 TiDB 客户端服务端间通信开启加密传输](/enable-tls-between-clients-and-servers.md)
-    - [为 TiDB 组件间通信开启加密传输](/enable-tls-between-components.md)
-    - [生成自签名证书](/generate-self-signed-certificates.md)
-    - [静态加密](/encryption-at-rest.md)
-    - [为 TiDB 落盘文件开启加密](/enable-disk-spill-encrypt.md)
-    - [日志脱敏](/log-redaction.md)
   - 权限
     - [与 MySQL 安全特性差异](/security-compatibility-with-mysql.md)
     - [权限管理](/privilege-management.md)
@@ -722,7 +740,7 @@
       - [`EXECUTE`](/sql-statements/sql-statement-execute.md)
       - [`EXPLAIN ANALYZE`](/sql-statements/sql-statement-explain-analyze.md)
       - [`EXPLAIN`](/sql-statements/sql-statement-explain.md)
-      - [`FLASHBACK CLUSTER TO TIMESTAMP`](/sql-statements/sql-statement-flashback-to-timestamp.md)
+      - [`FLASHBACK CLUSTER`](/sql-statements/sql-statement-flashback-cluster.md)
       - [`FLASHBACK DATABASE`](/sql-statements/sql-statement-flashback-database.md)
       - [`FLASHBACK TABLE`](/sql-statements/sql-statement-flashback-table.md)
       - [`FLUSH PRIVILEGES`](/sql-statements/sql-statement-flush-privileges.md)
@@ -783,7 +801,7 @@
       - [`SHOW PLACEMENT LABELS`](/sql-statements/sql-statement-show-placement-labels.md)
       - [`SHOW PLUGINS`](/sql-statements/sql-statement-show-plugins.md)
       - [`SHOW PRIVILEGES`](/sql-statements/sql-statement-show-privileges.md)
-      - [`SHOW [FULL] PROCESSSLIST`](/sql-statements/sql-statement-show-processlist.md)
+      - [`SHOW PROCESSLIST`](/sql-statements/sql-statement-show-processlist.md)
       - [`SHOW PROFILES`](/sql-statements/sql-statement-show-profiles.md)
       - [`SHOW PUMP STATUS`](/sql-statements/sql-statement-show-pump-status.md)
       - [`SHOW SCHEMAS`](/sql-statements/sql-statement-show-schemas.md)
@@ -852,7 +870,7 @@
     - [分区表](/partitioned-table.md)
     - [临时表](/temporary-tables.md)
     - [缓存表](/cached-tables.md)
-    - 字符集和排序
+    - 字符集和排序规则
       - [概述](/character-set-and-collation.md)
       - [GBK](/character-set-gbk.md)
     - [Placement Rules in SQL](/placement-rules-in-sql.md)
@@ -967,6 +985,15 @@
   - [TiDB 版本规则](/releases/versioning.md)
   - [TiDB 离线包](/binary-package.md)
   - v6.5
+    - [6.5.12](/releases/release-6.5.12.md)
+    - [6.5.11](/releases/release-6.5.11.md)
+    - [6.5.10](/releases/release-6.5.10.md)
+    - [6.5.9](/releases/release-6.5.9.md)
+    - [6.5.8](/releases/release-6.5.8.md)
+    - [6.5.7](/releases/release-6.5.7.md)
+    - [6.5.6](/releases/release-6.5.6.md)
+    - [6.5.5](/releases/release-6.5.5.md)
+    - [6.5.4](/releases/release-6.5.4.md)
     - [6.5.3](/releases/release-6.5.3.md)
     - [6.5.2](/releases/release-6.5.2.md)
     - [6.5.1](/releases/release-6.5.1.md)
@@ -978,6 +1005,7 @@
   - v6.2
     - [6.2.0-DMR](/releases/release-6.2.0.md)
   - v6.1
+    - [6.1.7](/releases/release-6.1.7.md)
     - [6.1.6](/releases/release-6.1.6.md)
     - [6.1.5](/releases/release-6.1.5.md)
     - [6.1.4](/releases/release-6.1.4.md)
