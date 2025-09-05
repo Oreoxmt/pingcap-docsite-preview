@@ -118,10 +118,24 @@ perform_sync_task() {
     SRC_DIR="$REPO_DIR/$(echo "$TASK" | cut -d',' -f1)"
     DEST_DIR="markdown-pages/$(echo "$TASK" | cut -d',' -f2)/$DIR_SUFFIX"
     mkdir -p "$DEST_DIR"
+
+    # Ensure variables.json is always available for processing.
+    if [[ -f "$SRC_DIR/variables.json" ]]; then
+      rsync -av "$SRC_DIR/variables.json" "$DEST_DIR"
+    fi
+
     # Only sync modified or added files.
     git -C "$SRC_DIR" diff --merge-base --name-only --diff-filter=AMR origin/"$BASE_BRANCH" --relative | tee /dev/fd/2 |
       rsync -av --files-from=- "$SRC_DIR" "$DEST_DIR"
 
+    # Get the current commit SHA
+    CURRENT_COMMIT=$(git -C "$REPO_DIR" rev-parse HEAD)
+    commit_changes "Sync files for PR https://github.com/$REPO_OWNER/$REPO_NAME/pull/$PR_NUMBER (commit: https://github.com/$REPO_OWNER/$REPO_NAME/pull/$PR_NUMBER/commits/$CURRENT_COMMIT)"
+
+    # Replace variables in Markdown files with values from variables.json.
+    if [[ -f "$DEST_DIR/variables.json" ]]; then
+      ./scripts/replace_variables.py "$DEST_DIR" "$DEST_DIR/variables.json"
+    fi
     # Remove copyable strings.
     (cd "$DEST_DIR" && remove_copyable)
 
@@ -129,17 +143,20 @@ perform_sync_task() {
       process_cloud_toc "$DEST_DIR"
     fi
 
+    commit_changes "Post-process docs (variables replaced, copyable removed)"
+
   done
 
 }
 
 commit_changes() {
-  # Exit if TEST is set and not empty.
-  test -n "$TEST" && echo "Test mode, exiting..." && exit 0
+  mess=$1
+  # Return early if TEST is set and not empty.
+  test -n "$TEST" && echo "Test mode, returning..." && return 0
   # Handle untracked files.
   git add .
   # Commit changes, if any.
-  git commit -m "$COMMIT_MESS" || echo "No changes to commit"
+  git commit -m "$mess" || echo "No changes to commit"
 }
 
 # Select appropriate versions of find and sed depending on the operating system.
@@ -167,8 +184,4 @@ get_destination_suffix
 clone_repo
 perform_sync_task
 
-# Get the current commit SHA
-CURRENT_COMMIT=$(git -C "$REPO_DIR" rev-parse HEAD)
-COMMIT_MESS="Preview PR https://github.com/$REPO_OWNER/$REPO_NAME/pull/$PR_NUMBER and this preview is triggered from commit https://github.com/$REPO_OWNER/$REPO_NAME/pull/$PR_NUMBER/commits/$CURRENT_COMMIT"
-
-commit_changes
+commit_changes "Finalize preview sync"

@@ -25,12 +25,13 @@ rsync -av markdown-pages/en/tidb-in-kubernetes/master/ markdown-pages/en/tidb-in
 rsync -av markdown-pages/zh/tidb-in-kubernetes/master/ markdown-pages/zh/tidb-in-kubernetes/"$RELEASE_DIR"/
 
 commit_changes() {
-  # Exit if TEST is set and not empty.
-  test -n "$TEST" && echo "Test mode, exiting..." && exit 0
+  mess=$1
+  # Return early if TEST is set and not empty.
+  test -n "$TEST" && echo "Test mode, returning..." && return 0
   # Handle untracked files.
   git add .
   # Commit changes, if any.
-  git commit -m "Update the {release-x.y} directory" || echo "No changes to commit"
+  git commit -m "$mess" || echo "No changes to commit"
 }
 
-commit_changes
+commit_changes "Update the {release-x.y} directory"
