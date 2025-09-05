@@ -61,7 +61,7 @@ To deploy the cluster, run the `tiup cluster deploy` command. The usage of the c
 tiup cluster deploy <cluster-name> <version> <topology.yaml> [flags]
 ```
 
-This command requires you to provide the cluster name, the TiDB cluster version (such as `v{{{ .tidb-version }}}`), and a topology file of the cluster.
+This command requires you to provide the cluster name, the TiDB cluster version (such as `v7.5.6`), and a topology file of the cluster.
 
 To write a topology file, refer to [the example](https://github.com/pingcap/tiup/blob/master/embed/examples/cluster/topology.example.yaml). The following file is an example of the simplest topology:
 
@@ -118,12 +118,10 @@ tidb_servers:
 ...
 ```
 
-Save the file as `/tmp/topology.yaml`. If you want to use TiDB v{{{ .tidb-version }}} and your cluster name is `prod-cluster`, run the following command:
-
-{{< copyable "shell-regular" >}}
+Save the file as `/tmp/topology.yaml`. If you want to use TiDB v7.5.6 and your cluster name is `prod-cluster`, run the following command:
 
 ```shell
-tiup cluster deploy -p prod-cluster v{{{ .tidb-version }}} /tmp/topology.yaml
+tiup cluster deploy -p prod-cluster v7.5.6 /tmp/topology.yaml
 ```
 
 During the execution, TiUP asks you to confirm your topology again and requires the root password of the target machine (the `-p` flag means inputting password):
@@ -131,7 +129,7 @@ During the execution, TiUP asks you to confirm your topology again and requires 
 ```bash
 Please confirm your topology:
 TiDB Cluster: prod-cluster
-TiDB Version: v{{{ .tidb-version }}}
+TiDB Version: v7.5.6
 Type        Host          Ports                            OS/Arch       Directories
 ----        ----          -----                            -------       -----------
 pd          172.16.5.134  2379/2380                        linux/x86_64  deploy/pd-2379,data/pd-2379
@@ -164,8 +162,6 @@ Deployed cluster `prod-cluster` successfully
 
 After the cluster is successfully deployed, view the cluster list by running the following command:
 
-{{< copyable "shell-root" >}}
-
 ```bash
 tiup cluster list
 ```
@@ -174,14 +170,12 @@ tiup cluster list
 Starting /root/.tiup/components/cluster/v1.12.3/cluster list
 Name          User  Version    Path                                               PrivateKey
 ----          ----  -------    ----                                               ----------
-prod-cluster  tidb  v{{{ .tidb-version }}}    /root/.tiup/storage/cluster/clusters/prod-cluster  /root/.tiup/storage/cluster/clusters/prod-cluster/ssh/id_rsa
+prod-cluster  tidb  v7.5.6    /root/.tiup/storage/cluster/clusters/prod-cluster  /root/.tiup/storage/cluster/clusters/prod-cluster/ssh/id_rsa
 ```
 
 ## Start the cluster
 
 After the cluster is successfully deployed, start the cluster by running the following command:
-
-{{< copyable "shell-regular" >}}
 
 ```shell
 tiup cluster start prod-cluster
@@ -195,8 +189,6 @@ TiUP uses `systemd` to start a daemon process. If the process terminates unexpec
 
 TiUP provides the `tiup cluster display` command to view the status of each component in the cluster. With this command, you don't have to log in to each machine to see the component status. The usage of the command is as follows:
 
-{{< copyable "shell-root" >}}
-
 ```bash
 tiup cluster display prod-cluster
 ```
@@ -204,7 +196,7 @@ tiup cluster display prod-cluster
 ```
 Starting /root/.tiup/components/cluster/v1.12.3/cluster display prod-cluster
 TiDB Cluster: prod-cluster
-TiDB Version: v{{{ .tidb-version }}}
+TiDB Version: v7.5.6
 ID                  Role        Host          Ports                            OS/Arch       Status  Data Dir              Deploy Dir
 --                  ----        ----          -----                            -------       ------  --------              ----------
 172.16.5.134:3000   grafana     172.16.5.134  3000                             linux/x86_64  Up      -                     deploy/grafana-3000
@@ -261,15 +253,11 @@ To use this command, you need to specify at least two flags: the cluster name an
 
 For example, to make the TiKV node on `172.16.5.140` offline, run the following command:
 
-{{< copyable "shell-regular" >}}
-
 ```bash
 tiup cluster scale-in prod-cluster -N 172.16.5.140:20160
 ```
 
 By running `tiup cluster display`, you can see that the TiKV node is marked `Offline`:
-
-{{< copyable "shell-root" >}}
 
 ```bash
 tiup cluster display prod-cluster
@@ -278,7 +266,7 @@ tiup cluster display prod-cluster
 ```
 Starting /root/.tiup/components/cluster/v1.12.3/cluster display prod-cluster
 TiDB Cluster: prod-cluster
-TiDB Version: v{{{ .tidb-version }}}
+TiDB Version: v7.5.6
 ID                  Role        Host          Ports                            OS/Arch       Status   Data Dir              Deploy Dir
 --                  ----        ----          -----                            -------       ------   --------              ----------
 172.16.5.134:3000   grafana     172.16.5.134  3000                             linux/x86_64  Up       -                     deploy/grafana-3000
@@ -330,8 +318,6 @@ To add a TiKV node and a PD node in the `tidb-test` cluster, take the following 
     ```
 
 2. Perform the scale-out operation. TiUP cluster adds the corresponding nodes to the cluster according to the port, directory, and other information described in `scale.yaml`.
-
-    {{< copyable "shell-regular" >}}
 
     ```shell
     tiup cluster scale-out tidb-test scale.yaml
@@ -389,19 +375,15 @@ Global Flags:
   -y, --yes               Skip all confirmations and assumes 'yes'
 ```
 
-For example, the following command upgrades the cluster to v{{{ .tidb-version }}}:
-
-{{< copyable "shell-regular" >}}
+For example, the following command upgrades the cluster to v7.5.6:
 
 ```bash
-tiup cluster upgrade tidb-test v{{{ .tidb-version }}}
+tiup cluster upgrade tidb-test v7.5.6
 ```
 
 ## Update configuration
 
 If you want to dynamically update the component configurations, the TiUP cluster component saves a current configuration for each cluster. To edit this configuration, execute the `tiup cluster edit-config <cluster-name>` command. For example:
-
-{{< copyable "shell-regular" >}}
 
 ```bash
 tiup cluster edit-config prod-cluster
@@ -410,8 +392,6 @@ tiup cluster edit-config prod-cluster
 TiUP cluster opens the configuration file in the vi editor. If you want to use other editors, use the `EDITOR` environment variable to customize the editor, such as `export EDITOR=nano`.
 
 After editing the file, save the changes. To apply the new configuration to the cluster, execute the following command:
-
-{{< copyable "shell-regular" >}}
 
 ```bash
 tiup cluster reload prod-cluster
@@ -459,8 +439,6 @@ When you execute `tiup reload`, TiUP first deletes all old configuration files i
 
 For normal upgrade, you can use the `upgrade` command. But in some scenarios, such as debugging, you might need to replace the currently running component with a temporary package. To achieve this, use the `patch` command:
 
-{{< copyable "shell-root" >}}
-
 ```bash
 tiup cluster patch --help
 ```
@@ -490,15 +468,11 @@ Global Flags:
 
 If a TiDB hotfix package is in `/tmp/tidb-hotfix.tar.gz` and you want to replace all the TiDB packages in the cluster, run the following command:
 
-{{< copyable "shell-regular" >}}
-
 ```bash
 tiup cluster patch test-cluster /tmp/tidb-hotfix.tar.gz -R tidb
 ```
 
 You can also replace only one TiDB package in the cluster:
-
-{{< copyable "shell-regular" >}}
 
 ```bash
 tiup cluster patch test-cluster /tmp/tidb-hotfix.tar.gz -N 172.16.4.5:4000
@@ -513,8 +487,6 @@ tiup cluster patch test-cluster /tmp/tidb-hotfix.tar.gz -N 172.16.4.5:4000
 Before TiUP is released, TiDB Ansible is often used to deploy TiDB clusters. To enable TiUP to take over the cluster deployed by TiDB Ansible, use the `import` command.
 
 The usage of the `import` command is as follows:
-
-{{< copyable "shell-root" >}}
 
 ```bash
 tiup cluster import --help
@@ -542,14 +514,10 @@ Global Flags:
 
 You can use either of the following commands to import a TiDB Ansible cluster:
 
-{{< copyable "shell-regular" >}}
-
 ```bash
 cd tidb-ansible
 tiup cluster import
 ```
-
-{{< copyable "shell-regular" >}}
 
 ```bash
 tiup cluster import --dir=/path/to/tidb-ansible
@@ -569,8 +537,6 @@ Flags:
 
 If the `[audit-id]` flag is not specified, the command shows a list of commands that have been executed. For example:
 
-{{< copyable "shell-regular" >}}
-
 ```bash
 tiup cluster audit
 ```
@@ -579,16 +545,14 @@ tiup cluster audit
 Starting component `cluster`: /home/tidb/.tiup/components/cluster/v1.12.3/cluster audit
 ID      Time                       Command
 --      ----                       -------
-4BLhr0  {{{ .tidb-release-date }}}T23:55:09+08:00  /home/tidb/.tiup/components/cluster/v1.12.3/cluster deploy test v{{{ .tidb-version }}} /tmp/topology.yaml
-4BKWjF  {{{ .tidb-release-date }}}T23:36:57+08:00  /home/tidb/.tiup/components/cluster/v1.12.3/cluster deploy test v{{{ .tidb-version }}} /tmp/topology.yaml
-4BKVwH  {{{ .tidb-release-date }}}T23:02:08+08:00  /home/tidb/.tiup/components/cluster/v1.12.3/cluster deploy test v{{{ .tidb-version }}} /tmp/topology.yaml
-4BKKH1  {{{ .tidb-release-date }}}T16:39:04+08:00  /home/tidb/.tiup/components/cluster/v1.12.3/cluster destroy test
-4BKKDx  {{{ .tidb-release-date }}}T16:36:57+08:00  /home/tidb/.tiup/components/cluster/v1.12.3/cluster deploy test v{{{ .tidb-version }}} /tmp/topology.yaml
+4BLhr0  2025-03-14T23:55:09+08:00  /home/tidb/.tiup/components/cluster/v1.12.3/cluster deploy test v7.5.6 /tmp/topology.yaml
+4BKWjF  2025-03-14T23:36:57+08:00  /home/tidb/.tiup/components/cluster/v1.12.3/cluster deploy test v7.5.6 /tmp/topology.yaml
+4BKVwH  2025-03-14T23:02:08+08:00  /home/tidb/.tiup/components/cluster/v1.12.3/cluster deploy test v7.5.6 /tmp/topology.yaml
+4BKKH1  2025-03-14T16:39:04+08:00  /home/tidb/.tiup/components/cluster/v1.12.3/cluster destroy test
+4BKKDx  2025-03-14T16:36:57+08:00  /home/tidb/.tiup/components/cluster/v1.12.3/cluster deploy test v7.5.6 /tmp/topology.yaml
 ```
 
 The first column is `audit-id`. To view the execution log of a certain command, pass the `audit-id` of a command as the flag as follows:
-
-{{< copyable "shell-regular" >}}
 
 ```bash
 tiup cluster audit 4BLhr0
@@ -615,8 +579,6 @@ Global Flags:
 ```
 
 For example, to execute `ls /tmp` on all TiDB nodes, run the following command:
-
-{{< copyable "shell-regular" >}}
 
 ```bash
 tiup cluster exec test-cluster --command='ls /tmp'
@@ -645,8 +607,6 @@ etcdctl [args] = tiup ctl etcd [args]
 ```
 
 For example, if you previously view the store by running `pd-ctl -u http://127.0.0.1:2379 store`, now you can run the following command in TiUP:
-
-{{< copyable "shell-regular" >}}
 
 ```bash
 tiup ctl:v<CLUSTER_VERSION> pd -u http://127.0.0.1:2379 store
@@ -699,7 +659,7 @@ All operations above performed on the cluster machine use the SSH client embedde
 
 Then you can use the `--ssh=system` command-line flag to enable the system-native command-line tool:
 
-- Deploy a cluster: `tiup cluster deploy <cluster-name> <version> <topo> --ssh=system`. Fill in the name of your cluster for `<cluster-name>`, the TiDB version to be deployed (such as `v{{{ .tidb-version }}}`) for `<version>`, and the topology file for `<topo>`.
+- Deploy a cluster: `tiup cluster deploy <cluster-name> <version> <topo> --ssh=system`. Fill in the name of your cluster for `<cluster-name>`, the TiDB version to be deployed (such as `v7.5.6`) for `<version>`, and the topology file for `<topo>`.
 - Start a cluster: `tiup cluster start <cluster-name> --ssh=system`
 - Upgrade a cluster: `tiup cluster upgrade ... --ssh=system`
 

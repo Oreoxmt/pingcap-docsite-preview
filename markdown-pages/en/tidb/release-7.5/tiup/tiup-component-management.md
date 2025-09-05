@@ -34,15 +34,11 @@ You can also use the following flags in the above commands:
 
 Example 1: View all currently installed components.
 
-{{< copyable "shell-regular" >}}
-
 ```shell
 tiup list --installed
 ```
 
 Example 2: Get a list of the TiKV component of all installable versions from the server.
-
-{{< copyable "shell-regular" >}}
 
 ```shell
 tiup list tikv
@@ -57,26 +53,20 @@ You can use the `tiup install` command to query the component list. This usage o
 
 Example 1: Use TiUP to install the latest stable version of TiDB.
 
-{{< copyable "shell-regular" >}}
-
 ```shell
 tiup install tidb
 ```
 
 Example 2: Use TiUP to install the nightly version of TiDB.
 
-{{< copyable "shell-regular" >}}
-
 ```shell
 tiup install tidb:nightly
 ```
 
-Example 3: Use TiUP to install TiKV v{{{ .tidb-version }}}.
-
-{{< copyable "shell-regular" >}}
+Example 3: Use TiUP to install TiKV v7.5.6.
 
 ```shell
-tiup install tikv:v{{{ .tidb-version }}}
+tiup install tikv:v7.5.6
 ```
 
 ## Upgrade components
@@ -90,23 +80,17 @@ After a new version of a component is published, you can use the `tiup update` c
 
 Example 1: Upgrade all components to the latest versions.
 
-{{< copyable "shell-regular" >}}
-
 ```shell
 tiup update --all
 ```
 
 Example 2: Upgrade all components to the nightly version.
 
-{{< copyable "shell-regular" >}}
-
 ```shell
 tiup update --all --nightly
 ```
 
 Example 3: Upgrade TiUP to the latest version.
-
-{{< copyable "shell-regular" >}}
 
 ```shell
 tiup update --self
@@ -129,17 +113,13 @@ Before the component is started, TiUP creates a directory for it, and then puts 
 
 If you want to start the same component multiple times and reuse the previous working directory, you can use `--tag` to specify the same name when the component is started. After the tag is specified, the working directory will *not be automatically deleted* when the instance is terminated, which makes it convenient to reuse the working directory.
 
-Example 1: Operate TiDB v{{{ .tidb-version }}}.
-
-{{< copyable "shell-regular" >}}
+Example 1: Operate TiDB v7.5.6.
 
 ```shell
-tiup tidb:v{{{ .tidb-version }}}
+tiup tidb:v7.5.6
 ```
 
 Example 2: Specify the tag with which TiKV operates.
-
-{{< copyable "shell-regular" >}}
 
 ```shell
 tiup --tag=experiment tikv
@@ -148,8 +128,6 @@ tiup --tag=experiment tikv
 ### Query the operating status of a component
 
 You can use the `tiup status` command to check the operating status of a component:
-
-{{< copyable "shell-regular" >}}
 
 ```shell
 tiup status
@@ -170,8 +148,6 @@ By executing this command, you will get a list of instances, one instance per li
 
 You can use the `tiup clean` command to clean up component instances and delete the working directory. If the instance is still operating before the cleaning, the related process is killed first. The command usage is as follows:
 
-{{< copyable "shell-regular" >}}
-
 ```bash
 tiup clean [tag] [flags]
 ```
@@ -184,15 +160,11 @@ In the above command, `tag` is the instance tag to be cleaned. If `--all` is use
 
 Example 1: Clean up the component instance with the `experiment` tag name.
 
-{{< copyable "shell-regular" >}}
-
 ```shell
 tiup clean experiment
 ```
 
 Example 2: Clean up all component instances.
-
-{{< copyable "shell-regular" >}}
 
 ```shell
 tiup clean --all
@@ -203,8 +175,6 @@ tiup clean --all
 The components installed using TiUP take up local disk space. If you do not want to keep too many components of old versions, you can check which versions of a component are currently installed, and then uninstall this component.
 
 You can use the `tiup uninstall` command to uninstall all versions or specific versions of a component. This command also supports uninstalling all components. The command usage is as follows:
-
-{{< copyable "shell-regular" >}}
 
 ```bash
 tiup uninstall [component][:version] [flags]
@@ -220,25 +190,19 @@ The following flags are supported in this command:
 - If the version is ignored, adding `--all` means to uninstall all versions of this component.
 - If the version and the component are both ignored, adding `--all` means to uninstall all components of all versions.
 
-Example 1: Uninstall TiDB v{{{ .tidb-version }}}.
-
-{{< copyable "shell-regular" >}}
+Example 1: Uninstall TiDB v7.5.6.
 
 ```shell
-tiup uninstall tidb:v{{{ .tidb-version }}}
+tiup uninstall tidb:v7.5.6
 ```
 
 Example 2: Uninstall TiKV of all versions.
-
-{{< copyable "shell-regular" >}}
 
 ```shell
 tiup uninstall tikv --all
 ```
 
 Example 3: Uninstall all installed components.
-
-{{< copyable "shell-regular" >}}
 
 ```shell
 tiup uninstall --all

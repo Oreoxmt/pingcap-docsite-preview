@@ -39,13 +39,9 @@ This section exemplifies how to add a TiDB node to the `10.0.1.5` host.
 
     Add the scale-out topology configuration in the `scale-out.yml` file:
 
-    {{< copyable "shell-regular" >}}
-
     ```shell
     vi scale-out.yml
     ```
-
-    {{< copyable "" >}}
 
     ```ini
     tidb_servers:
@@ -59,8 +55,6 @@ This section exemplifies how to add a TiDB node to the `10.0.1.5` host.
 
     Here is a TiKV configuration file template:
 
-    {{< copyable "" >}}
-
     ```ini
     tikv_servers:
     - host: 10.0.1.5
@@ -73,8 +67,6 @@ This section exemplifies how to add a TiDB node to the `10.0.1.5` host.
     ```
 
     Here is a PD configuration file template:
-
-    {{< copyable "" >}}
 
     ```ini
     pd_servers:
@@ -96,23 +88,17 @@ This section exemplifies how to add a TiDB node to the `10.0.1.5` host.
 
     1. Check for potential risks:
 
-        {{< copyable "shell-regular" >}}
-
         ```shell
         tiup cluster check <cluster-name> scale-out.yml --cluster --user root [-p] [-i /home/root/.ssh/gcp_rsa]
         ```
 
     2. Enable automatic repair:
 
-        {{< copyable "shell-regular" >}}
-
         ```shell
         tiup cluster check <cluster-name> scale-out.yml --cluster --apply --user root [-p] [-i /home/root/.ssh/gcp_rsa]
         ```
 
     3. Run the `scale-out` command:
-
-        {{< copyable "shell-regular" >}}
 
         ```shell
         tiup cluster scale-out <cluster-name> scale-out.yml [-p] [-i /home/root/.ssh/gcp_rsa]
@@ -147,8 +133,6 @@ This section exemplifies how to add a TiDB node to the `10.0.1.5` host.
 
 4. Check the cluster status:
 
-    {{< copyable "shell-regular" >}}
-
     ```shell
     tiup cluster display <cluster-name>
     ```
@@ -180,8 +164,6 @@ This section exemplifies how to add a TiFlash node to the `10.0.1.4` host.
 
     Create the `scale-out.yml` file to add the TiFlash node information.
 
-    {{< copyable "" >}}
-
     ```ini
     tiflash_servers:
     - host: 10.0.1.4
@@ -190,8 +172,6 @@ This section exemplifies how to add a TiFlash node to the `10.0.1.4` host.
     Currently, you can only add IP addresses but not domain names.
 
 2. Run the scale-out command:
-
-    {{< copyable "shell-regular" >}}
 
     ```shell
     tiup cluster scale-out <cluster-name> scale-out.yml
@@ -202,8 +182,6 @@ This section exemplifies how to add a TiFlash node to the `10.0.1.4` host.
     > The preceding command is based on the assumption that the mutual trust has been configured for the user to run the command and the new machine. If the mutual trust cannot be configured, use the `-p` option to enter the password of the new machine, or use the `-i` option to specify the private key file.
 
 3. View the cluster status:
-
-    {{< copyable "shell-regular" >}}
 
     ```shell
     tiup cluster display <cluster-name>
@@ -229,8 +207,6 @@ This section exemplifies how to add two TiCDC nodes to the `10.0.1.3` and `10.0.
 
     Create the `scale-out.yml` file to add the TiCDC node information.
 
-    {{< copyable "" >}}
-
     ```ini
     cdc_servers:
       - host: 10.0.1.3
@@ -243,8 +219,6 @@ This section exemplifies how to add two TiCDC nodes to the `10.0.1.3` and `10.0.
 
 2. Run the scale-out command:
 
-    {{< copyable "shell-regular" >}}
-
     ```shell
     tiup cluster scale-out <cluster-name> scale-out.yml
     ```
@@ -254,8 +228,6 @@ This section exemplifies how to add two TiCDC nodes to the `10.0.1.3` and `10.0.
     > The preceding command is based on the assumption that the mutual trust has been configured for the user to run the command and the new machine. If the mutual trust cannot be configured, use the `-p` option to enter the password of the new machine, or use the `-i` option to specify the private key file.
 
 3. View the cluster status:
-
-    {{< copyable "shell-regular" >}}
 
     ```shell
     tiup cluster display <cluster-name>
@@ -285,8 +257,6 @@ This section exemplifies how to remove a TiKV node from the `10.0.1.5` host.
 
 1. View the node ID information:
 
-    {{< copyable "shell-regular" >}}
-
     ```shell
     tiup cluster display <cluster-name>
     ```
@@ -294,7 +264,7 @@ This section exemplifies how to remove a TiKV node from the `10.0.1.5` host.
     ```
     Starting /root/.tiup/components/cluster/v1.12.3/cluster display <cluster-name>
     TiDB Cluster: <cluster-name>
-    TiDB Version: v{{{ .tidb-version }}}
+    TiDB Version: v7.5.6
     ID              Role         Host        Ports                            Status  Data Dir                Deploy Dir
     --              ----         ----        -----                            ------  --------                ----------
     10.0.1.3:8300   cdc          10.0.1.3    8300                             Up      data/cdc-8300           deploy/cdc-8300
@@ -314,8 +284,6 @@ This section exemplifies how to remove a TiKV node from the `10.0.1.5` host.
     ```
 
 2. Run the scale-in command:
-
-    {{< copyable "shell-regular" >}}
 
     ```shell
     tiup cluster scale-in <cluster-name> --node 10.0.1.5:20160
@@ -347,8 +315,6 @@ This section exemplifies how to remove a TiKV node from the `10.0.1.5` host.
 4. Check the cluster status:
 
     The scale-in process takes some time. You can run the following command to check the scale-in status:
-
-    {{< copyable "shell-regular" >}}
 
     ```shell
     tiup cluster display <cluster-name>
@@ -396,15 +362,11 @@ Perform the scale-in operation with one of the following solutions.
 
 1. Confirm the name of the node to be taken down:
 
-    {{< copyable "shell-regular" >}}
-
     ```shell
     tiup cluster display <cluster-name>
     ```
 
 2. Remove the TiFlash node (assume that the node name is `10.0.1.4:9000` from Step 1):
-
-    {{< copyable "shell-regular" >}}
 
     ```shell
     tiup cluster scale-in <cluster-name> --node 10.0.1.4:9000
@@ -420,8 +382,6 @@ In special cases (such as when a node needs to be forcibly taken down), or if th
 
     * If you use TiUP deployment, replace `pd-ctl` with `tiup ctl:v<CLUSTER_VERSION> pd`:
 
-    {{< copyable "shell-regular" >}}
-
     ```shell
     tiup ctl:v<CLUSTER_VERSION> pd -u http://<pd_ip>:<pd_port> store
     ```
@@ -435,8 +395,6 @@ In special cases (such as when a node needs to be forcibly taken down), or if th
     * Enter `store delete <store_id>` in pd-ctl (`<store_id>` is the store ID of the TiFlash node found in the previous step.
 
     * If you use TiUP deployment, replace `pd-ctl` with `tiup ctl:v<CLUSTER_VERSION> pd`:
-
-        {{< copyable "shell-regular" >}}
 
         ```shell
         tiup ctl:v<CLUSTER_VERSION> pd -u http://<pd_ip>:<pd_port> store delete <store_id>
@@ -452,8 +410,6 @@ In special cases (such as when a node needs to be forcibly taken down), or if th
 
 5. Delete information about the TiFlash node that goes down from the cluster topology using the following command:
 
-    {{< copyable "shell-regular" >}}
-
     ```shell
     tiup cluster scale-in <cluster-name> --node <pd_ip>:<pd_port> --force
     ```
@@ -465,8 +421,6 @@ In special cases (such as when a node needs to be forcibly taken down), or if th
 The steps to manually clean up the replication rules in PD are below:
 
 1. View all data replication rules related to TiFlash in the current PD instance:
-
-    {{< copyable "shell-regular" >}}
 
     ```shell
     curl http://<pd_ip>:<pd_port>/pd/api/v1/config/rules/group/tiflash
@@ -497,15 +451,11 @@ The steps to manually clean up the replication rules in PD are below:
 
 2. Remove all data replication rules related to TiFlash. Take the rule whose `id` is `table-45-r` as an example. Delete it by the following command:
 
-    {{< copyable "shell-regular" >}}
-
     ```shell
     curl -v -X DELETE http://<pd_ip>:<pd_port>/pd/api/v1/config/rule/tiflash/table-45-r
     ```
 
 3. View the cluster status:
-
-    {{< copyable "shell-regular" >}}
 
     ```shell
     tiup cluster display <cluster-name>
@@ -529,15 +479,11 @@ After the scale-out, the cluster topology is as follows:
 
 1. Take the node offline:
 
-    {{< copyable "shell-regular" >}}
-
     ```shell
     tiup cluster scale-in <cluster-name> --node 10.0.1.4:8300
     ```
 
 2. View the cluster status:
-
-    {{< copyable "shell-regular" >}}
 
     ```shell
     tiup cluster display <cluster-name>

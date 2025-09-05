@@ -34,8 +34,6 @@ It is recommended that you use [OpenSSL](https://www.openssl.org/) to create key
 
 1. Execute the following command to generate the CA key:
 
-    {{< copyable "shell-regular" >}}
-
     ```bash
     sudo openssl genrsa 2048 > ca-key.pem
     ```
@@ -51,15 +49,11 @@ It is recommended that you use [OpenSSL](https://www.openssl.org/) to create key
 
 2. Execute the following command to generate the certificate corresponding to the CA key:
 
-    {{< copyable "shell-regular" >}}
-
     ```bash
     sudo openssl req -new -x509 -nodes -days 365000 -key ca-key.pem -out ca-cert.pem
     ```
 
 3. Enter detailed certificate information. For example:
-
-    {{< copyable "shell-regular" >}}
 
     ```bash
     Country Name (2 letter code) [AU]:US
@@ -79,15 +73,11 @@ It is recommended that you use [OpenSSL](https://www.openssl.org/) to create key
 
 1. Execute the following command to generate the server key:
 
-    {{< copyable "shell-regular" >}}
-
     ```bash
     sudo openssl req -newkey rsa:2048 -days 365000 -nodes -keyout server-key.pem -out server-req.pem
     ```
 
 2. Enter detailed certificate information. For example:
-
-    {{< copyable "shell-regular" >}}
 
     ```bash
     Country Name (2 letter code) [AU]:US
@@ -106,8 +96,6 @@ It is recommended that you use [OpenSSL](https://www.openssl.org/) to create key
 
 3. Execute the following command to generate the RSA key of the server:
 
-    {{< copyable "shell-regular" >}}
-
     ```bash
     sudo openssl rsa -in server-key.pem -out server-key.pem
     ```
@@ -119,8 +107,6 @@ It is recommended that you use [OpenSSL](https://www.openssl.org/) to create key
     ```
 
 4. Use the CA certificate signature to generate the signed server certificate:
-
-    {{< copyable "shell-regular" >}}
 
     ```bash
     sudo openssl x509 -req -in server-req.pem -days 365000 -CA ca-cert.pem -CAkey ca-key.pem -set_serial 01 -out server-cert.pem
@@ -144,15 +130,11 @@ After generating the server key and certificate, you need to generate the key an
 
 1. Execute the following command to generate the client key:
 
-    {{< copyable "shell-regular" >}}
-
     ```bash
     sudo openssl req -newkey rsa:2048 -days 365000 -nodes -keyout client-key.pem -out client-req.pem
     ```
 
 2. Enter detailed certificate information. For example:
-
-    {{< copyable "shell-regular" >}}
 
     ```bash
     Country Name (2 letter code) [AU]:US
@@ -171,8 +153,6 @@ After generating the server key and certificate, you need to generate the key an
 
 3. Execute the following command to generate the RSA key of the client:
 
-    {{< copyable "shell-regular" >}}
-
     ```bash
     sudo openssl rsa -in client-key.pem -out client-key.pem
     ```
@@ -184,8 +164,6 @@ After generating the server key and certificate, you need to generate the key an
     ```
 
 4. Use the CA certificate signature to generate the client certificate:
-
-    {{< copyable "shell-regular" >}}
 
     ```bash
     sudo openssl x509 -req -in client-req.pem -days 365000 -CA ca-cert.pem -CAkey ca-key.pem -set_serial 01 -out client-cert.pem
@@ -207,8 +185,6 @@ After generating the server key and certificate, you need to generate the key an
 
 Execute the following command to verify certificate:
 
-{{< copyable "shell-regular" >}}
-
 ```bash
 openssl verify -CAfile ca-cert.pem server-cert.pem client-cert.pem
 ```
@@ -228,8 +204,6 @@ After generating the certificates, you need to configure the TiDB server and the
 
 Modify the `[security]` section in the TiDB configuration file. This step specifies the directory in which the CA certificate, the server key, and the server certificate are stored. You can replace `path/to/server-cert.pem`, `path/to/server-key.pem`, `path/to/ca-cert.pem` with your own directory.
 
-{{< copyable "" >}}
-
 ```
 [security]
 ssl-cert ="path/to/server-cert.pem"
@@ -248,8 +222,6 @@ Start TiDB and check logs. If the following information is displayed in the log,
 Configure the client so that the client uses the client key and certificate for login.
 
 Taking the MySQL client as an example, you can use the newly created client certificate, client key and CA by specifying `ssl-cert`, `ssl-key`, and `ssl-ca`:
-
-{{< copyable "shell-regular" >}}
 
 ```bash
 mysql -utest -h0.0.0.0 -P4000 --ssl-cert /path/to/client-cert.new.pem --ssl-key /path/to/client-key.new.pem --ssl-ca /path/to/ca-cert.pem
@@ -271,8 +243,6 @@ The user certificate information can be specified by `REQUIRE SUBJECT`, `REQUIRE
 
     To get this option, execute the following command:
 
-    {{< copyable "shell-regular" >}}
-
     ```bash
     openssl x509 -noout -subject -in client-cert.pem | sed 's/.\{8\}//'  | sed 's/, /\//g' | sed 's/ = /=/g' | sed 's/^/\//'
     ```
@@ -281,8 +251,6 @@ The user certificate information can be specified by `REQUIRE SUBJECT`, `REQUIRE
 
     To get this option, execute the following command:
 
-    {{< copyable "shell-regular" >}}
-
     ```bash
     openssl x509 -noout -subject -in ca-cert.pem | sed 's/.\{8\}//'  | sed 's/, /\//g' | sed 's/ = /=/g' | sed 's/^/\//'
     ```
@@ -290,8 +258,6 @@ The user certificate information can be specified by `REQUIRE SUBJECT`, `REQUIRE
 + `require san`: Specifies the `Subject Alternative Name` information of the CA certificate that issues the user certificate. The information to be specified is consistent with the [`alt_names` of the `openssl.cnf` configuration file](https://docs.pingcap.com/tidb/stable/generate-self-signed-certificates) used to generate the client certificate.
 
     + Execute the following command to get the information of the `REQUIRE SAN` item in the generated certificate:
-
-        {{< copyable "shell-regular" >}}
 
         ```shell
         openssl x509 -noout -extensions subjectAltName -in client.crt
@@ -304,8 +270,6 @@ The user certificate information can be specified by `REQUIRE SUBJECT`, `REQUIRE
         - DNS
 
     + Multiple check items can be configured after they are connected by commas. For example, configure `REQUIRE SAN` as follows for the `u1` user:
-
-        {{< copyable "sql" >}}
 
         ```sql
         CREATE USER 'u1'@'%' REQUIRE SAN 'DNS:d1,URI:spiffe://example.org/myservice1,URI:spiffe://example.org/myservice2';
@@ -327,15 +291,11 @@ You can configure one option or multiple options using the space or `and` as the
 
 + Configure user certificate when creating a user (`CREATE USER`):
 
-    {{< copyable "sql" >}}
-
     ```sql
     CREATE USER 'u1'@'%' REQUIRE ISSUER '<replaceable>' SUBJECT '<replaceable>' SAN '<replaceable>' CIPHER '<replaceable>';
     ```
 
 + Configure user certificate when altering a user:
-
-    {{< copyable "sql" >}}
 
     ```sql
     ALTER USER 'u1'@'%' REQUIRE ISSUER '<replaceable>' SUBJECT '<replaceable>' SAN '<replaceable>' CIPHER '<replaceable>';
@@ -360,7 +320,7 @@ The output:
 
 ```
 --------------
-mysql  Ver {{{ .tidb-version }}} for Linux on x86_64 (MySQL Community Server - GPL)
+mysql  Ver 7.5.6 for Linux on x86_64 (MySQL Community Server - GPL)
 
 Connection id:       1
 Current database:    test
@@ -400,8 +360,6 @@ The CA certificate is the basis for mutual verification between the client and s
 
 1. Back up the old CA key and certificate (suppose that `ca-key.pem` is stolen):
 
-    {{< copyable "shell-regular" >}}
-
     ```bash
     mv ca-key.pem ca-key.old.pem && \
     mv ca-cert.pem ca-cert.old.pem
@@ -409,15 +367,11 @@ The CA certificate is the basis for mutual verification between the client and s
 
 2. Generate the new CA key:
 
-    {{< copyable "shell-regular" >}}
-
     ```bash
     sudo openssl genrsa 2048 > ca-key.pem
     ```
 
 3. Generate the new CA certificate using the newly generated CA key:
-
-    {{< copyable "shell-regular" >}}
 
     ```bash
     sudo openssl req -new -x509 -nodes -days 365000 -key ca-key.pem -out ca-cert.new.pem
@@ -428,8 +382,6 @@ The CA certificate is the basis for mutual verification between the client and s
     > Generating the new CA certificate is to replace the keys and certificates on the client and server, and to ensure that online users are not affected. Therefore, the appended information in the above command must be consistent with the `require issuer` information.
 
 4. Generate the combined CA certificate:
-
-    {{< copyable "shell-regular" >}}
 
     ```bash
     cat ca-cert.new.pem ca-cert.old.pem > ca-cert.pem
@@ -447,8 +399,6 @@ Also replace the old CA certificate with the combined certificate so that the cl
 
 1. Generate the new RSA key of the client:
 
-    {{< copyable "shell-regular" >}}
-
     ```bash
     sudo openssl req -newkey rsa:2048 -days 365000 -nodes -keyout client-key.new.pem -out client-req.new.pem && \
     sudo openssl rsa -in client-key.new.pem -out client-key.new.pem
@@ -460,15 +410,11 @@ Also replace the old CA certificate with the combined certificate so that the cl
 
 2. Use the combined certificate and the new CA key to generate the new client certificate:
 
-    {{< copyable "shell-regular" >}}
-
     ```bash
     sudo openssl x509 -req -in client-req.new.pem -days 365000 -CA ca-cert.pem -CAkey ca-key.pem -set_serial 01 -out client-cert.new.pem
     ```
 
 3. Make the client (for example, MySQL) connect TiDB with the new client key and certificate:
-
-    {{< copyable "shell-regular" >}}
 
     ```bash
     mysql -utest -h0.0.0.0 -P4000 --ssl-cert /path/to/client-cert.new.pem --ssl-key /path/to/client-key.new.pem --ssl-ca /path/to/ca-cert.pem
@@ -482,16 +428,12 @@ Also replace the old CA certificate with the combined certificate so that the cl
 
 1. Generate the new RSA key of the server:
 
-    {{< copyable "shell-regular" >}}
-
     ```bash
     sudo openssl req -newkey rsa:2048 -days 365000 -nodes -keyout server-key.new.pem -out server-req.new.pem && \
     sudo openssl rsa -in server-key.new.pem -out server-key.new.pem
     ```
 
 2. Use the combined CA certificate and the new CA key to generate the new server certificate:
-
-    {{< copyable "shell-regular" >}}
 
     ```bash
     sudo openssl x509 -req -in server-req.new.pem -days 365000 -CA ca-cert.pem -CAkey ca-key.pem -set_serial 01 -out server-cert.new.pem

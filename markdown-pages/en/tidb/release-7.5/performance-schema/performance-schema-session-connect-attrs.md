@@ -20,8 +20,6 @@ Common attributes:
 
 You can view the columns of the `SESSION_CONNECT_ATTRS` table as follows:
 
-{{< copyable "sql" >}}
-
 ```sql
 USE performance_schema;
 DESCRIBE session_connect_attrs;
@@ -40,8 +38,6 @@ DESCRIBE session_connect_attrs;
 
 You can view the information on session attributes stored in the `SESSION_CONNECT_ATTRS` table as follows:
 
-{{< copyable "sql" >}}
-
 ```sql
 USE performance_schema;
 TABLE SESSION_CONNECT_ATTRS;
@@ -52,7 +48,7 @@ TABLE SESSION_CONNECT_ATTRS;
 | PROCESSLIST_ID | ATTR_NAME       | ATTR_VALUE | ORDINAL_POSITION |
 +----------------+-----------------+------------+------------------+
 |        2097154 | _client_name    | libmysql   |                0 |
-|        2097154 | _client_version | {{{ .tidb-version }}}      |                1 |
+|        2097154 | _client_version | 7.5.6      |                1 |
 |        2097154 | _os             | Linux      |                2 |
 |        2097154 | _pid            | 1299203    |                3 |
 |        2097154 | _platform       | x86_64     |                4 |

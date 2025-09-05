@@ -31,8 +31,6 @@ As a distributed system, a basic TiDB test cluster usually consists of 2 TiDB in
 
 1. Download and install TiUP:
 
-    {{< copyable "shell-regular" >}}
-
     ```shell
     curl --proto '=https' --tlsv1.2 -sSf https://tiup-mirrors.pingcap.com/install.sh | sh
     ```
@@ -59,8 +57,6 @@ As a distributed system, a basic TiDB test cluster usually consists of 2 TiDB in
     >
     > After the installation, TiUP displays the absolute path of the corresponding Shell profile file. You need to modify `${your_shell_profile}` in the following `source` command according to the path. In this case, `${your_shell_profile}` is `/Users/user/.zshrc` from the output of Step 1.
 
-    {{< copyable "shell-regular" >}}
-
     ```shell
     source ${your_shell_profile}
     ```
@@ -69,21 +65,17 @@ As a distributed system, a basic TiDB test cluster usually consists of 2 TiDB in
 
     - To start a TiDB cluster of the latest version with 1 TiDB instance, 1 TiKV instance, 1 PD instance, and 1 TiFlash instance, run the following command:
 
-        {{< copyable "shell-regular" >}}
-
         ```shell
         tiup playground
         ```
 
     - To specify the TiDB version and the number of instances of each component, run a command like this:
 
-        {{< copyable "shell-regular" >}}
-
         ```shell
-        tiup playground v{{{ .tidb-version }}} --db 2 --pd 3 --kv 3
+        tiup playground v7.5.6 --db 2 --pd 3 --kv 3
         ```
 
-        The command downloads a version cluster to the local machine and starts it, such as v{{{ .tidb-version }}}. To view the latest version, run `tiup list tidb`.
+        The command downloads a version cluster to the local machine and starts it, such as v7.5.6. To view the latest version, run `tiup list tidb`.
 
         This command returns the access methods of the cluster:
 
@@ -107,15 +99,11 @@ As a distributed system, a basic TiDB test cluster usually consists of 2 TiDB in
 
     + Use the TiUP client to connect to TiDB.
 
-        {{< copyable "shell-regular" >}}
-
         ```shell
         tiup client
         ```
 
     + Alternatively, you can use the MySQL client to connect to TiDB.
-
-        {{< copyable "shell-regular" >}}
 
         ```shell
         mysql --host 127.0.0.1 --port 4000 -u root
@@ -135,8 +123,6 @@ As a distributed system, a basic TiDB test cluster usually consists of 2 TiDB in
 
     2. Run the following command after the service is stopped:
 
-        {{< copyable "shell-regular" >}}
-
         ```shell
         tiup clean --all
         ```
@@ -151,8 +137,6 @@ As a distributed system, a basic TiDB test cluster usually consists of 2 TiDB in
 As a distributed system, a basic TiDB test cluster usually consists of 2 TiDB instances, 3 TiKV instances, 3 PD instances, and optional TiFlash instances. With TiUP Playground, you can quickly build the test cluster by following these steps:
 
 1. Download and install TiUP:
-
-    {{< copyable "shell-regular" >}}
 
     ```shell
     curl --proto '=https' --tlsv1.2 -sSf https://tiup-mirrors.pingcap.com/install.sh | sh
@@ -180,8 +164,6 @@ As a distributed system, a basic TiDB test cluster usually consists of 2 TiDB in
     >
     > After the installation, TiUP displays the absolute path of the corresponding Shell profile file. You need to modify `${your_shell_profile}` in the following `source` command according to the path.
 
-    {{< copyable "shell-regular" >}}
-
     ```shell
     source ${your_shell_profile}
     ```
@@ -190,21 +172,17 @@ As a distributed system, a basic TiDB test cluster usually consists of 2 TiDB in
 
     - To start a TiDB cluster of the latest version with 1 TiDB instance, 1 TiKV instance, 1 PD instance, and 1 TiFlash instance, run the following command:
 
-        {{< copyable "shell-regular" >}}
-
         ```shell
         tiup playground
         ```
 
     - To specify the TiDB version and the number of instances of each component, run a command like this:
 
-        {{< copyable "shell-regular" >}}
-
         ```shell
-        tiup playground v{{{ .tidb-version }}} --db 2 --pd 3 --kv 3
+        tiup playground v7.5.6 --db 2 --pd 3 --kv 3
         ```
 
-        The command downloads a version cluster to the local machine and starts it, such as v{{{ .tidb-version }}}. To view the latest version, run `tiup list tidb`.
+        The command downloads a version cluster to the local machine and starts it, such as v7.5.6. To view the latest version, run `tiup list tidb`.
 
         This command returns the access methods of the cluster:
 
@@ -226,15 +204,11 @@ As a distributed system, a basic TiDB test cluster usually consists of 2 TiDB in
 
     + Use the TiUP client to connect to TiDB.
 
-        {{< copyable "shell-regular" >}}
-
         ```shell
         tiup client
         ```
 
     + Alternatively, you can use the MySQL client to connect to TiDB.
-
-        {{< copyable "shell-regular" >}}
 
         ```shell
         mysql --host 127.0.0.1 --port 4000 -u root
@@ -253,8 +227,6 @@ As a distributed system, a basic TiDB test cluster usually consists of 2 TiDB in
     1. Stop the process by pressing <kbd>Control+C</kbd>.
 
     2. Run the following command after the service is stopped:
-
-        {{< copyable "shell-regular" >}}
 
         ```shell
         tiup clean --all
@@ -311,8 +283,6 @@ Other requirements for the target machine include:
 
 1. Download and install TiUP:
 
-    {{< copyable "shell-regular" >}}
-
     ```shell
     curl --proto '=https' --tlsv1.2 -sSf https://tiup-mirrors.pingcap.com/install.sh | sh
     ```
@@ -323,23 +293,17 @@ Other requirements for the target machine include:
     >
     > After the installation, TiUP displays the absolute path of the corresponding Shell profile file. You need to modify `${your_shell_profile}` in the following `source` command according to the path.
 
-    {{< copyable "shell-regular" >}}
-
     ```shell
     source ${your_shell_profile}
     ```
 
 3. Install the cluster component of TiUP:
 
-    {{< copyable "shell-regular" >}}
-
     ```shell
     tiup cluster
     ```
 
 4. If the TiUP cluster is already installed on the machine, update the software version:
-
-    {{< copyable "shell-regular" >}}
 
     ```shell
     tiup update --self && tiup update cluster
@@ -350,8 +314,6 @@ Other requirements for the target machine include:
     1. Modify `/etc/ssh/sshd_config`, and set `MaxSessions` to `20`.
     2. Restart the `sshd` service:
 
-        {{< copyable "shell-root" >}}
-
         ```shell
         service sshd restart
         ```
@@ -359,8 +321,6 @@ Other requirements for the target machine include:
 6. Create and start the cluster:
 
     Edit the configuration file according to the following template, and name it as `topo.yaml`:
-
-    {{< copyable "" >}}
 
     ```yaml
     # # Global variables are applied to all deployments and used as the default value of
@@ -429,14 +389,12 @@ Other requirements for the target machine include:
 
 7. Execute the cluster deployment command:
 
-    {{< copyable "shell-regular" >}}
-
     ```shell
     tiup cluster deploy <cluster-name> <version> ./topo.yaml --user root -p
     ```
 
     - `<cluster-name>`: Set the cluster name
-    - `<version>`: Set the TiDB cluster version, such as `v{{{ .tidb-version }}}`. You can see all the supported TiDB versions by running the `tiup list tidb` command
+    - `<version>`: Set the TiDB cluster version, such as `v7.5.6`. You can see all the supported TiDB versions by running the `tiup list tidb` command
     - `-p`: Specify the password used to connect to the target machine.
 
         > **Note:**
@@ -452,8 +410,6 @@ Other requirements for the target machine include:
 
 8. Start the cluster:
 
-    {{< copyable "shell-regular" >}}
-
     ```shell
     tiup cluster start <cluster-name>
     ```
@@ -462,15 +418,11 @@ Other requirements for the target machine include:
 
     - Install the MySQL client. If it is already installed, skip this step.
 
-        {{< copyable "shell-regular" >}}
-
         ```shell
         yum -y install mysql
         ```
 
     - Access TiDB. The password is empty:
-
-        {{< copyable "shell-regular" >}}
 
         ```shell
         mysql -h 10.0.1.1 -P 4000 -u root
@@ -482,15 +434,11 @@ Other requirements for the target machine include:
 
     - To view the currently deployed cluster list:
 
-        {{< copyable "shell-regular" >}}
-
         ```shell
         tiup cluster list
         ```
 
     - To view the cluster topology and status:
-
-         {{< copyable "shell-regular" >}}
 
         ```shell
         tiup cluster display <cluster-name>

@@ -29,8 +29,6 @@ Based on this scenario, the following sections describe how to create a data mig
 
 Prepare 2 runnable MySQL instances. You can also use Docker to quickly start MySQL. The commands are as follows:
 
-{{< copyable "shell-regular" >}}
-
 ```bash
 docker run --rm --name mysql-3306 -p 3306:3306 -e MYSQL_ALLOW_EMPTY_PASSWORD=true mysql:5.7.22 --log-bin=mysql-bin --port=3306 --bind-address=0.0.0.0 --binlog-format=ROW --server-id=1 --gtid_mode=ON --enforce-gtid-consistency=true > mysql.3306.log 2>&1 &
 docker run --rm --name mysql-3307 -p 3307:3307 -e MYSQL_ALLOW_EMPTY_PASSWORD=true mysql:5.7.22 --log-bin=mysql-bin --port=3307 --bind-address=0.0.0.0 --binlog-format=ROW --server-id=1 --gtid_mode=ON --enforce-gtid-consistency=true > mysql.3307.log 2>&1 &
@@ -39,8 +37,6 @@ docker run --rm --name mysql-3307 -p 3307:3307 -e MYSQL_ALLOW_EMPTY_PASSWORD=tru
 ### Prepare data
 
 - Write example data into mysql-3306:
-
-    {{< copyable "sql" >}}
 
     ```sql
     drop database if exists `sharding1`;
@@ -53,8 +49,6 @@ docker run --rm --name mysql-3307 -p 3307:3307 -e MYSQL_ALLOW_EMPTY_PASSWORD=tru
     ```
 
 - Write example data into mysql-3307:
-
-    {{< copyable "sql" >}}
 
     ```sql
     drop database if exists `sharding2`;
@@ -70,10 +64,8 @@ docker run --rm --name mysql-3307 -p 3307:3307 -e MYSQL_ALLOW_EMPTY_PASSWORD=tru
 
 To run a TiDB server, use the following command:
 
-{{< copyable "shell-regular" >}}
-
 ```bash
-wget https://download.pingcap.org/tidb-community-server-v{{{ .tidb-version }}}-linux-amd64.tar.gz
+wget https://download.pingcap.org/tidb-community-server-v7.5.6-linux-amd64.tar.gz
 tar -xzvf tidb-latest-linux-amd64.tar.gz
 mv tidb-latest-linux-amd64/bin/tidb-server ./
 ./tidb-server
@@ -95,8 +87,6 @@ Before starting a data migration task, you need to configure the MySQL data sour
 > + You can use the plaintext password to configure the source information in DM v1.0.6 and later versions.
 
 For safety reasons, it is recommended to configure and use encrypted passwords. You can use dmctl to encrypt the MySQL/TiDB password. Suppose the password is "123456":
-
-{{< copyable "shell-regular" >}}
 
 ```bash
 ./dmctl encrypt "123456"
@@ -133,8 +123,6 @@ In MySQL2 data source, copy the above configurations to `conf/source2.yaml`. You
 
 To load the data source configurations of MySQL1 into the DM cluster using dmctl, run the following command in the terminal:
 
-{{< copyable "shell-regular" >}}
-
 ```bash
 ./dmctl --master-addr=127.0.0.1:8261 operate-source create conf/source1.yaml
 ```
@@ -148,8 +136,6 @@ After importing [prepared data](#prepare-data), there are several sharded tables
 Now, suppose that you need to migrate these sharded tables to the `db_target.t_target` table in TiDB. The steps are as follows.
 
 1. Create the configuration file of the task:
-
-    {{< copyable "" >}}
 
     ```yaml
     ---
@@ -193,8 +179,6 @@ Now, suppose that you need to migrate these sharded tables to the `db_target.t_t
     ```
 
 2. To create a task using dmctl, write the above configurations to the `conf/task.yaml` file:
-
-    {{< copyable "shell-regular" >}}
 
     ```bash
     ./dmctl --master-addr 127.0.0.1:8261 start-task conf/task.yaml

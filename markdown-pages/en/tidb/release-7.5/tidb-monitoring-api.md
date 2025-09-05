@@ -27,7 +27,7 @@ The following example uses `http://${host}:${port}/status` to get the current st
 curl http://127.0.0.1:10080/status
 {
     connections: 0,  # The current number of clients connected to the TiDB server.
-    version: "8.0.11-TiDB-v{{{ .tidb-version }}}",  # The TiDB version number.
+    version: "8.0.11-TiDB-v7.5.6",  # The TiDB version number.
     git_hash: "778c3f4a5a716880bcd1d71b257c8165685f0d70"  # The Git Hash of the current TiDB code.
 }
 ```
@@ -35,8 +35,6 @@ curl http://127.0.0.1:10080/status
 #### Storage information
 
 The following example uses `http://${host}:${port}/schema_storage/${db}/${table}` to get the storage information of the specific data table. The result is returned in **JSON** format.
-
-{{< copyable "shell-regular" >}}
 
 ```bash
 curl http://127.0.0.1:10080/schema_storage/mysql/stats_histograms

@@ -11,8 +11,6 @@ When creating a private cloud, usually, you need to use an isolated network envi
 
 Execute the following command to get the help information of the `mirror` command:
 
-{{< copyable "shell-regular" >}}
-
 ```bash
 tiup mirror --help
 ```
@@ -51,8 +49,6 @@ Use "tiup mirror [command] --help" for more information about a command.
 
 You can run the `tiup mirror clone` command to build a local mirror:
 
-{{< copyable "shell-regular" >}}
-
 ```bash
 tiup mirror clone <target-dir> [global-version] [flags]
 ```
@@ -86,9 +82,9 @@ The `tiup mirror clone` command provides many optional flags (might provide more
 
     If you want to clone only one version (not all versions) of a component, use `--<component>=<version>` to specify this version. For example:
 
-    - Execute the `tiup mirror clone <target-dir> --tidb v{{{ .tidb-version }}}` command to clone the v{{{ .tidb-version }}} version of the TiDB component.
-    - Run the `tiup mirror clone <target-dir> --tidb v{{{ .tidb-version }}} --tikv all` command to clone the v{{{ .tidb-version }}} version of the TiDB component and all versions of the TiKV component.
-    - Run the `tiup mirror clone <target-dir> v{{{ .tidb-version }}}` command to clone the v{{{ .tidb-version }}} version of all components in a cluster.
+    - Execute the `tiup mirror clone <target-dir> --tidb v7.5.6` command to clone the v7.5.6 version of the TiDB component.
+    - Run the `tiup mirror clone <target-dir> --tidb v7.5.6 --tikv all` command to clone the v7.5.6 version of the TiDB component and all versions of the TiKV component.
+    - Run the `tiup mirror clone <target-dir> v7.5.6` command to clone the v7.5.6 version of all components in a cluster.
 
 After cloning, signing keys are set up automatically.
 

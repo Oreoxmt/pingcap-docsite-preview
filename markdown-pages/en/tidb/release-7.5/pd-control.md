@@ -28,7 +28,7 @@ To obtain `pd-ctl` of the latest version, download the TiDB server installation 
 
 > **Note:**
 >
-> `{version}` in the link indicates the version number of TiDB. For example, the download link for `v{{{ .tidb-version }}}` in the `amd64` architecture is `https://download.pingcap.org/tidb-community-server-v{{{ .tidb-version }}}-linux-amd64.tar.gz`.
+> `{version}` in the link indicates the version number of TiDB. For example, the download link for `v7.5.6` in the `amd64` architecture is `https://download.pingcap.org/tidb-community-server-v7.5.6-linux-amd64.tar.gz`.
 
 ### Compile from source code
 
@@ -171,7 +171,7 @@ Usage:
 }
 
 >> config show cluster-version                // Display the current version of the cluster, which is the current minimum version of TiKV nodes in the cluster and does not correspond to the binary version.
-"{{{ .tidb-version }}}"
+"7.5.6"
 ```
 
 - `max-snapshot-count` controls the maximum number of snapshots that a single store receives or sends out at the same time. The scheduler is restricted by this configuration to avoid taking up normal application resources. When you need to improve the speed of adding replicas or balancing, increase this value.
@@ -226,8 +226,6 @@ Usage:
 
 - `region-score-formula-version` controls the version of the Region score formula. The value options are `v1` and `v2`. The version 2 of the formula helps to reduce redundant balance Region scheduling in some scenarios, such as taking TiKV nodes online or offline.
 
-    {{< copyable "" >}}
-
     ```bash
     config set region-score-formula-version v2
     ```
@@ -247,8 +245,6 @@ Usage:
 - `max-store-preparing-time` controls the maximum waiting time for the store to go online. During the online stage of a store, PD can query the online progress of the store. When the specified time is exceeded, PD assumes that the store has been online and cannot query the online progress of the store again. But this does not prevent Regions from transferring to the new online store. In most scenarios, you do not need to adjust this parameter.
 
     The following command specifies that the maximum waiting time for the store to go online is 4 hours.
-
-    {{< copyable "" >}}
 
     ```bash
     config set max-store-preparing-time 4h
@@ -307,7 +303,7 @@ Usage:
 - `cluster-version` is the version of the cluster, which is used to enable or disable some features and to deal with the compatibility issues. By default, it is the minimum version of all normally running TiKV nodes in the cluster. You can set it manually only when you need to roll it back to an earlier version.
 
     ```bash
-    config set cluster-version {{{ .tidb-version }}}              // Set the version of the cluster to {{{ .tidb-version }}}
+    config set cluster-version 7.5.6              // Set the version of the cluster to 7.5.6
     ```
 
 - `replication-mode` controls the replication mode of Regions in the dual data center scenario. See [Enable the DR Auto-Sync mode](/two-data-centers-in-one-city-deployment.md#enable-the-dr-auto-sync-mode) for details.
@@ -341,8 +337,6 @@ Usage:
 - PD rounds the lowest digits of the flow number, which reduces the update of statistics caused by the changes of the Region flow information. This configuration item is used to specify the number of lowest digits to round for the Region flow information. For example, the flow `100512` will be rounded to `101000` because the default value is `3`. This configuration replaces `trace-region-flow`.
 
 - For example, set the value of `flow-round-by-digit` to `4`:
-
-    {{< copyable "" >}}
 
     ```bash
     config set flow-round-by-digit 4
@@ -1190,8 +1184,6 @@ unsafe remove-failed-stores show
 
 ### Query all nodes whose status is not `Up`
 
-{{< copyable "" >}}
-
 ```bash
 store --jq='.stores[].store | select(.state_name!="Up") | { id, address, state_name}'
 ```
@@ -1203,8 +1195,6 @@ store --jq='.stores[].store | select(.state_name!="Up") | { id, address, state_n
 ```
 
 ### Query all TiFlash nodes
-
-{{< copyable "" >}}
 
 ```bash
 store --jq='.stores[].store | select(.labels | length>0 and contains([{"key":"engine","value":"tiflash"}])) | { id, address, state_name}'

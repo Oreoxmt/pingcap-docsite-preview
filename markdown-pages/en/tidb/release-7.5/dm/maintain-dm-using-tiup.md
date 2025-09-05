@@ -63,8 +63,6 @@ Flags:
 
 After the cluster is successfully deployed, view the cluster list by running the following command:
 
-{{< copyable "shell-root" >}}
-
 ```bash
 tiup dm list
 ```
@@ -79,8 +77,6 @@ prod-cluster  tidb  ${version}  /root/.tiup/storage/dm/clusters/test  /root/.tiu
 
 After the cluster is successfully deployed, start the cluster by running the following command:
 
-{{< copyable "shell-regular" >}}
-
 ```shell
 tiup dm start prod-cluster
 ```
@@ -90,8 +86,6 @@ If you forget the name of your cluster, view the cluster list by running `tiup d
 ## Check the cluster status
 
 TiUP provides the `tiup dm display` command to view the status of each component in the cluster. With this command, you do not have to log in to each machine to see the component status. The usage of the command is as follows:
-
-{{< copyable "shell-root" >}}
 
 ```bash
 tiup dm display prod-cluster
@@ -137,8 +131,6 @@ To use this command, you need to specify at least two arguments: the cluster nam
 
 For example, to scale in the DM-worker node on `172.16.5.140` (similar to scaling in DM-master), run the following command:
 
-{{< copyable "shell-regular" >}}
-
 ```bash
 tiup dm scale-in prod-cluster -N 172.16.5.140:8262
 ```
@@ -166,8 +158,6 @@ For example, to scale out a DM-worker node in the `prod-cluster` cluster, take t
 
 2. Perform the scale-out operation. TiUP DM adds the corresponding nodes to the cluster according to the port, directory, and other information described in `scale.yaml`.
 
-    {{< copyable "shell-regular" >}}
-
     ```shell
     tiup dm scale-out prod-cluster scale.yaml
     ```
@@ -192,8 +182,6 @@ The rolling upgrade process is made as transparent as possible to the applicatio
 
 You can run the `tiup dm upgrade` command to upgrade a DM cluster. For example, the following command upgrades the cluster to `${version}`. Modify `${version}` to your needed version before running this command:
 
-{{< copyable "shell-regular" >}}
-
 ```bash
 tiup dm upgrade prod-cluster ${version}
 ```
@@ -202,15 +190,11 @@ tiup dm upgrade prod-cluster ${version}
 
 If you want to dynamically update the component configurations, the TiUP DM component saves a current configuration for each cluster. To edit this configuration, execute the `tiup dm edit-config <cluster-name>` command. For example:
 
-{{< copyable "shell-regular" >}}
-
 ```bash
 tiup dm edit-config prod-cluster
 ```
 
 TiUP DM opens the configuration file in the vi editor. If you want to use other editors, use the `EDITOR` environment variable to customize the editor, such as `export EDITOR=nano`. After editing the file, save the changes. To apply the new configuration to the cluster, execute the following command:
-
-{{< copyable "shell-regular" >}}
 
 ```bash
 tiup dm reload prod-cluster
@@ -221,8 +205,6 @@ The command sends the configuration to the target machine and restarts the clust
 ## Update component
 
 For normal upgrade, you can use the `upgrade` command. But in some scenarios, such as debugging, you might need to replace the currently running component with a temporary package. To achieve this, use the `patch` command:
-
-{{< copyable "shell-root" >}}
 
 ```bash
 tiup dm patch --help
@@ -250,15 +232,11 @@ Global Flags:
 
 If a DM-master hotfix package is in `/tmp/dm-master-hotfix.tar.gz` and you want to replace all the DM-master packages in the cluster, run the following command:
 
-{{< copyable "shell-regular" >}}
-
 ```bash
 tiup dm patch prod-cluster /tmp/dm-master-hotfix.tar.gz -R dm-master
 ```
 
 You can also replace only one DM-master package in the cluster:
-
-{{< copyable "shell-regular" >}}
 
 ```bash
 tiup dm patch prod-cluster /tmp/dm--hotfix.tar.gz -N 172.16.4.5:8261
@@ -280,8 +258,6 @@ tiup dm patch prod-cluster /tmp/dm--hotfix.tar.gz -N 172.16.4.5:8261
 Before TiUP is released, DM-Ansible is often used to deploy DM clusters. To enable TiUP to take over the DM 1.0 cluster deployed by DM-Ansible, use the `import` command.
 
 For example, to import a cluster deployed using DM Ansible:
-
-{{< copyable "shell-regular" >}}
 
 ```bash
 tiup dm import --dir=/path/to/dm-ansible --cluster-version ${version}
@@ -310,8 +286,6 @@ Flags:
 
 If the `[audit-id]` argument is not specified, the command shows a list of commands that have been executed. For example:
 
-{{< copyable "shell-regular" >}}
-
 ```bash
 tiup dm audit
 ```
@@ -325,8 +299,6 @@ ID      Time                  Command
 ```
 
 The first column is `audit-id`. To view the execution log of a certain command, pass the `audit-id` argument as follows:
-
-{{< copyable "shell-regular" >}}
 
 ```bash
 tiup dm audit 4D5kQY
@@ -350,8 +322,6 @@ Flags:
 
 For example, to execute `ls /tmp` on all DM nodes, run the following command:
 
-{{< copyable "shell-regular" >}}
-
 ```bash
 tiup dm exec prod-cluster --command='ls /tmp'
 ```
@@ -374,8 +344,6 @@ tiup dmctl:${version} [args]
 
 The previous dmctl command to add a source is `dmctl --master-addr master1:8261 operate-source create /tmp/source1.yml`. After dmctl is integrated into TiUP, the command is:
 
-{{< copyable "shell-regular" >}}
-
 ```bash
 tiup dmctl --master-addr master1:8261 operate-source create /tmp/source1.yml
 ```
@@ -389,7 +357,7 @@ All operations above performed on the cluster machine use the SSH client embedde
 
 Then you can use the `--native-ssh` command-line flag to enable the system-native command-line tool:
 
-- Deploy a cluster: `tiup dm deploy <cluster-name> <version> <topo> --native-ssh`. Fill in the name of your cluster for `<cluster-name>`,  the DM version to be deployed (such as `v{{{ .tidb-version }}}`) for `<version>` , and the topology file name for `<topo>`.
+- Deploy a cluster: `tiup dm deploy <cluster-name> <version> <topo> --native-ssh`. Fill in the name of your cluster for `<cluster-name>`,  the DM version to be deployed (such as `v7.5.6`) for `<version>` , and the topology file name for `<topo>`.
 - Start a cluster: `tiup dm start <cluster-name> --native-ssh`.
 - Upgrade a cluster: `tiup dm upgrade ... --native-ssh`
 

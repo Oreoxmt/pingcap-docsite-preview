@@ -30,8 +30,6 @@ Log in to the control machine using a regular user account (take the `tidb` user
 
 1. Install TiUP by running the following command:
 
-    {{< copyable "shell-regular" >}}
-
     ```shell
     curl --proto '=https' --tlsv1.2 -sSf https://tiup-mirrors.pingcap.com/install.sh | sh
     ```
@@ -40,15 +38,11 @@ Log in to the control machine using a regular user account (take the `tidb` user
 
     1. Redeclare the global environment variables:
 
-        {{< copyable "shell-regular" >}}
-
         ```shell
         source .bash_profile
         ```
 
     2. Confirm whether TiUP is installed:
-
-        {{< copyable "shell-regular" >}}
 
         ```shell
         which tiup
@@ -56,15 +50,11 @@ Log in to the control machine using a regular user account (take the `tidb` user
 
 3. Install the TiUP cluster component:
 
-    {{< copyable "shell-regular" >}}
-
     ```shell
     tiup cluster
     ```
 
 4. If TiUP is already installed, update the TiUP cluster component to the latest version:
-
-    {{< copyable "shell-regular" >}}
 
     ```shell
     tiup update --self && tiup update cluster
@@ -73,8 +63,6 @@ Log in to the control machine using a regular user account (take the `tidb` user
     If `Update successfully!` is displayed, the TiUP cluster is updated successfully.
 
 5. Verify the current version of your TiUP cluster:
-
-    {{< copyable "shell-regular" >}}
 
     ```shell
     tiup --binary cluster
@@ -106,23 +94,17 @@ https://download.pingcap.org/tidb-community-toolkit-{version}-linux-{arch}.tar.g
 
     1. Install the TiUP tool:
 
-        {{< copyable "shell-regular" >}}
-
         ```shell
         curl --proto '=https' --tlsv1.2 -sSf https://tiup-mirrors.pingcap.com/install.sh | sh
         ```
 
     2. Redeclare the global environment variables:
 
-        {{< copyable "shell-regular" >}}
-
         ```shell
         source .bash_profile
         ```
 
     3. Confirm whether TiUP is installed:
-
-        {{< copyable "shell-regular" >}}
 
         ```shell
         which tiup
@@ -132,8 +114,6 @@ https://download.pingcap.org/tidb-community-toolkit-{version}-linux-{arch}.tar.g
 
     1. Pull the needed components on a machine that has access to the Internet:
 
-        {{< copyable "shell-regular" >}}
-
         ```shell
         tiup mirror clone tidb-community-server-${version}-linux-amd64 ${version} --os=linux --arch=amd64
         ```
@@ -141,8 +121,6 @@ https://download.pingcap.org/tidb-community-toolkit-{version}-linux-{arch}.tar.g
         The command above creates a directory named `tidb-community-server-${version}-linux-amd64` in the current directory, which contains the component package necessary for starting a cluster.
 
     2. Pack the component package by using the `tar` command and send the package to the control machine in the isolated environment:
-
-        {{< copyable "shell-regular" >}}
 
         ```bash
         tar czvf tidb-community-server-${version}-linux-amd64.tar.gz tidb-community-server-${version}-linux-amd64
@@ -156,8 +134,6 @@ https://download.pingcap.org/tidb-community-toolkit-{version}-linux-{arch}.tar.g
 
     1. When pulling an offline mirror, you can get an incomplete offline mirror by specifying specific information via parameters, such as the component and version information. For example, you can pull an offline mirror that includes only the offline mirror of TiUP v1.12.3 and TiUP Cluster v1.12.3 by running the following command:
 
-        {{< copyable "shell-regular" >}}
-
         ```bash
         tiup mirror clone tiup-custom-mirror-v1.12.3 --tiup v1.12.3 --cluster v1.12.3
         ```
@@ -167,8 +143,6 @@ https://download.pingcap.org/tidb-community-toolkit-{version}-linux-{arch}.tar.g
     2. Refer to the step 2 of "Pull the mirror using TiUP", and send this incomplete offline mirror to the control machine in the isolated environment.
 
     3. Check the path of the current offline mirror on the control machine in the isolated environment. If your TiUP tool is of a recent version, you can get the current mirror address by running the following command:
-
-        {{< copyable "shell-regular" >}}
 
         ```bash
         tiup mirror show
@@ -180,15 +154,11 @@ https://download.pingcap.org/tidb-community-toolkit-{version}-linux-{arch}.tar.g
 
         First, copy the `keys` directory in the current offline mirror to the `$HOME/.tiup` directory:
 
-        {{< copyable "shell-regular" >}}
-
         ```bash
         cp -r ${base_mirror}/keys $HOME/.tiup/
         ```
 
         Then use the TiUP command to merge the incomplete offline mirror into the mirror in use:
-
-        {{< copyable "shell-regular" >}}
 
         ```bash
         tiup mirror merge tiup-custom-mirror-v1.12.3
@@ -199,8 +169,6 @@ https://download.pingcap.org/tidb-community-toolkit-{version}-linux-{arch}.tar.g
 #### Deploy the offline TiUP component
 
 After sending the package to the control machine of the target cluster, install the TiUP component by running the following commands:
-
-{{< copyable "shell-regular" >}}
 
 ```bash
 tar xzvf tidb-community-server-${version}-linux-amd64.tar.gz && \
@@ -230,8 +198,6 @@ To switch the mirror to another directory, run the `tiup mirror set <mirror-dir>
 
 Run the following command to create a cluster topology file:
 
-{{< copyable "shell-regular" >}}
-
 ```shell
 tiup cluster template > topology.yaml
 ```
@@ -240,23 +206,17 @@ In the following two common scenarios, you can generate recommended topology tem
 
 - For hybrid deployment: Multiple instances are deployed on a single machine. For details, see [Hybrid Deployment Topology](/hybrid-deployment-topology.md).
 
-    {{< copyable "shell-regular" >}}
-
     ```shell
     tiup cluster template --full > topology.yaml
     ```
 
 - For geo-distributed deployment: TiDB clusters are deployed in geographically distributed data centers. For details, see [Geo-Distributed Deployment Topology](/geo-distributed-deployment-topology.md).
 
-    {{< copyable "shell-regular" >}}
-
     ```shell
     tiup cluster template --multi-dc > topology.yaml
     ```
 
 Run `vi topology.yaml` to see the configuration file content:
-
-{{< copyable "shell-regular" >}}
 
 ```shell
 global:
@@ -330,15 +290,11 @@ Before you run the `deploy` command, use the `check` and `check --apply` command
 
 1. Check for potential risks:
 
-    {{< copyable "shell-regular" >}}
-
     ```shell
     tiup cluster check ./topology.yaml --user root [-p] [-i /home/root/.ssh/gcp_rsa]
     ```
 
 2. Enable automatic repair:
-
-    {{< copyable "shell-regular" >}}
 
     ```shell
     tiup cluster check ./topology.yaml --apply --user root [-p] [-i /home/root/.ssh/gcp_rsa]
@@ -346,16 +302,14 @@ Before you run the `deploy` command, use the `check` and `check --apply` command
 
 3. Deploy a TiDB cluster:
 
-    {{< copyable "shell-regular" >}}
-
     ```shell
-    tiup cluster deploy tidb-test v{{{ .tidb-version }}} ./topology.yaml --user root [-p] [-i /home/root/.ssh/gcp_rsa]
+    tiup cluster deploy tidb-test v7.5.6 ./topology.yaml --user root [-p] [-i /home/root/.ssh/gcp_rsa]
     ```
 
 In the `tiup cluster deploy` command above:
 
 - `tidb-test` is the name of the TiDB cluster to be deployed.
-- `v{{{ .tidb-version }}}` is the version of the TiDB cluster to be deployed. You can see the latest supported versions by running `tiup list tidb`.
+- `v7.5.6` is the version of the TiDB cluster to be deployed. You can see the latest supported versions by running `tiup list tidb`.
 - `topology.yaml` is the initialization configuration file.
 - `--user root` indicates logging into the target machine as the `root` user to complete the cluster deployment. The `root` user is expected to have `ssh` and `sudo` privileges to the target machine. Alternatively, you can use other users with `ssh` and `sudo` privileges to complete the deployment.
 - `[-i]` and `[-p]` are optional. If you have configured login to the target machine without password, these parameters are not required. If not, choose one of the two parameters. `[-i]` is the private key of the root user (or other users specified by `--user`) that has access to the target machine. `[-p]` is used to input the user password interactively.
@@ -363,8 +317,6 @@ In the `tiup cluster deploy` command above:
 At the end of the output log, you will see ```Deployed cluster `tidb-test` successfully```. This indicates that the deployment is successful.
 
 ## Step 5. Check the clusters managed by TiUP
-
-{{< copyable "shell-regular" >}}
 
 ```shell
 tiup cluster list
@@ -375,8 +327,6 @@ TiUP supports managing multiple TiDB clusters. The preceding command outputs inf
 ## Step 6. Check the status of the deployed TiDB cluster
 
 For example, run the following command to check the status of the `tidb-test` cluster:
-
-{{< copyable "shell-regular" >}}
 
 ```shell
 tiup cluster display tidb-test
@@ -398,15 +348,11 @@ After safe start, TiUP automatically generates a password for the TiDB root user
 
 Method 1: Safe start
 
-{{< copyable "shell-regular" >}}
-
 ```shell
 tiup cluster start tidb-test --init
 ```
 
 If the output is as follows, the start is successful:
-
-{{< copyable "shell-regular" >}}
 
 ```shell
 Started cluster `tidb-test` successfully.
@@ -418,8 +364,6 @@ The generated password can NOT be got again in future.
 
 Method 2: Standard start
 
-{{< copyable "shell-regular" >}}
-
 ```shell
 tiup cluster start tidb-test
 ```
@@ -427,8 +371,6 @@ tiup cluster start tidb-test
 If the output log includes ```Started cluster `tidb-test` successfully```, the start is successful. After standard start, you can log in to a database using a root user without a password.
 
 ## Step 8. Verify the running status of the TiDB cluster
-
-{{< copyable "shell-regular" >}}
 
 ```shell
 tiup cluster display tidb-test

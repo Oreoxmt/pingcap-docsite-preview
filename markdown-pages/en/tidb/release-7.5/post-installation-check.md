@@ -15,8 +15,6 @@ This section describes how to check the TiDB cluster status using TiUP commands,
 
 Use the `tiup cluster display <cluster-name>` command to check the cluster status. For example:
 
-{{< copyable "shell-regular" >}}
-
 ```shell
 tiup cluster display tidb-test
 ```
@@ -49,8 +47,6 @@ Expected output: If the `Status` information of each node is `Up`, the cluster r
 
 Log in to the database by running the following command:
 
-{{< copyable "shell-regular" >}}
-
 ```shell
 mysql -u root -h ${tidb_server_host_IP_address} -P 4000
 ```
@@ -62,7 +58,7 @@ The following information indicates successful login:
 ```sql
 Welcome to the MySQL monitor.  Commands end with ; or \g.
 Your MySQL connection id is 3
-Server version: 8.0.11-TiDB-v{{{ .tidb-version }}} TiDB Server (Apache License 2.0) Community Edition, MySQL 8.0 compatible
+Server version: 8.0.11-TiDB-v7.5.6 TiDB Server (Apache License 2.0) Community Edition, MySQL 8.0 compatible
 Copyright (c) 2000, 2023, Oracle and/or its affiliates. All rights reserved.
 Oracle is a registered trademark of Oracle Corporation and/or its
 affiliates. Other names may be trademarks of their respective
@@ -74,8 +70,6 @@ Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
 ### Database operations
 
 - Check the version of TiDB:
-
-    {{< copyable "sql" >}}
 
     ```sql
     select tidb_version()\G
@@ -99,8 +93,6 @@ Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
 
 - Create a database named `pingcap`:
 
-    {{< copyable "sql" >}}
-
     ```sql
     create database pingcap;
     ```
@@ -113,8 +105,6 @@ Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
 
     Switch to the `pingcap` database:
 
-    {{< copyable "sql" >}}
-
     ```sql
     use pingcap;
     ```
@@ -126,8 +116,6 @@ Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
     ```
 
 - Create a table named `tab_tidb`:
-
-    {{< copyable "sql" >}}
 
     ```sql
     CREATE TABLE `tab_tidb` (
@@ -147,8 +135,6 @@ Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
 
 - Insert data:
 
-    {{< copyable "sql" >}}
-
     ```sql
     insert into `tab_tidb` values (1,'TiDB',5,'TiDB-v5.0.0');
     ```
@@ -160,8 +146,6 @@ Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
     ```
 
 - View the entries in `tab_tidb`:
-
-    {{< copyable "sql" >}}
 
     ```sql
     select * from tab_tidb;
@@ -179,8 +163,6 @@ Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
     ```
 
 - View the store state, `store_id`, capacity, and uptime of TiKV:
-
-    {{< copyable "sql" >}}
 
     ```sql
     select STORE_ID,ADDRESS,STORE_STATE,STORE_STATE_NAME,CAPACITY,AVAILABLE,UPTIME from INFORMATION_SCHEMA.TIKV_STORE_STATUS;
@@ -200,8 +182,6 @@ Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
     ```
 
 - Exit TiDB:
-
-    {{< copyable "sql" >}}
 
     ```sql
     exit

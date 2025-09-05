@@ -11,8 +11,6 @@ This document describes how to migrate data from MySQL to TiDB using [TiDB Data 
 
 1. Install TiUP, and install [`dmctl`](/dm/dmctl-introduction.md) using TiUP:
 
-    {{< copyable "shell-regular" >}}
-
     ```shell
     curl --proto '=https' --tlsv1.2 -sSf https://tiup-mirrors.pingcap.com/install.sh | sh
     tiup install dm dmctl
@@ -20,18 +18,14 @@ This document describes how to migrate data from MySQL to TiDB using [TiDB Data 
 
 2. Generate the minimal deployment topology file of a DM cluster:
 
-    {{< copyable "shell-regular" >}}
-
     ```
     tiup dm template
     ```
 
 3. Copy the configuration information in the output, and save it as the `topology.yaml` file with the modified IP address. Deploy the DM cluster with the `topology.yaml` file using TiUP:
 
-    {{< copyable "shell-regular" >}}
-
     ```shell
-    tiup dm deploy dm-test {{{ .tidb-version }}} topology.yaml -p
+    tiup dm deploy dm-test 7.5.6 topology.yaml -p
     ```
 
 ## Step 2: Prepare the data source
@@ -39,8 +33,6 @@ This document describes how to migrate data from MySQL to TiDB using [TiDB Data 
 You can use one or multiple MySQL instances as an upstream data source.
 
 1. Create a configuration file for each data source as follows:
-
-    {{< copyable "shell-regular" >}}
 
     ```yaml
     source-id: "mysql-01"
@@ -53,8 +45,6 @@ You can use one or multiple MySQL instances as an upstream data source.
 
 2. Add the source to the DM cluster by running the following command. `mysql-01.yaml` is the configuration file created in the previous step.
 
-    {{< copyable "shell-regular" >}}
-
     ```bash
     tiup dmctl --master-addr=127.0.0.1:8261 operate-source create mysql-01.yaml # use one of master_servers as the argument of --master-addr
     ```
@@ -62,8 +52,6 @@ You can use one or multiple MySQL instances as an upstream data source.
 If you do not have a MySQL instance for testing, you can create a MySQL instance in Docker by taking the following steps:
 
 1. Create a MySQL configuration file:
-
-    {{< copyable "shell-regular" >}}
 
     ```shell
     mkdir -p /tmp/mysqltest && cd /tmp/mysqltest
@@ -84,8 +72,6 @@ If you do not have a MySQL instance for testing, you can create a MySQL instance
 
 2. Start the MySQL instance using Docker:
 
-    {{< copyable "shell-regular" >}}
-
     ```shell
     docker run --name mysql-01 -v /tmp/mysqltest:/etc/mysql/conf.d -e MYSQL_ROOT_PASSWORD=my-secret-pw -d -p 3306:3306 mysql:5.7
     ```
@@ -95,8 +81,6 @@ If you do not have a MySQL instance for testing, you can create a MySQL instance
     > **Note:**
     >
     > This command is only suitable for trying out data migration, and cannot be used in production environments or stress tests.
-
-    {{< copyable "shell-regular" >}}
 
     ```shell
     mysql -uroot -p -h 127.0.0.1 -P 3306
@@ -108,8 +92,6 @@ You can choose an existing TiDB cluster as a target for data migration.
 
 If you do not have a TiDB cluster for testing, you can quickly build a demonstration environment by running the following command:
 
-{{< copyable "shell-regular" >}}
-
 ```shell
 tiup playground
 ```
@@ -117,8 +99,6 @@ tiup playground
 ## Step 4: Prepare test data
 
 Create a test table and data in one or multiple data sources. If you use an existing MySQL database, and the database contains available data, you can skip this step.
-
-{{< copyable "sql" >}}
 
 ```sql
 drop database if exists `testdm`;
@@ -133,8 +113,6 @@ insert into t2 (id, uid, name) values (3, 20001, 'José Arcadio Buendía'), (4, 
 ## Step 5: Create a data migration task
 
 1. Create a task configuration file `testdm-task.yaml`:
-
-    {{< copyable "" >}}
 
     ```yaml
     name: testdm
@@ -158,8 +136,6 @@ insert into t2 (id, uid, name) values (3, 20001, 'José Arcadio Buendía'), (4, 
 
 2. Create the task using dmctl:
 
-    {{< copyable "shell-regular" >}}
-
     ```bash
     tiup dmctl --master-addr 127.0.0.1:8261 start-task testdm-task.yaml
     ```
@@ -169,8 +145,6 @@ You have successfully created a task that migrates data from a `mysql-01` databa
 ## Step 6: Check the status of the task
 
 After the task is created, you can use the `dmctl query-status` command to check the status of the task:
-
-{{< copyable "shell-regular" >}}
 
 ```bash
 tiup dmctl --master-addr 127.0.0.1:8261 query-status testdm
