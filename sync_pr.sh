@@ -128,7 +128,7 @@ perform_sync_task() {
     git -C "$SRC_DIR" diff --merge-base --name-only --diff-filter=AMR origin/"$BASE_BRANCH" --relative | tee /dev/fd/2 |
       rsync -av --files-from=- "$SRC_DIR" "$DEST_DIR"
 
-    # Get the current commit SHA
+    # Get the current commit SHA.
     CURRENT_COMMIT=$(git -C "$REPO_DIR" rev-parse HEAD)
     commit_changes "Sync files for PR https://github.com/$REPO_OWNER/$REPO_NAME/pull/$PR_NUMBER (commit: https://github.com/$REPO_OWNER/$REPO_NAME/pull/$PR_NUMBER/commits/$CURRENT_COMMIT)"
 

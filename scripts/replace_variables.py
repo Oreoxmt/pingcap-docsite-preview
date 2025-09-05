@@ -39,13 +39,13 @@ def create_variable_replacer(variables_file: Path):
         path_segments = variable_path.split(".")
         current_value = variables
 
-        # Traverse through the nested dictionary structure using path segments
+        # Traverse through the nested dictionary structure using path segments.
         for segment in path_segments:
             if segment not in current_value:
                 raise KeyError(f"Variable {variable_path} is not defined in the configuration file.")
             current_value = current_value[segment]
 
-        # Ensure the final value is a string before returning it
+        # Ensure the final value is a string before returning it.
         if isinstance(current_value, str):
             return current_value
         raise ValueError(f"Variable {variable_path} exists but its value is not a string.")
@@ -57,8 +57,7 @@ def replace_variables(target_path: Path, variables_file: Path):
     """
     Replace all variables in Markdown files with their actual values.
 
-    Variables are defined in a JSON file and referenced in Markdown files
-    using the syntax {{{ .path.to.variable }}}.
+    Variables are defined in a JSON file and referenced in Markdown files using the syntax {{{ .path.to.variable }}}.
 
     Args:
         target_path (Path): File or directory path to process
