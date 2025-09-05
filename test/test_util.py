@@ -52,6 +52,10 @@ class DocSitePreviewTest:
         for dependency in dependencies:
             dependency_script = os.path.join(self.feature_dir, dependency)
             test_dependency_script = os.path.join(self.test_output, dependency)
+
+            # Create the destination directory if it doesn't exist.
+            os.makedirs(os.path.dirname(test_dependency_script), exist_ok=True)
+
             shutil.copy(dependency_script, test_dependency_script)
             self._make_executable(test_dependency_script)
 

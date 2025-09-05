@@ -71,7 +71,7 @@ class TestRunner:
         script_name = config.test_target
         diff_command = config.diff_command
         case_name = case.name
-        feature_dir = os.path.dirname(case_name)
+        feature_dir = os.path.dirname(os.path.abspath(script_name))
         test_dir = os.path.abspath(case.directory)
         script_args = case.args
 
