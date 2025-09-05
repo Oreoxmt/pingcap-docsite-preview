@@ -11,8 +11,9 @@ directory = "test/sync_scaffold/"
 
 [sync_pr]
 
-diff_command = "diff -qrs data actual --exclude temp --exclude '*.log' --exclude sync_pr.sh"
+diff_command = "diff -qrs data actual --exclude temp --exclude '*.log' --exclude sync_pr.sh --exclude scripts"
 test_target = "sync_pr.sh"
+test_dependencies = ["scripts/replace_variables.py"]
 
 [[sync_pr.test_cases]]
 
@@ -38,11 +39,17 @@ name = "Sync markdown-pages from a TiDB Operator PR"
 args = "preview-operator/pingcap/docs-tidb-operator/2397"
 directory = "test/sync_pr_operator/"
 
+[[sync_pr.test_cases]]
+
+name = "Sync markdown-pages from a PR and replace variables"
+args = "preview/pingcap/docs/21614"
+directory = "test/sync_pr_replace_variables/"
+
 [sync_mult_prs]
 
-diff_command = "diff -qrs data actual --exclude temp --exclude '*.log' --exclude sync_mult_prs.sh --exclude sync_pr.sh"
+diff_command = "diff -qrs data actual --exclude temp --exclude '*.log' --exclude sync_mult_prs.sh --exclude sync_pr.sh --exclude scripts"
 test_target = "sync_mult_prs.sh"
-test_dependencies = ["sync_pr.sh"]
+test_dependencies = ["sync_pr.sh", "scripts/replace_variables.py"]
 
 [[sync_mult_prs.test_cases]]
 
