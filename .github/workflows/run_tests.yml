@@ -20,8 +20,8 @@ jobs:
       run: |
         echo "GITHUB_TOKEN=${{ secrets.GITHUB_TOKEN }}" >> .env
         echo "TEST=1" >> .env
-        echo "DOCS_PR=13910" >> .env
-        echo "DOCS_CN_PR=14523" >> .env
+        echo "DOCS_PR=21323" >> .env
+        echo "DOCS_CN_PR=20575" >> .env
         echo "CLOUD_DOCS_PR=10098" >> .env
         echo "OPERATOR_DOCS_PR=2397" >> .env
         echo "RELEASE_DIR=release-6.7" >> .env

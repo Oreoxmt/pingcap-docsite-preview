@@ -14,7 +14,7 @@ aliases: ['/zh/tidb/dev/insert-data']
 
 在阅读本页面之前，你需要准备以下事项：
 
-- [使用 TiDB Serverless 构建 TiDB 集群](/develop/dev-guide-build-cluster-in-cloud.md)。
+- [使用 {{{ .starter }}} 构建 TiDB 集群](/develop/dev-guide-build-cluster-in-cloud.md)。
 - 阅读[数据库模式概览](/develop/dev-guide-schema-design-overview.md)，并[创建数据库](/develop/dev-guide-create-database.md)、[创建表](/develop/dev-guide-create-table.md)、[创建二级索引](/develop/dev-guide-create-secondary-indexes.md)。
 
 ## 插入行
@@ -194,8 +194,8 @@ func buildBulkInsertSQL(amount int) string {
 
 有关 Golang 的完整示例，可参阅：
 
-- [TiDB 和 Go-MySQL-Driver 的简单 CRUD 应用程序](/develop/dev-guide-sample-application-golang-sql-driver.md)
-- [TiDB 和 GORM 的简单 CRUD 应用程序](/develop/dev-guide-sample-application-golang-gorm.md)
+- [使用 Go-MySQL-Driver 连接到 TiDB](/develop/dev-guide-sample-application-golang-sql-driver.md)
+- [使用 GORM 连接到 TiDB](/develop/dev-guide-sample-application-golang-gorm.md)
 
 </div>
 
@@ -224,11 +224,12 @@ with get_connection(autocommit=True) as connection:
 
 有关 Python 的完整示例，可参阅：
 
-- [TiDB 和 PyMySQL 的简单 CRUD 应用程序](/develop/dev-guide-sample-application-python-pymysql.md)
-- [TiDB 和 mysqlclient 的简单 CRUD 应用程序](/develop/dev-guide-sample-application-python-mysqlclient.md)
-- [TiDB 和 MySQL Connector/Python 的简单 CRUD 应用程序](/develop/dev-guide-sample-application-python-mysql-connector.md)
-- [TiDB 和 SQLAlchemy 的简单 CRUD 应用程序](/develop/dev-guide-sample-application-python-sqlalchemy.md)
-- [TiDB 和 peewee 的简单 CRUD 应用程序](/develop/dev-guide-sample-application-python-peewee.md)
+- [使用 PyMySQL 连接到 TiDB](/develop/dev-guide-sample-application-python-pymysql.md)
+- [使用 mysqlclient 连接到 TiDB](/develop/dev-guide-sample-application-python-mysqlclient.md)
+- [使用 MySQL Connector/Python 连接到 TiDB](/develop/dev-guide-sample-application-python-mysql-connector.md)
+- [使用 SQLAlchemy 连接到 TiDB](/develop/dev-guide-sample-application-python-sqlalchemy.md)
+- [使用 Django 连接到 TiDB](/develop/dev-guide-sample-application-python-django.md)
+- [使用 peewee 连接到 TiDB](/develop/dev-guide-sample-application-python-peewee.md)
 
 </div>
 

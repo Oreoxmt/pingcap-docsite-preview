@@ -1,0 +1,10 @@
+{
+  "tidb": "TiDB",
+  "tidb-version": "8.5.3",
+  "tidb-release-date": "2025-08-14",
+  "self-managed": "TiDB Self-Managed",
+  "starter": "TiDB Cloud Starter",
+  "essential": "TiDB Cloud Essential",
+  "dedicated": "TiDB Cloud Dedicated",
+  "console-url": "tidbcloud.com"
+}
