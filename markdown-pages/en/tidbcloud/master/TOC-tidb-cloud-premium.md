@@ -71,7 +71,7 @@
   - C#
     - [C#](/develop/dev-guide-sample-application-cs.md)
   - [WordPress](/tidb-cloud/dev-guide-wordpress.md)
-  - Serverless Driver ![BETA](https://docs-download.pingcap.com/media/images/docs/tidb-cloud/blank_transparent_placeholder.png) <!--TBD, ToDo: Not sure if we need to update the driver name-->
+  - Serverless Driver ![BETA](/media/tidb-cloud/blank_transparent_placeholder.png) <!--TBD, ToDo: Not sure if we need to update the driver name-->
     - [TiDB Cloud Serverless Driver](/tidb-cloud/serverless-driver.md)
     - [Node.js Example](/tidb-cloud/serverless-driver-node-example.md)
     - [Prisma Example](/tidb-cloud/serverless-driver-prisma-example.md)
@@ -131,8 +131,8 @@
 - Manage Instances
   - [Select Your Cluster Plan](/tidb-cloud/select-cluster-tier.md)
   - Manage TiDB Cloud Instances
-    - [Create a TiDB Cloud Premium Instance](/tidb-cloud/premium/create-tidb-instance-premium.md)
-    - Connect to Your TiDB Cloud Instance
+    - [Create a {{{ .premium }}} Instance](/tidb-cloud/premium/create-tidb-instance-premium.md)
+    - Connect to Your TiDB Cloud Cluster
       - [Connection Overview](/tidb-cloud/premium/connect-to-tidb-instance.md)
       - [Connect via Public Endpoint](/tidb-cloud/premium/connect-to-premium-via-public-connection.md)
       - [Connect via Private Endpoint with AWS](/tidb-cloud/premium/connect-to-premium-via-aws-private-endpoint.md)
@@ -240,6 +240,8 @@
     - [Configure an IP Access List](/tidb-cloud/premium/configure-ip-access-list-premium.md)
     - [Connect via Private Endpoint with Alibaba Cloud](/tidb-cloud/set-up-private-endpoint-connections-on-alibaba-cloud.md)
     - [Configure Firewall Rules for Public Endpoints](/tidb-cloud/configure-serverless-firewall-rules-for-public-endpoints.md)
+  - Data Access Control
+    - [User-Controlled Log Redaction](/tidb-cloud/tidb-cloud-log-redaction.md)
   - Audit Management
     - [Console Audit Logging](/tidb-cloud/tidb-cloud-console-auditing.md)
 - Billing
@@ -532,14 +534,14 @@
   - [Metadata Lock](/metadata-lock.md)
   - [Use UUIDs](/best-practices/uuid.md)
   - [TiDB Accelerated Table Creation](/accelerated-table-creation.md)
-- API Reference ![BETA](https://docs-download.pingcap.com/media/images/docs/tidb-cloud/blank_transparent_placeholder.png)
+- API Reference ![BETA](/media/tidb-cloud/blank_transparent_placeholder.png)
   - [Overview](/tidb-cloud/api-overview.md)
   - v1beta1
     - [Billing](https://docs.pingcap.com/tidbcloud/api/v1beta1/billing)
     - [IAM](https://docs.pingcap.com/tidbcloud/api/v1beta1/iam)
     - [MSP (Deprecated)](https://docs.pingcap.com/tidbcloud/api/v1beta1/msp)
   - [v1beta](https://docs.pingcap.com/tidbcloud/api/v1beta)
-- CLI Reference ![BETA](https://docs-download.pingcap.com/media/images/docs/tidb-cloud/blank_transparent_placeholder.png)
+- CLI Reference ![BETA](/media/tidb-cloud/blank_transparent_placeholder.png)
   - [Overview](/tidb-cloud/cli-reference.md)
   - auth
     - [login](/tidb-cloud/ticloud-auth-login.md)
