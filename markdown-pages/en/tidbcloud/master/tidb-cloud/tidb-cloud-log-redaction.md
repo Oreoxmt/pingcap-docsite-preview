@@ -1,11 +1,11 @@
 ---
 title: User-Controlled Log Redaction
-summary: Learn how to enable or disable user-controlled log redaction for TiDB Cloud Dedicated clusters and {{{ .premium }}} instances to manage sensitive data visibility in execution logs.
+summary: Learn how to enable or disable user-controlled log redaction for TiDB Cloud Dedicated clusters and TiDB Cloud Premium instances to manage sensitive data visibility in execution logs.
 ---
 
 # User-Controlled Log Redaction
 
-User-controlled log redaction lets you manage the visibility of sensitive data in your <CustomContent plan="dedicated">[TiDB Cloud Dedicated](/tidb-cloud/select-cluster-tier.md#tidb-cloud-dedicated) cluster</CustomContent><CustomContent plan="premium">{{{ .premium }}} instance</CustomContent> logs. By toggling this redaction feature, you can protect your information, balance operational needs with security, and control what appears in your <CustomContent plan="dedicated">cluster</CustomContent><CustomContent plan="premium">instance</CustomContent> logs.
+User-controlled log redaction lets you manage the visibility of sensitive data in your <CustomContent plan="dedicated">[TiDB Cloud Dedicated](/tidb-cloud/select-cluster-tier.md#tidb-cloud-dedicated) cluster</CustomContent><CustomContent plan="premium">TiDB Cloud Premium instance</CustomContent> logs. By toggling this redaction feature, you can protect your information, balance operational needs with security, and control what appears in your <CustomContent plan="dedicated">cluster</CustomContent><CustomContent plan="premium">instance</CustomContent> logs.
 
 Log redaction is enabled by default, ensuring that sensitive information in running logs and execution plans is concealed. If you need more detailed log information for <CustomContent plan="dedicated">cluster</CustomContent><CustomContent plan="premium">instance</CustomContent> maintenance or SQL tuning, you can disable this feature at any time.
 
@@ -21,7 +21,7 @@ Log redaction is enabled by default, ensuring that sensitive information in runn
 
 > **Note:**
 >
-> The log redaction feature is supported for TiDB Cloud Dedicated clusters and {{{ .premium }}} instances.
+> The log redaction feature is supported for TiDB Cloud Dedicated clusters and TiDB Cloud Premium instances.
 
 </CustomContent>
 
