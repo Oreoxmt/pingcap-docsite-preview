@@ -1,7 +1,7 @@
 <!-- markdownlint-disable MD007 -->
 <!-- markdownlint-disable MD041 -->
 
-- About TiDB Self-Managed (master)
+- Preview (main)
   - [What is TiDB Self-Managed](/overview.md)
   - [TiDB 8.5 Release Notes](/releases/release-8.5.0.md)
   - [Features](/basic-features.md)

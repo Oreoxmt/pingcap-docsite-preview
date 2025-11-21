@@ -6,7 +6,7 @@ hide_sidebar: true
 hide_commit: true
 ---
 
-<LearningPathContainer platform="tidb-operator" title="TiDB on Kubernetes (master)" subTitle="Using TiDB Operator provided by PingCAP, you can run and maintain TiDB seamlessly on the Kubernetes clusters deployed on a public cloud or in a self-managed environment.">
+<LearningPathContainer platform="tidb-operator" title="TiDB on Kubernetes (main)" subTitle="Using TiDB Operator provided by PingCAP, you can run and maintain TiDB seamlessly on the Kubernetes clusters deployed on a public cloud or in a self-managed environment.">
 
 <LearningPath label="Learn" icon="cloud1">
 
