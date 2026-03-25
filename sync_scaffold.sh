@@ -8,7 +8,7 @@ CLONE_DIR="temp/docs-staging"
 
 # Files to sync from the repository
 SYNC_FILES=("TOC*.md" "_index.md" "_docHome.md")
-SYNC_JSON_FILE="docs.json"
+SYNC_JSON_FILES=("docs.json" "tooltip-terms.json")
 
 # Get the current script's directory and change to it
 SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
@@ -83,8 +83,10 @@ done
 # Synchronize SRC and DEST
 rsync -avm --checksum "${INCLUDES[@]}" --exclude='*' "$SRC" "$DEST"
 
-# Copy SYNC_JSON_FILE from CLONE_DIR to the current directory
-cp "$CLONE_DIR/$SYNC_JSON_FILE" "./$SYNC_JSON_FILE"
+# Copy SYNC_JSON_FILES from CLONE_DIR to the current directory
+for file in "${SYNC_JSON_FILES[@]}"; do
+  cp "$CLONE_DIR/$file" "./$file"
+done
 
 # Exit if TEST is set and not empty
 test -n "$TEST" && echo "Test mode, exiting..." && exit 0
