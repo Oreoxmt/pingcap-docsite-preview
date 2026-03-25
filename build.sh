@@ -62,7 +62,7 @@ fi
 
 # Copy docs.json and tooltip-terms.json to website-docs/docs.
 cp docs.json website-docs/docs/docs.json
-cp tooltip-terms.json website-docs/docs/tooltip-terms.json
+[ -f tooltip-terms.json ] && cp tooltip-terms.json website-docs/docs/tooltip-terms.json
 
 # Run the start command for development environment. <https://www.gatsbyjs.com/docs/reference/gatsby-cli/#develop>
 if [ "$CMD" == "start" ]; then

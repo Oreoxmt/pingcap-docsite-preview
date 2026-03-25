@@ -85,7 +85,7 @@ rsync -avm --checksum "${INCLUDES[@]}" --exclude='*' "$SRC" "$DEST"
 
 # Copy SYNC_JSON_FILES from CLONE_DIR to the current directory
 for file in "${SYNC_JSON_FILES[@]}"; do
-  cp "$CLONE_DIR/$file" "./$file"
+  [ -f "$CLONE_DIR/$file" ] && cp "$CLONE_DIR/$file" "./$file"
 done
 
 # Exit if TEST is set and not empty
