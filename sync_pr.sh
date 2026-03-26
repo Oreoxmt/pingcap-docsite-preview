@@ -112,6 +112,27 @@ process_cloud_toc() {
 
 perform_sync_task() {
   generate_sync_tasks
+
+  # Set the target branch and folders of TOC namespace per product.
+  # These folders are served from a fixed target branch; when BASE_BRANCH differs, they must also be synced there for the preview to reflect changes at their canonical URLs.
+  #  - tidb:               docs.tidb.stable from docs.json (e.g. release-8.5)
+  #  - tidb-in-kubernetes: main
+  #  - tidbcloud:          master (already the default target, no extra sync needed)
+  case "$PREVIEW_PRODUCT" in
+  preview)
+    TOC_TARGET_BRANCH=$(jq -r '.docs.tidb.stable' docs.json)
+    TOC_FOLDERS=("ai" "develop" "best-practices" "api" "releases")
+    ;;
+  preview-operator)
+    TOC_TARGET_BRANCH="main"
+    TOC_FOLDERS=("releases")
+    ;;
+  *)
+    TOC_TARGET_BRANCH=""
+    TOC_FOLDERS=()
+    ;;
+  esac
+
   # Perform sync tasks.
   for TASK in "${SYNC_TASKS[@]}"; do
 
@@ -125,7 +146,8 @@ perform_sync_task() {
     fi
 
     # Only sync modified or added files.
-    git -C "$SRC_DIR" diff --merge-base --name-only --diff-filter=AMR origin/"$BASE_BRANCH" --relative | tee /dev/fd/2 |
+    CHANGED_FILES=$(git -C "$SRC_DIR" diff --merge-base --name-only --diff-filter=AMR origin/"$BASE_BRANCH" --relative)
+    echo "$CHANGED_FILES" | tee /dev/fd/2 |
       rsync -av --files-from=- "$SRC_DIR" "$DEST_DIR"
 
     # Get the current commit SHA.
@@ -144,6 +166,47 @@ perform_sync_task() {
     fi
 
     commit_changes "Post-process docs (variables replaced, copyable removed)"
+
+    # Sync TOC namespace folders to the target branch path when BASE_BRANCH differs.
+    if [[ -n "$TOC_TARGET_BRANCH" && "$BASE_BRANCH" != "$TOC_TARGET_BRANCH" ]]; then
+      TOC_TARGET_DIR="$(dirname "$DEST_DIR")/$TOC_TARGET_BRANCH"
+
+      if [[ "$TOC_TARGET_DIR" == "$DEST_DIR" ]]; then
+        echo "Warning: TOC_TARGET_DIR equals DEST_DIR ($DEST_DIR), skipping TOC namespace sync for task $TASK."
+      else
+        mkdir -p "$TOC_TARGET_DIR"
+
+        if [[ -f "$SRC_DIR/variables.json" ]]; then
+          rsync -av "$SRC_DIR/variables.json" "$TOC_TARGET_DIR/"
+        fi
+
+        # Sync changed TOC*.md files.
+        CHANGED_TOCS=$(echo "$CHANGED_FILES" | grep "^TOC.*\.md$" || true)
+        if [[ -n "$CHANGED_TOCS" ]]; then
+          echo "$CHANGED_TOCS" | rsync -av --files-from=- "$SRC_DIR" "$TOC_TARGET_DIR/"
+        fi
+
+        # Sync changed files in each TOC namespace folder.
+        TOC_FOLDER_SYNCED=false
+        for FOLDER in "${TOC_FOLDERS[@]}"; do
+          CHANGED=$(echo "$CHANGED_FILES" | grep "^$FOLDER/" || true)
+          if [[ -n "$CHANGED" ]]; then
+            echo "$CHANGED" | sed "s|^$FOLDER/||" |
+              rsync -av --files-from=- "$SRC_DIR/$FOLDER/" "$TOC_TARGET_DIR/$FOLDER/"
+            TOC_FOLDER_SYNCED=true
+          fi
+        done
+
+        if [[ "$TOC_FOLDER_SYNCED" == true ]]; then
+          # Use the target branch's variables.json, which might differ from BASE_BRANCH.
+          if [[ -f "$TOC_TARGET_DIR/variables.json" ]]; then
+            ./scripts/replace_variables.py "$TOC_TARGET_DIR" "$TOC_TARGET_DIR/variables.json"
+          fi
+          (cd "$TOC_TARGET_DIR" && remove_copyable)
+          commit_changes "Sync TOC namespace folders from ${BASE_BRANCH} to ${TOC_TARGET_BRANCH} for preview (task: ${TASK})"
+        fi
+      fi
+    fi
 
   done
 
