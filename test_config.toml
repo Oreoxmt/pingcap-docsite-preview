@@ -11,9 +11,9 @@ directory = "test/sync_scaffold/"
 
 [sync_pr]
 
-diff_command = "diff -qrs data actual --exclude temp --exclude '*.log' --exclude sync_pr.sh --exclude scripts"
+diff_command = "diff -qrs data actual --exclude temp --exclude '*.log' --exclude sync_pr.sh --exclude scripts --exclude docs.json"
 test_target = "sync_pr.sh"
-test_dependencies = ["scripts/replace_variables.py"]
+test_dependencies = ["scripts/replace_variables.py", "docs.json"]
 
 [[sync_pr.test_cases]]
 
@@ -47,9 +47,9 @@ directory = "test/sync_pr_replace_variables/"
 
 [sync_mult_prs]
 
-diff_command = "diff -qrs data actual --exclude temp --exclude '*.log' --exclude sync_mult_prs.sh --exclude sync_pr.sh --exclude scripts"
+diff_command = "diff -qrs data actual --exclude temp --exclude '*.log' --exclude sync_mult_prs.sh --exclude sync_pr.sh --exclude scripts --exclude docs.json"
 test_target = "sync_mult_prs.sh"
-test_dependencies = ["sync_pr.sh", "scripts/replace_variables.py"]
+test_dependencies = ["sync_pr.sh", "scripts/replace_variables.py", "docs.json"]
 
 [[sync_mult_prs.test_cases]]
 
