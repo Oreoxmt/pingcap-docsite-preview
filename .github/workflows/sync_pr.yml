@@ -21,7 +21,7 @@ jobs:
 
     steps:
     - name: Checkout current repo
-      uses: actions/checkout@v3
+      uses: actions/checkout@v5
 
     - name: Run sync_pr script
       run: |
