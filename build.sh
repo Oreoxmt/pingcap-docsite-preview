@@ -73,6 +73,6 @@ fi
 # Run the build command for production environment. <https://www.gatsbyjs.com/docs/reference/gatsby-cli/#build>
 if [ "$CMD" == "build" ]; then
   replace_image_path
-  (cd website-docs && pnpm install && pnpm build)
+  (cd website-docs && pnpm install --frozen-lockfile && pnpm build)
   move_images
 fi
