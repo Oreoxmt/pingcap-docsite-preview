@@ -87,7 +87,7 @@ The following video introduces key features of TiDB.
     date="2026-04-09"
   />
   <ResourceCard
-    title="S3 is the New Network: Rethinking Data Architecture for AI Agents"
+    title="Distributed SQL Database: Architecture, Scale, and High Availability"
     type="blog"
     link="https://www.pingcap.com/blog/why-distributed-sql-databases-elevate-modern-app-dev/"
     imgSrc="https://static.pingcap.com/files/2023/08/17235704/Distributed-SQL-Databases.png"
