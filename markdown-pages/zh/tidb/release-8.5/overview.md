@@ -62,18 +62,18 @@ summary: TiDB 是平凯星辰自主设计、研发的开源分布式关系型数
 - [TiDB 数据库的计算](/tidb-computing.md)
 - [TiDB 数据库的调度](/tidb-scheduling.md)
 
-## Related resources
+## 相关资源
 
 <RelatedResources>
   <ResourceCard
-    title="TiDB Admin Lab 1: Deploying a TiDB Cluster Using TiUP"
+    title="TiDB 管理实验 1：使用 TiUP 部署 TiDB 集群"
     type="lab"
     link="https://labs.tidb.io/labs/dba_303_lab_ff0"
     imgSrc="https://lab-static.pingcap.com/quick-demo/dba_303_ch01_en.png"
-    duration="60 mins"
+    duration="60 分钟"
   />
   <ResourceCard
-    title="S3 is the New Network: Rethinking Data Architecture for AI Agents"
+    title="S3 是新的网络：为 AI 智能体重新思考数据架构"
     type="blog"
     link="https://www.pingcap.com/blog/s3-new-network-cloud-object-storage-database-architecture/"
     imgSrc="https://static.pingcap.com/files/2026/04/10114857/Blog-Feature.png"
@@ -81,7 +81,7 @@ summary: TiDB 是平凯星辰自主设计、研发的开源分布式关系型数
     date="2026-04-09"
   />
   <ResourceCard
-    title="Distributed SQL Database: Architecture, Scale, and High Availability"
+    title="分布式 SQL 数据库：架构、扩展性与高可用性"
     type="blog"
     link="https://www.pingcap.com/blog/why-distributed-sql-databases-elevate-modern-app-dev/"
     imgSrc="https://static.pingcap.com/files/2023/08/17235704/Distributed-SQL-Databases.png"
@@ -89,12 +89,12 @@ summary: TiDB 是平凯星辰自主设计、研发的开源分布式关系型数
     date="2025-12-10"
   />
   <ResourceCard
-    title="Create a Consistent Cluster"
+    title="创建一致性集群"
     type="video"
     link="https://www.youtube.com/watch?v=aWBNNPm21zg"
     imgSrc="https://static.pingcap.com/files/2023/06/23183557/Introducing-TiDB-1.jpeg"
     author="PingCAP"
     date="2021-10-10"
-    duration="2 mins"
+    duration="2 分钟"
   />
 </RelatedResources>
