@@ -17,7 +17,7 @@ In this tutorial, you can learn how to use TiDB and mysql2 in AWS Lambda Functio
 
 > **Note**
 >
-> This tutorial works with {{{ .starter }}}, {{{ .essential }}}, {{{ .premium }}}, and TiDB Self-Managed.
+> This tutorial works with TiDB Cloud Starter, TiDB Cloud Essential, TiDB Cloud Premium, and TiDB Self-Managed.
 
 ## Prerequisites
 
@@ -32,7 +32,7 @@ To complete this tutorial, you need:
 
 **If you don't have a TiDB cluster, you can create one as follows:**
 
-- (Recommended) [Create a {{{ .starter }}} instance](/develop/dev-guide-build-cluster-in-cloud.md).
+- (Recommended) [Create a TiDB Cloud Starter instance](/develop/dev-guide-build-cluster-in-cloud.md).
 - [Deploy a local test TiDB Self-Managed cluster](/quick-start-with-tidb.md#deploy-a-local-test-cluster) or [Deploy a production TiDB Self-Managed cluster](/production-deployment-using-tiup.md).
 
 If you don't have an AWS account or a user, you can create them by following the steps in the [Getting Started with Lambda](https://docs.aws.amazon.com/lambda/latest/dg/getting-started.html) guide.
@@ -68,9 +68,9 @@ Connect to TiDB depending on the TiDB deployment option you've selected.
 
 <SimpleTab>
 
-<div label="{{{ .starter }}} or Essential">
+<div label="TiDB Cloud Starter or Essential">
 
-1. Navigate to the [**My TiDB**](https://tidbcloud.com/tidbs) page, and then click the name of your target {{{ .starter }}} or Essential instance to go to its overview page.
+1. Navigate to the [**My TiDB**](https://tidbcloud.com/tidbs) page, and then click the name of your target TiDB Cloud Starter or Essential instance to go to its overview page.
 
 2. Click **Connect** in the upper right corner. A connection dialog is displayed.
 
@@ -109,9 +109,9 @@ Connect to TiDB depending on the TiDB deployment option you've selected.
 
 </div>
 
-<div label="{{{ .premium }}}">
+<div label="TiDB Cloud Premium">
 
-1. Navigate to the [**My TiDB**](https://tidbcloud.com/tidbs) page, and then click the name of your target {{{ .premium }}} instance to go to its overview page.
+1. Navigate to the [**My TiDB**](https://tidbcloud.com/tidbs) page, and then click the name of your target TiDB Cloud Premium instance to go to its overview page.
 
 2. In the left navigation pane, click **Settings** > **Networking**.
 
@@ -128,7 +128,7 @@ Connect to TiDB depending on the TiDB deployment option you've selected.
     - If a message indicates that the public endpoint is still being enabled, wait until the process completes.
     - If you have not set a password yet, click **Set Root Password** in the dialog.
     - If you need to verify the server certificate or if the connection fails and requires a CA certificate, click **CA cert** to download it.
-    - In addition to the **Public** connection type, {{{ .premium }}} supports **Private Endpoint** connections. For more information, see [Connect to {{{ .premium }}} via AWS PrivateLink](/tidb-cloud/premium/connect-to-premium-via-aws-private-endpoint.md).
+    - In addition to the **Public** connection type, TiDB Cloud Premium supports **Private Endpoint** connections. For more information, see [Connect to TiDB Cloud Premium via AWS PrivateLink](/tidb-cloud/premium/connect-to-premium-via-aws-private-endpoint.md).
 
 7. Copy and paste the corresponding connection string into `env.json`. The following is an example:
 
@@ -385,7 +385,7 @@ For more information, refer to [Delete data](/develop/dev-guide-delete-data.md).
 - To avoid SQL injection, it is recommended to use [prepared statements](https://github.com/sidorares/node-mysql2#using-prepared-statements).
 - In scenarios where there are not many complex SQL statements involved, using ORM frameworks like [Sequelize](https://sequelize.org/), [TypeORM](https://typeorm.io/), or [Prisma](https://www.prisma.io/) can greatly improve development efficiency.
 - For building a RESTful API for your application, it is recommended to [use AWS Lambda with API Gateway](https://docs.aws.amazon.com/lambda/latest/dg/services-apigateway.html).
-- For designing high-performance applications using {{{ .starter }}} and AWS Lambda, refer to [this blog](https://aws.amazon.com/blogs/apn/designing-high-performance-applications-using-serverless-tidb-cloud-and-aws-lambda/).
+- For designing high-performance applications using TiDB Cloud Starter and AWS Lambda, refer to [this blog](https://aws.amazon.com/blogs/apn/designing-high-performance-applications-using-serverless-tidb-cloud-and-aws-lambda/).
 
 ## Next steps
 

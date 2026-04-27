@@ -17,7 +17,7 @@ In this tutorial, you can learn how to connect to TiDB using MySQL Workbench.
 
 > **Note:**
 >
-> This tutorial is compatible with {{{ .starter }}}, {{{ .essential }}}, {{{ .premium }}}, TiDB Cloud Dedicated, and TiDB Self-Managed.
+> This tutorial is compatible with TiDB Cloud Starter, TiDB Cloud Essential, TiDB Cloud Premium, TiDB Cloud Dedicated, and TiDB Self-Managed.
 
 ## Prerequisites
 
@@ -28,7 +28,7 @@ To complete this tutorial, you need:
 
 **If you don't have a TiDB cluster, you can create one as follows:**
 
-- (Recommended) [Create a {{{ .starter }}} instance](/develop/dev-guide-build-cluster-in-cloud.md).
+- (Recommended) [Create a TiDB Cloud Starter instance](/develop/dev-guide-build-cluster-in-cloud.md).
 - [Deploy a local test TiDB Self-Managed cluster](/quick-start-with-tidb.md#deploy-a-local-test-cluster) or [Deploy a production TiDB Self-Managed cluster](/production-deployment-using-tiup.md).
 
 ## Connect to TiDB
@@ -36,9 +36,9 @@ To complete this tutorial, you need:
 Connect to TiDB depending on the TiDB deployment option you have selected.
 
 <SimpleTab>
-<div label="{{{ .starter }}} or Essential">
+<div label="TiDB Cloud Starter or Essential">
 
-1. Navigate to the [**My TiDB**](https://tidbcloud.com/tidbs) page, and then click the name of your target {{{ .starter }}} or Essential instance to go to its overview page.
+1. Navigate to the [**My TiDB**](https://tidbcloud.com/tidbs) page, and then click the name of your target TiDB Cloud Starter or Essential instance to go to its overview page.
 
 2. Click **Connect** in the upper-right corner. A connection dialog is displayed.
 
@@ -67,20 +67,20 @@ Connect to TiDB depending on the TiDB deployment option you have selected.
     - **Username**: enter the `USERNAME` parameter from the TiDB Cloud connection dialog.
     - **Password**: click **Store in Keychain ...** or **Store in Vault**, enter the password you created in step 4, and then click **OK** to store the password.
 
-        ![MySQL Workbench: store the password of {{{ .starter }}} in keychain](/media/develop/mysql-workbench-store-password-in-keychain.png)
+        ![MySQL Workbench: store the password of TiDB Cloud Starter in keychain](/media/develop/mysql-workbench-store-password-in-keychain.png)
 
     The following figure shows an example of the connection parameters:
 
-    ![MySQL Workbench: configure connection settings for {{{ .starter }}}](/media/develop/mysql-workbench-connection-config-serverless-parameters.png)
+    ![MySQL Workbench: configure connection settings for TiDB Cloud Starter](/media/develop/mysql-workbench-connection-config-serverless-parameters.png)
 
-7. Click **Test Connection** to validate the connection to your target {{{ .starter }}} or Essential instance.
+7. Click **Test Connection** to validate the connection to your target TiDB Cloud Starter or Essential instance.
 
 8. If the connection test is successful, you can see the **Successfully made the MySQL connection** message. Click **OK** to save the connection configuration.
 
 </div>
-<div label="{{{ .premium }}}">
+<div label="TiDB Cloud Premium">
 
-1. Navigate to the [**My TiDB**](https://tidbcloud.com/tidbs) page, and then click the name of your target {{{ .premium }}} instance to go to its overview page.
+1. Navigate to the [**My TiDB**](https://tidbcloud.com/tidbs) page, and then click the name of your target TiDB Cloud Premium instance to go to its overview page.
 
 2. In the left navigation pane, click **Settings** > **Networking**.
 
@@ -97,7 +97,7 @@ Connect to TiDB depending on the TiDB deployment option you have selected.
     - If a message indicates that the public endpoint is still being enabled, wait until the process completes.
     - If you have not set a password yet, click **Set Root Password** in the dialog.
     - If you need to verify the server certificate or if the connection fails and requires a CA certificate, click **CA cert** to download it.
-    - In addition to the **Public** connection type, {{{ .premium }}} supports **Private Endpoint** connections. For more information, see [Connect to {{{ .premium }}} via AWS PrivateLink](/tidb-cloud/premium/connect-to-premium-via-aws-private-endpoint.md).
+    - In addition to the **Public** connection type, TiDB Cloud Premium supports **Private Endpoint** connections. For more information, see [Connect to TiDB Cloud Premium via AWS PrivateLink](/tidb-cloud/premium/connect-to-premium-via-aws-private-endpoint.md).
 
 7. Launch MySQL Workbench and click **+** near the **MySQL Connections** title.
 
@@ -107,9 +107,9 @@ Connect to TiDB depending on the TiDB deployment option you have selected.
     - **Hostname**: enter the `HOST` parameter from the TiDB Cloud connection dialog.
     - **Port**: enter the `PORT` parameter from the TiDB Cloud connection dialog.
     - **Username**: enter the `USERNAME` parameter from the TiDB Cloud connection dialog.
-    - **Password**: click **Store in Keychain ...** or **Store in Vault**, enter the password of the {{{ .premium }}} instance, and then click **OK** to store the password.
+    - **Password**: click **Store in Keychain ...** or **Store in Vault**, enter the password of the TiDB Cloud Premium instance, and then click **OK** to store the password.
 
-9. Click **Test Connection** to validate the connection to the {{{ .premium }}} instance.
+9. Click **Test Connection** to validate the connection to the TiDB Cloud Premium instance.
 
 10. If the connection test is successful, you can see the **Successfully made the MySQL connection** message. Click **OK** to save the connection configuration.
 

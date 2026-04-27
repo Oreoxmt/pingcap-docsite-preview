@@ -16,7 +16,7 @@ In this tutorial, you can learn how to use TiDB and Prisma to accomplish the fol
 
 > **Note:**
 >
-> This tutorial works with {{{ .starter }}}, {{{ .essential }}}, {{{ .premium }}}, TiDB Cloud Dedicated, and TiDB Self-Managed.
+> This tutorial works with TiDB Cloud Starter, TiDB Cloud Essential, TiDB Cloud Premium, TiDB Cloud Dedicated, and TiDB Self-Managed.
 
 ## Prerequisites
 
@@ -28,7 +28,7 @@ To complete this tutorial, you need:
 
 **If you don't have a TiDB cluster, you can create one as follows:**
 
-- (Recommended) [Create a {{{ .starter }}} instance](/develop/dev-guide-build-cluster-in-cloud.md).
+- (Recommended) [Create a TiDB Cloud Starter instance](/develop/dev-guide-build-cluster-in-cloud.md).
 - [Deploy a local test TiDB Self-Managed cluster](/quick-start-with-tidb.md#deploy-a-local-test-cluster) or [Deploy a production TiDB Self-Managed cluster](/production-deployment-using-tiup.md).
 
 ## Run the sample app to connect to TiDB
@@ -68,9 +68,9 @@ npm install prisma typescript ts-node @types/node --save-dev
 Connect to TiDB depending on the TiDB deployment option you've selected.
 
 <SimpleTab>
-<div label="{{{ .starter }}} or Essential">
+<div label="TiDB Cloud Starter or Essential">
 
-1. Navigate to the [**My TiDB**](https://tidbcloud.com/tidbs) page, and then click the name of your target {{{ .starter }}} or Essential instance to go to its overview page.
+1. Navigate to the [**My TiDB**](https://tidbcloud.com/tidbs) page, and then click the name of your target TiDB Cloud Starter or Essential instance to go to its overview page.
 
 2. Click **Connect** in the upper-right corner. A connection dialog is displayed.
 
@@ -97,7 +97,7 @@ Connect to TiDB depending on the TiDB deployment option you've selected.
 
     > **Note**
     >
-    > For {{{ .starter }}}, you **MUST** enable TLS connection by setting `sslaccept=strict` when using public endpoint.
+    > For TiDB Cloud Starter, you **MUST** enable TLS connection by setting `sslaccept=strict` when using public endpoint.
 
 7. Save the `.env` file.
 8. In the `prisma/schema.prisma`, set up `mysql` as the connection provider and `env("DATABASE_URL")` as the connection URL:
@@ -110,9 +110,9 @@ Connect to TiDB depending on the TiDB deployment option you've selected.
     ```
 
 </div>
-<div label="{{{ .premium }}}">
+<div label="TiDB Cloud Premium">
 
-1. Navigate to the [**My TiDB**](https://tidbcloud.com/tidbs) page, and then click the name of your target {{{ .premium }}} instance to go to its overview page.
+1. Navigate to the [**My TiDB**](https://tidbcloud.com/tidbs) page, and then click the name of your target TiDB Cloud Premium instance to go to its overview page.
 
 2. In the left navigation pane, click **Settings** > **Networking**.
 
@@ -129,7 +129,7 @@ Connect to TiDB depending on the TiDB deployment option you've selected.
     - If a message indicates that the public endpoint is still being enabled, wait until the process completes.
     - If you have not set a password yet, click **Set Root Password** in the dialog.
     - If you need to verify the server certificate or if the connection fails and requires a CA certificate, click **CA cert** to download it.
-    - In addition to the **Public** connection type, {{{ .premium }}} supports **Private Endpoint** connections. For more information, see [Connect to {{{ .premium }}} via AWS PrivateLink](/tidb-cloud/premium/connect-to-premium-via-aws-private-endpoint.md).
+    - In addition to the **Public** connection type, TiDB Cloud Premium supports **Private Endpoint** connections. For more information, see [Connect to TiDB Cloud Premium via AWS PrivateLink](/tidb-cloud/premium/connect-to-premium-via-aws-private-endpoint.md).
 
 7. Run the following command to copy `.env.example` and rename it to `.env`:
 
@@ -181,7 +181,7 @@ Connect to TiDB depending on the TiDB deployment option you've selected.
 
     > **Note**
     >
-    > For {{{ .starter }}}, It is **RECOMMENDED** to enable TLS connection by setting `sslaccept=strict` when using public endpoint. When you set up `sslaccept=strict` to enable TLS connection, you **MUST** specify the file path of the CA certificate downloaded from connection dialog via `sslcert=/path/to/ca.pem`.
+    > For TiDB Cloud Starter, It is **RECOMMENDED** to enable TLS connection by setting `sslaccept=strict` when using public endpoint. When you set up `sslaccept=strict` to enable TLS connection, you **MUST** specify the file path of the CA certificate downloaded from connection dialog via `sslcert=/path/to/ca.pem`.
 
 6. Save the `.env` file.
 7. In the `prisma/schema.prisma`, set up `mysql` as the connection provider and `env("DATABASE_URL")` as the connection URL:
@@ -306,7 +306,7 @@ void main();
 If the connection is successful, the terminal will output the TiDB version as follows:
 
 ```
-🔌 Connected to TiDB cluster! (TiDB version: 8.0.11-TiDB-v{{{ .tidb-version }}})
+🔌 Connected to TiDB cluster! (TiDB version: 8.0.11-TiDB-v8.5.6)
 🆕 Created a new player with ID 1.
 ℹ️ Got Player 1: Player { id: 1, coins: 100, goods: 100 }
 🔢 Added 50 coins and 50 goods to player 1, now player 1 has 150 coins and 150 goods.

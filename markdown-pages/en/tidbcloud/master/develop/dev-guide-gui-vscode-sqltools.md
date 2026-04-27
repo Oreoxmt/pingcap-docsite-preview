@@ -12,7 +12,7 @@ In this tutorial, you can learn how to connect to TiDB using Visual Studio Code.
 
 > **Note:**
 >
-> - This tutorial is compatible with {{{ .starter }}}, {{{ .essential }}}, {{{ .premium }}}, TiDB Cloud Dedicated, and TiDB Self-Managed.
+> - This tutorial is compatible with TiDB Cloud Starter, TiDB Cloud Essential, TiDB Cloud Premium, TiDB Cloud Dedicated, and TiDB Self-Managed.
 > - This tutorial also works with Visual Studio Code Remote Development environments, such as [GitHub Codespaces](https://github.com/features/codespaces), [Visual Studio Code Dev Containers](https://code.visualstudio.com/docs/devcontainers/containers), and [Visual Studio Code WSL](https://code.visualstudio.com/docs/remote/wsl).
 
 ## Prerequisites
@@ -28,7 +28,7 @@ To complete this tutorial, you need:
 
 **If you don't have a TiDB cluster, you can create one as follows:**
 
-- (Recommended) [Create a {{{ .starter }}} instance](/develop/dev-guide-build-cluster-in-cloud.md).
+- (Recommended) [Create a TiDB Cloud Starter instance](/develop/dev-guide-build-cluster-in-cloud.md).
 - [Deploy a local test TiDB Self-Managed cluster](/quick-start-with-tidb.md#deploy-a-local-test-cluster) or [Deploy a production TiDB Self-Managed cluster](/production-deployment-using-tiup.md).
 
 ## Connect to TiDB
@@ -36,9 +36,9 @@ To complete this tutorial, you need:
 Connect to TiDB depending on the TiDB deployment option you have selected.
 
 <SimpleTab>
-<div label="{{{ .starter }}} or Essential">
+<div label="TiDB Cloud Starter or Essential">
 
-1. Navigate to the [**My TiDB**](https://tidbcloud.com/tidbs) page, and then click the name of your target {{{ .starter }}} or Essential instance to go to its overview page.
+1. Navigate to the [**My TiDB**](https://tidbcloud.com/tidbs) page, and then click the name of your target TiDB Cloud Starter or Essential instance to go to its overview page.
 
 2. Click **Connect** in the upper-right corner. A connection dialog is displayed.
 
@@ -76,27 +76,27 @@ Connect to TiDB depending on the TiDB deployment option you have selected.
     - In the **MySQL driver specific options** area, configure the following parameters:
 
         - **Authentication Protocol**: select **default**.
-        - **SSL**: select **Enabled**. {{{ .starter }}} requires a secure connection. In the **SSL Options (node.TLSSocket)** area, configure the **Certificate Authority (CA) Certificate File** field as the `CA` parameter from the TiDB Cloud connection dialog.
+        - **SSL**: select **Enabled**. TiDB Cloud Starter requires a secure connection. In the **SSL Options (node.TLSSocket)** area, configure the **Certificate Authority (CA) Certificate File** field as the `CA` parameter from the TiDB Cloud connection dialog.
 
             > **Note:**
             >
-            > If you are running on Windows or GitHub Codespaces, you can leave **SSL** blank. By default SQLTools trusts well-known CAs curated by Let's Encrypt. For more information, see [{{{ .starter }}} root certificate management](https://docs.pingcap.com/tidbcloud/secure-connections-to-serverless-clusters#root-certificate-management).
+            > If you are running on Windows or GitHub Codespaces, you can leave **SSL** blank. By default SQLTools trusts well-known CAs curated by Let's Encrypt. For more information, see [TiDB Cloud Starter root certificate management](https://docs.pingcap.com/tidbcloud/secure-connections-to-serverless-clusters#root-certificate-management).
 
-    ![VS Code SQLTools: configure connection settings for {{{ .starter }}}](/media/develop/vsc-sqltools-connection-config-serverless.jpg)
+    ![VS Code SQLTools: configure connection settings for TiDB Cloud Starter](/media/develop/vsc-sqltools-connection-config-serverless.jpg)
 
-7. Click **TEST CONNECTION** to validate the connection to your target {{{ .starter }}} or Essential instance.
+7. Click **TEST CONNECTION** to validate the connection to your target TiDB Cloud Starter or Essential instance.
 
     1. In the pop-up window, click **Allow**.
     2. In the **SQLTools Driver Credentials** dialog, enter the password you created in step 4.
 
-        ![VS Code SQLTools: enter password to connect to {{{ .starter }}}](/media/develop/vsc-sqltools-password.jpg)
+        ![VS Code SQLTools: enter password to connect to TiDB Cloud Starter](/media/develop/vsc-sqltools-password.jpg)
 
 8. If the connection test is successful, you can see the **Successfully connected!** message. Click **SAVE CONNECTION** to save the connection configuration.
 
 </div>
-<div label="{{{ .premium }}}">
+<div label="TiDB Cloud Premium">
 
-1. Navigate to the [**My TiDB**](https://tidbcloud.com/tidbs) page, and then click the name of your target {{{ .premium }}} instance to go to its overview page.
+1. Navigate to the [**My TiDB**](https://tidbcloud.com/tidbs) page, and then click the name of your target TiDB Cloud Premium instance to go to its overview page.
 
 2. In the left navigation pane, click **Settings** > **Networking**.
 
@@ -113,7 +113,7 @@ Connect to TiDB depending on the TiDB deployment option you have selected.
     - If a message indicates that the public endpoint is still being enabled, wait until the process completes.
     - If you have not set a password yet, click **Set Root Password** in the dialog.
     - If you need to verify the server certificate or if the connection fails and requires a CA certificate, click **CA cert** to download it.
-    - In addition to the **Public** connection type, {{{ .premium }}} supports **Private Endpoint** connections. For more information, see [Connect to {{{ .premium }}} via AWS PrivateLink](/tidb-cloud/premium/connect-to-premium-via-aws-private-endpoint.md).
+    - In addition to the **Public** connection type, TiDB Cloud Premium supports **Private Endpoint** connections. For more information, see [Connect to TiDB Cloud Premium via AWS PrivateLink](/tidb-cloud/premium/connect-to-premium-via-aws-private-endpoint.md).
 
 7. Launch VS Code and select the **SQLTools** extension on the navigation pane. Under the **CONNECTIONS** section, click **Add New Connection** and select **TiDB** as the database driver.
 
@@ -130,7 +130,7 @@ Connect to TiDB depending on the TiDB deployment option you have selected.
         - **Authentication Protocol**: select **default**.
         - **SSL**: select **Disabled**.
 
-9. Click **TEST CONNECTION** to validate the connection to the {{{ .premium }}} instance.
+9. Click **TEST CONNECTION** to validate the connection to the TiDB Cloud Premium instance.
 
 10. In the **SQLTools Driver Credentials** dialog, enter the password.
 

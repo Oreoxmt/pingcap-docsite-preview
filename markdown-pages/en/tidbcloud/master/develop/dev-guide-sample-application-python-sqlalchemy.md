@@ -16,7 +16,7 @@ In this tutorial, you can learn how to use TiDB and SQLAlchemy to accomplish the
 
 > **Note:**
 >
-> This tutorial works with {{{ .starter }}}, {{{ .essential }}}, {{{ .premium }}}, TiDB Cloud Dedicated, and TiDB Self-Managed.
+> This tutorial works with TiDB Cloud Starter, TiDB Cloud Essential, TiDB Cloud Premium, TiDB Cloud Dedicated, and TiDB Self-Managed.
 
 ## Prerequisites
 
@@ -28,7 +28,7 @@ To complete this tutorial, you need:
 
 **If you don't have a TiDB cluster, you can create one as follows:**
 
-- (Recommended) [Create a {{{ .starter }}} instance](/develop/dev-guide-build-cluster-in-cloud.md).
+- (Recommended) [Create a TiDB Cloud Starter instance](/develop/dev-guide-build-cluster-in-cloud.md).
 - [Deploy a local test TiDB Self-Managed cluster](/quick-start-with-tidb.md#deploy-a-local-test-cluster) or [Deploy a production TiDB Self-Managed cluster](/production-deployment-using-tiup.md).
 
 ## Run the sample app to connect to TiDB
@@ -63,13 +63,13 @@ You can also use other database drivers, such as [mysqlclient](https://github.co
 Connect to TiDB depending on the TiDB deployment option you've selected.
 
 <SimpleTab>
-<div label="{{{ .starter }}} or Essential">
+<div label="TiDB Cloud Starter or Essential">
 
 > **Note:**
 >
-> Currently, {{{ .starter }}} instances have a limitation: if there are no active connections for 5 minutes, they will shut down, which closes all connections. Therefore, when using SQLAlchemy with {{{ .starter }}} instances, pooled connections might encounter `OperationalError` such as `Lost connection to MySQL server during query` or `MySQL Connection not available`. To avoid this error, you can set the `pool_recycle` parameter to `300`. For more information, see [Dealing with Disconnects](https://docs.sqlalchemy.org/en/20/core/pooling.html#dealing-with-disconnects) in SQLAlchemy documentation.
+> Currently, TiDB Cloud Starter instances have a limitation: if there are no active connections for 5 minutes, they will shut down, which closes all connections. Therefore, when using SQLAlchemy with TiDB Cloud Starter instances, pooled connections might encounter `OperationalError` such as `Lost connection to MySQL server during query` or `MySQL Connection not available`. To avoid this error, you can set the `pool_recycle` parameter to `300`. For more information, see [Dealing with Disconnects](https://docs.sqlalchemy.org/en/20/core/pooling.html#dealing-with-disconnects) in SQLAlchemy documentation.
 
-1. Navigate to the [**My TiDB**](https://tidbcloud.com/tidbs) page, and then click the name of your target {{{ .starter }}} or Essential instance to go to its overview page.
+1. Navigate to the [**My TiDB**](https://tidbcloud.com/tidbs) page, and then click the name of your target TiDB Cloud Starter or Essential instance to go to its overview page.
 
 2. Click **Connect** in the upper-right corner. A connection dialog is displayed.
 
@@ -112,9 +112,9 @@ Connect to TiDB depending on the TiDB deployment option you've selected.
 7. Save the `.env` file.
 
 </div>
-<div label="{{{ .premium }}}">
+<div label="TiDB Cloud Premium">
 
-1. Navigate to the [**My TiDB**](https://tidbcloud.com/tidbs) page, and then click the name of your target {{{ .premium }}} instance to go to its overview page.
+1. Navigate to the [**My TiDB**](https://tidbcloud.com/tidbs) page, and then click the name of your target TiDB Cloud Premium instance to go to its overview page.
 
 2. In the left navigation pane, click **Settings** > **Networking**.
 
@@ -131,7 +131,7 @@ Connect to TiDB depending on the TiDB deployment option you've selected.
     - If a message indicates that the public endpoint is still being enabled, wait until the process completes.
     - If you have not set a password yet, click **Set Root Password** in the dialog.
     - If you need to verify the server certificate or if the connection fails and requires a CA certificate, click **CA cert** to download it.
-    - In addition to the **Public** connection type, {{{ .premium }}} supports **Private Endpoint** connections. For more information, see [Connect to {{{ .premium }}} via AWS PrivateLink](/tidb-cloud/premium/connect-to-premium-via-aws-private-endpoint.md).
+    - In addition to the **Public** connection type, TiDB Cloud Premium supports **Private Endpoint** connections. For more information, see [Connect to TiDB Cloud Premium via AWS PrivateLink](/tidb-cloud/premium/connect-to-premium-via-aws-private-endpoint.md).
 
 7. Run the following command to copy `.env.example` and rename it to `.env`:
 
