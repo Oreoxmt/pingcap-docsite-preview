@@ -23,7 +23,7 @@ TiDB Cloud 为你提供了通过 PagerDuty、[Slack](/tidb-cloud/monitor-alert-s
 
 <CustomContent plan="premium">
 
-- 要订阅 TiDB Cloud 的报警通知，你必须拥有组织的 `Organization Owner` 访问权限，或在 TiDB Cloud 中目标 TiDB Cloud Premium 实例的 `Instance Manager` 访问权限。
+- 要订阅 TiDB Cloud 的报警通知，你必须拥有组织的 `Organization Owner` 访问权限，或在 TiDB Cloud 中目标 {{{ .premium }}} 实例的 `Instance Manager` 访问权限。
 
 </CustomContent>
 
@@ -44,7 +44,7 @@ TiDB Cloud 为你提供了通过 PagerDuty、[Slack](/tidb-cloud/monitor-alert-s
 
 > **提示：**
 >
-> 对于 TiDB Cloud Dedicated，报警订阅针对当前项目下的所有报警。如果你在该项目下有多个 TiDB Cloud Dedicated 集群，只需订阅一次即可。
+> 对于 {{{ .dedicated }}}，报警订阅针对当前项目下的所有报警。如果你在该项目下有多个 {{{ .dedicated }}} 集群，只需订阅一次即可。
 
 1. 在 [TiDB Cloud 控制台](https://tidbcloud.com) 中，前往你组织的 [**My TiDB**](https://tidbcloud.com/tidbs) 页面，然后点击 **Project view** 标签页。
 2. 在项目视图中，找到目标项目，然后点击该项目的 <MDSvgIcon name="icon-project-settings" />。
@@ -59,7 +59,7 @@ TiDB Cloud 为你提供了通过 PagerDuty、[Slack](/tidb-cloud/monitor-alert-s
 
 8. 点击 **Save** 完成订阅。
 
-另外，你也可以在 TiDB Cloud Dedicated 集群的 **Alert** 页面右上角点击 **Subscribe**，系统会跳转到 **Alert Subscription** 页面。
+另外，你也可以在 {{{ .dedicated }}} 集群的 **Alert** 页面右上角点击 **Subscribe**，系统会跳转到 **Alert Subscription** 页面。
 
 另外，你也可以在集群的 **Alert** 页面右上角点击 **Subscribe**，系统会跳转到 **Alert Subscription** 页面。
 
@@ -69,9 +69,9 @@ TiDB Cloud 为你提供了通过 PagerDuty、[Slack](/tidb-cloud/monitor-alert-s
 
 > **提示：**
 >
-> 对于 TiDB Cloud Essential，报警订阅针对当前实例下的所有报警。如果你有多个实例，需要分别为每个实例单独订阅。
+> 对于 {{{ .essential }}}，报警订阅针对当前实例下的所有报警。如果你有多个实例，需要分别为每个实例单独订阅。
 
-1. 在 [TiDB Cloud 控制台](https://tidbcloud.com) 中，前往你组织的 [**My TiDB**](https://tidbcloud.com/tidbs) 页面，然后点击目标 TiDB Cloud Essential 实例的名称以进入其概览页面。
+1. 在 [TiDB Cloud 控制台](https://tidbcloud.com) 中，前往你组织的 [**My TiDB**](https://tidbcloud.com/tidbs) 页面，然后点击目标 {{{ .essential }}} 实例的名称以进入其概览页面。
 2. 在左侧导航栏，点击 **Settings** > **Alert Subscription**。
 3. 在 **Alert Subscription** 页面，点击右上角的 **Add Subscriber**。
 4. 在 **Subscriber Type** 下拉列表中选择 **PagerDuty**。
@@ -83,7 +83,7 @@ TiDB Cloud 为你提供了通过 PagerDuty、[Slack](/tidb-cloud/monitor-alert-s
 
 7. 点击 **Save** 完成订阅。
 
-另外，你也可以在 TiDB Cloud Essential 实例的 **Alert** 页面右上角点击 **Subscribe**，系统会跳转到 **Alert Subscription** 页面。
+另外，你也可以在 {{{ .essential }}} 实例的 **Alert** 页面右上角点击 **Subscribe**，系统会跳转到 **Alert Subscription** 页面。
 
 </CustomContent>
 
@@ -91,9 +91,9 @@ TiDB Cloud 为你提供了通过 PagerDuty、[Slack](/tidb-cloud/monitor-alert-s
 
 > **提示：**
 >
-> 对于 TiDB Cloud Premium，报警订阅针对当前实例下的所有报警。如果你有多个实例，需要分别为每个实例单独订阅。
+> 对于 {{{ .premium }}}，报警订阅针对当前实例下的所有报警。如果你有多个实例，需要分别为每个实例单独订阅。
 
-1. 在 [TiDB Cloud 控制台](https://tidbcloud.com) 中，前往你组织的 [**My TiDB**](https://tidbcloud.com/tidbs) 页面，然后点击目标 TiDB Cloud Premium 实例的名称以进入其概览页面。
+1. 在 [TiDB Cloud 控制台](https://tidbcloud.com) 中，前往你组织的 [**My TiDB**](https://tidbcloud.com/tidbs) 页面，然后点击目标 {{{ .premium }}} 实例的名称以进入其概览页面。
 2. 在左侧导航栏，点击 **Settings** > **Alert Subscription**。
 3. 在 **Alert Subscription** 页面，点击右上角的 **Add Subscriber**。
 4. 在 **Subscriber Type** 下拉列表中选择 **PagerDuty**。
@@ -105,7 +105,7 @@ TiDB Cloud 为你提供了通过 PagerDuty、[Slack](/tidb-cloud/monitor-alert-s
 
 7. 点击 **Save** 完成订阅。
 
-另外，你也可以在 TiDB Cloud Premium 实例的 **Alert** 页面右上角点击 **Subscribe**，系统会跳转到 **Alert Subscription** 页面。
+另外，你也可以在 {{{ .premium }}} 实例的 **Alert** 页面右上角点击 **Subscribe**，系统会跳转到 **Alert Subscription** 页面。
 
 </CustomContent>
 
@@ -127,7 +127,7 @@ TiDB Cloud 为你提供了通过 PagerDuty、[Slack](/tidb-cloud/monitor-alert-s
 
 <CustomContent plan="essential">
 
-1. 在 [TiDB Cloud 控制台](https://tidbcloud.com) 中，前往你组织的 [**My TiDB**](https://tidbcloud.com/tidbs) 页面，然后点击目标 TiDB Cloud Essential 实例的名称以进入其概览页面。
+1. 在 [TiDB Cloud 控制台](https://tidbcloud.com) 中，前往你组织的 [**My TiDB**](https://tidbcloud.com/tidbs) 页面，然后点击目标 {{{ .essential }}} 实例的名称以进入其概览页面。
 2. 在左侧导航栏，点击 **Settings** > **Alert Subscription**。
 3. 在 **Alert Subscription** 页面，找到要删除的目标订阅者所在行，然后点击 **...** > **Unsubscribe**。
 4. 点击 **Unsubscribe** 以确认取消订阅。
@@ -136,7 +136,7 @@ TiDB Cloud 为你提供了通过 PagerDuty、[Slack](/tidb-cloud/monitor-alert-s
 
 <CustomContent plan="premium">
 
-1. 在 [TiDB Cloud 控制台](https://tidbcloud.com) 中，前往你组织的 [**My TiDB**](https://tidbcloud.com/tidbs) 页面，然后点击目标 TiDB Cloud Premium 实例的名称以进入其概览页面。
+1. 在 [TiDB Cloud 控制台](https://tidbcloud.com) 中，前往你组织的 [**My TiDB**](https://tidbcloud.com/tidbs) 页面，然后点击目标 {{{ .premium }}} 实例的名称以进入其概览页面。
 2. 在左侧导航栏，点击 **Settings** > **Alert Subscription**。
 3. 在 **Alert Subscription** 页面，找到要删除的目标订阅者所在行，然后点击 **...** > **Unsubscribe**。
 4. 点击 **Unsubscribe** 以确认取消订阅。

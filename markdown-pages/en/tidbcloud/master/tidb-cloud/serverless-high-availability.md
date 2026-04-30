@@ -9,7 +9,7 @@ TiDB Cloud 通过强大的机制，默认保持高可用和数据持久性，防
 
 > **注意：**
 >
-> - 本文档仅适用于 TiDB Cloud Starter、TiDB Cloud Essential 和 TiDB Cloud Premium。
+> - 本文档仅适用于 {{{ .starter }}}、{{{ .essential }}} 和 {{{ .premium }}}。
 > - 关于 TiDB Cloud Dedicated 的高可用，请参见 [TiDB Cloud Dedicated 的高可用](/tidb-cloud/high-availability-with-multi-az.md)。
 
 ## 概述
@@ -21,7 +21,7 @@ TiDB Cloud 在此基础上扩展了分区高可用和区域高可用能力，以
 > **注意：**
 >
 > - 对于 TiDB Cloud Starter 实例，仅启用分区高可用，且不可配置。
-> - 对于 TiDB Cloud Premium 实例，仅启用区域高可用，且不可配置。
+> - 对于 {{{ .premium }}} 实例，仅启用区域高可用，且不可配置。
 > - 对于部署在 AWS 东京（ap-northeast-1）Region 或任意阿里云 Region 的 TiDB Cloud Essential 实例，默认启用区域高可用。你可以在 TiDB Cloud Essential 实例创建时根据需要切换为分区高可用。对于部署在其他 Region 的 TiDB Cloud Essential 实例，仅启用分区高可用，且不可配置。
 
 - **分区高可用**：该选项将所有 node 部署在同一个可用区内，降低网络延时。它无需在应用层实现跨区冗余即可保证高可用，适用于优先考虑单区低延时的应用。详细信息参见 [分区高可用架构](#zonal-high-availability-architecture)。
@@ -30,7 +30,7 @@ TiDB Cloud 在此基础上扩展了分区高可用和区域高可用能力，以
 
 ## 分区高可用架构
 
-当你创建启用分区高可用的 TiDB Cloud Starter 或 Essential 实例时，所有组件（包括 Gateway、TiDB、TiKV 和 TiFlash 计算/写 node）都运行在同一个可用区内。数据面组件的部署通过虚拟机池提供基础设施冗余，从而最大程度减少故障转移时间和因同区部署带来的网络延时。
+当你创建启用分区高可用的 {{{ .starter }}} 或 Essential 实例时，所有组件（包括 Gateway、TiDB、TiKV 和 TiFlash 计算/写 node）都运行在同一个可用区内。数据面组件的部署通过虚拟机池提供基础设施冗余，从而最大程度减少故障转移时间和因同区部署带来的网络延时。
 
 <CustomContent language="en,zh">
 
@@ -86,7 +86,7 @@ Gateway 和计算层为无状态的，因此故障转移时会立即在其他位
 
 ## 区域高可用架构
 
-当你创建启用区域高可用的 TiDB Cloud Essential 或 TiDB Cloud Premium 实例时，关键 OLTP（联机事务处理）工作负载组件（如 PD 和 TiKV）会跨多个可用区部署，以确保冗余复制并最大化可用性。在正常运行期间，Gateway、TiDB 和 TiFlash 计算/写 node 等组件会部署在主可用区。这些数据面组件通过虚拟机池提供基础设施冗余，从而最大程度减少故障转移时间和因同区部署带来的网络延时。
+当你创建启用区域高可用的 {{{ .essential }}} 或 {{{ .premium }}} 实例时，关键 OLTP（联机事务处理）工作负载组件（如 PD 和 TiKV）会跨多个可用区部署，以确保冗余复制并最大化可用性。在正常运行期间，Gateway、TiDB 和 TiFlash 计算/写 node 等组件会部署在主可用区。这些数据面组件通过虚拟机池提供基础设施冗余，从而最大程度减少故障转移时间和因同区部署带来的网络延时。
 
 > **注意：**
 >

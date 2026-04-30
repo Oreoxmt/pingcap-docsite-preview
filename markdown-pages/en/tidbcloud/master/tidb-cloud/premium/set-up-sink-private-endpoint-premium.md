@@ -5,7 +5,7 @@ summary: 了解如何为 changefeed 设置 private endpoint。
 
 # 为 Changefeed 设置 Private Endpoint
 
-本文档介绍如何在你的 TiDB Cloud Premium 实例中为 changefeed 创建 private endpoint，从而使你能够通过私有连接安全地将数据流式传输到自托管 Kafka 或 MySQL。
+本文档介绍如何在你的 {{{ .premium }}} 实例中为 changefeed 创建 private endpoint，从而使你能够通过私有连接安全地将数据流式传输到自托管 Kafka 或 MySQL。
 
 ## 前提条件 {#prerequisites}
 
@@ -59,7 +59,7 @@ Private endpoint 利用云服务提供商的 **Private Link** 技术，使你的
 
 1. 登录 [TiDB Cloud console](https://tidbcloud.com/)。
 
-2. 在 [**My TiDB**](https://tidbcloud.com/tidbs) 页面上，点击目标 TiDB Cloud Premium 实例的名称，进入其实例概览页面。
+2. 在 [**My TiDB**](https://tidbcloud.com/tidbs) 页面上，点击目标 {{{ .premium }}} 实例的名称，进入其实例概览页面。
 
     > **Tip:**
     >
