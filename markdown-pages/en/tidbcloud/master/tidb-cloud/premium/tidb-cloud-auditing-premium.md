@@ -1,15 +1,15 @@
 ---
-title: "{{{ .premium }}} 数据库审计日志"
-summary: 了解如何在 {{{ .premium }}} 中审计实例。
+title: "TiDB Cloud Premium 数据库审计日志"
+summary: 了解如何在 TiDB Cloud Premium 中审计实例。
 ---
 
-# {{{ .premium }}} 数据库审计日志
+# TiDB Cloud Premium 数据库审计日志
 
 TiDB Cloud 提供审计日志功能，用于记录数据库的用户访问活动，例如已执行的 SQL 语句。
 
 为了评估组织中用户访问策略及其他信息安全措施的有效性，定期分析数据库审计日志是一项安全最佳实践。
 
-审计日志功能**默认处于禁用状态**。要审计一个 {{{ .premium }}} 实例，你必须先启用审计日志，然后配置审计过滤规则。
+审计日志功能**默认处于禁用状态**。要审计一个 TiDB Cloud Premium 实例，你必须先启用审计日志，然后配置审计过滤规则。
 
 > **注意：**
 >
@@ -17,19 +17,19 @@ TiDB Cloud 提供审计日志功能，用于记录数据库的用户访问活动
 
 ## 前提条件 {#prerequisites}
 
-- 你正在使用 {{{ .premium }}} 实例。
+- 你正在使用 TiDB Cloud Premium 实例。
 
     > **注意：**
     >
-    > - {{{ .starter }}} 不支持数据库审计日志。
-    > - 对于 {{{ .essential }}}，请参见 [{{{ .essential }}} 的数据库审计日志（Beta）](/tidb-cloud/essential-database-audit-logging.md)。
-    > - 对于 {{{ .dedicated }}}，请参见 [{{{ .dedicated }}} 数据库审计日志](/tidb-cloud/tidb-cloud-auditing.md)。
+    > - TiDB Cloud Starter 不支持数据库审计日志。
+    > - 对于 TiDB Cloud Essential，请参见 [TiDB Cloud Essential 的数据库审计日志（Beta）](/tidb-cloud/essential-database-audit-logging.md)。
+    > - 对于 TiDB Cloud Dedicated，请参见 [TiDB Cloud Dedicated 数据库审计日志](/tidb-cloud/tidb-cloud-auditing.md)。
 
 - 你必须在组织中拥有 `Organization Owner` 角色。否则，你将无法在 TiDB Cloud 控制台中看到与数据库审计相关的选项。
 
 ## 启用审计日志 {#enable-audit-logging}
 
-TiDB Cloud 支持将 {{{ .premium }}} 实例的审计日志记录到你的云存储服务中。在启用数据库审计日志之前，请先在实例所在的云服务提供商上配置你的云存储服务。
+TiDB Cloud 支持将 TiDB Cloud Premium 实例的审计日志记录到你的云存储服务中。在启用数据库审计日志之前，请先在实例所在的云服务提供商上配置你的云存储服务。
 
 ### 为 AWS 上的 TiDB 启用审计日志 {#enable-audit-logging-for-tidb-on-aws}
 
@@ -47,7 +47,7 @@ TiDB Cloud 支持将 {{{ .premium }}} 实例的审计日志记录到你的云存
 
 #### 第 2 步：配置 Amazon S3 访问权限 {#step-2-configure-amazon-s3-access}
 
-1. 获取你要启用审计日志的 {{{ .premium }}} 实例的 TiDB Cloud Account ID 和 External ID。
+1. 获取你要启用审计日志的 TiDB Cloud Premium 实例的 TiDB Cloud Account ID 和 External ID。
 
     1. 在 TiDB Cloud 控制台中，进入 [**My TiDB**](https://tidbcloud.com/tidbs) 页面。
 
@@ -121,7 +121,7 @@ TiDB Cloud 支持将 {{{ .premium }}} 实例的审计日志记录到你的云存
 
 #### 第 2 步：配置 OSS 访问权限 {#step-2-configure-oss-access}
 
-1. 获取你要启用审计日志的 {{{ .premium }}} 实例的 Alibaba Cloud Service Account ID。
+1. 获取你要启用审计日志的 TiDB Cloud Premium 实例的 Alibaba Cloud Service Account ID。
 
     1. 在 TiDB Cloud 控制台中，进入 [**My TiDB**](https://tidbcloud.com/tidbs) 页面。
     2. 点击目标实例名称进入其概览页面，然后在左侧导航栏中点击 **Settings** > **DB Audit Logging**。
@@ -183,7 +183,7 @@ TiDB Cloud 支持将 {{{ .premium }}} 实例的审计日志记录到你的云存
 在 TiDB Cloud 控制台中，返回到你获取 TiDB Cloud account ID 时所在的 **Database Audit Log Storage Configuration** 对话框，然后执行以下步骤：
 
 1. 在 **Bucket URI** 字段中，输入你的 OSS bucket 的 URI。例如，`oss://tidb-cloud-audit-log`。
-2. 在 **Bucket Region** 字段中，选择 bucket 所在的 Alibaba Cloud 区域（建议与 {{{ .premium }}} 实例所在区域保持一致）。
+2. 在 **Bucket Region** 字段中，选择 bucket 所在的 Alibaba Cloud 区域（建议与 TiDB Cloud Premium 实例所在区域保持一致）。
 3. 在 **Role ARN** 字段中，粘贴在[步骤 2. 配置 OSS 访问](#step-2-configure-oss-access)中复制的 Role ARN 值。
 4. 点击 **Test Connection** 以验证 TiDB Cloud 是否可以访问并写入 OSS bucket。
 
@@ -295,4 +295,4 @@ TiDB Cloud 审计日志是可读的文本文件，其完整文件名中包含实
 
 ## 审计日志限制 {#audit-logging-limitations}
 
-{{{ .premium }}} 不保证审计日志按时间顺序写入。要查找最新事件，你可能需要查看所有日志文件。若要按时间顺序对日志进行排序，请使用每条审计记录中的 `TIME` 字段。
+TiDB Cloud Premium 不保证审计日志按时间顺序写入。要查找最新事件，你可能需要查看所有日志文件。若要按时间顺序对日志进行排序，请使用每条审计记录中的 `TIME` 字段。

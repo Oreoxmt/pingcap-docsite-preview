@@ -121,8 +121,8 @@ TiDB Cloud 通过分层结构（组织、项目和资源）管理用户和资源
 
 - 在 TiDB Cloud 中，项目分为三种类型：
 
-    - **TiDB Dedicated project**：仅适用于 {{{ .dedicated }}} 集群的项目类型。Dedicated 项目管理项目范围内的设置，例如网络、维护、告警订阅、集成以及与加密相关的访问控制。
-    - **TiDB X project**：用于容纳 TiDB X 实例（包括 {{{ .starter }}}、Essential 和 Premium 实例）的逻辑容器。TiDB X 项目用于对资源进行分组并应用项目级 RBAC，但不包含 Dedicated 专属的基础设施设置。
+    - **TiDB Dedicated project**：仅适用于 TiDB Cloud Dedicated 集群的项目类型。Dedicated 项目管理项目范围内的设置，例如网络、维护、告警订阅、集成以及与加密相关的访问控制。
+    - **TiDB X project**：用于容纳 TiDB X 实例（包括 TiDB Cloud Starter、Essential 和 Premium 实例）的逻辑容器。TiDB X 项目用于对资源进行分组并应用项目级 RBAC，但不包含 Dedicated 专属的基础设施设置。
     - **TiDB X virtual project**：用于容纳未分组到任何 TiDB X project 中的 TiDB X 实例的虚拟项目。此项目类型仅用于 API 兼容性，不提供任何管理能力。
 
 **Resources**
@@ -134,15 +134,15 @@ TiDB Cloud 通过分层结构（组织、项目和资源）管理用户和资源
 ```
 - Your organization
     - TiDB X instances out of any project
-        - {{{ .starter }}} instance 1
-        - {{{ .essential }}} instance 1
+        - TiDB Cloud Starter instance 1
+        - TiDB Cloud Essential instance 1
     - TiDB X project 1
-        - {{{ .starter }}} instance 2
-        - {{{ .starter }}} instance 3
-        - {{{ .essential }}} instance 2
+        - TiDB Cloud Starter instance 2
+        - TiDB Cloud Starter instance 3
+        - TiDB Cloud Essential instance 2
     - TiDB Dedicated project 1
-        - {{{ .dedicated }}} cluster 1
-        - {{{ .dedicated }}} cluster 2
+        - TiDB Cloud Dedicated cluster 1
+        - TiDB Cloud Dedicated cluster 2
 ```
 
 ### Key features
@@ -233,7 +233,7 @@ TiDB Cloud 通过高级加密能力保护静态数据，确保安全性并符合
 
 - 启用后，使用 CMEK 密钥对静态数据和备份进行加密。
 
-- 对于未启用 CMEK 的 TiDB Cloud Dedicated 集群，TiDB Cloud 使用托管密钥；{{{ .starter }}} 和 {{{ .essential }}} 实例仅使用托管密钥。
+- 对于未启用 CMEK 的 TiDB Cloud Dedicated 集群，TiDB Cloud 使用托管密钥；TiDB Cloud Starter 和 TiDB Cloud Essential 实例仅使用托管密钥。
 
 **Best practices:**
 
@@ -251,7 +251,7 @@ TiDB Cloud 通过高级加密能力保护静态数据，确保安全性并符合
 
 **Dual-Layer Data Encryption**
 
-- 结合存储层加密（由云服务提供商提供）和数据库层加密，为托管在 AWS 上的 {{{ .premium }}} 实例增加一层额外的静态数据保护。
+- 结合存储层加密（由云服务提供商提供）和数据库层加密，为托管在 AWS 上的 TiDB Cloud Premium 实例增加一层额外的静态数据保护。
 
 - 启用后，对 TiKV 存储的数据、changefeed 数据和备份数据进行加密。
 
