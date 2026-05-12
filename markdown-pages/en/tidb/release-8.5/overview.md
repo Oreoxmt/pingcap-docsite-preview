@@ -87,15 +87,15 @@ The following video introduces key features of TiDB.
     date="2026-04-09"
   />
   <ResourceCard
-    title="Distributed SQL Database: Architecture, Scale, and High Availability"
-    type="blog"
+    title="Distributed SQL Database: Architecture, Scale, and High Availability Distributed SQL Database: Architecture, Scale, and High AvailabilityDistributed SQL Database: Architecture, Scale, and High AvailabilityDistributed SQL Database: Architecture, Scale, and High AvailabilityDistributed SQL Database: Architecture, Scale, and High Availability"
+    type="test"
     link="https://www.pingcap.com/blog/why-distributed-sql-databases-elevate-modern-app-dev/"
     imgSrc="https://static.pingcap.com/files/2023/08/17235704/Distributed-SQL-Databases.png"
     author="Brian Foster"
     date="2025-12-10"
   />
   <ResourceCard
-    title="Create a Consistent Cluster"
+    title="Create"
     type="video"
     link="https://www.youtube.com/watch?v=aWBNNPm21zg"
     imgSrc="https://static.pingcap.com/files/2023/06/23183557/Introducing-TiDB-1.jpeg"
