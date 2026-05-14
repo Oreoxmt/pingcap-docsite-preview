@@ -20,8 +20,6 @@ When a table is partitioned by Range, each partition contains rows for which the
 
 Assume you need to create a table that contains personnel records as follows:
 
-{{< copyable "sql" >}}
-
 ```sql
 CREATE TABLE employees (
     id INT NOT NULL,
@@ -35,8 +33,6 @@ CREATE TABLE employees (
 ```
 
 You can partition a table by Range in various ways as needed. For example, you can partition it by using the `store_id` column:
-
-{{< copyable "sql" >}}
 
 ```sql
 CREATE TABLE employees (
@@ -61,8 +57,6 @@ In this partition scheme, all rows corresponding to employees whose `store_id` i
 
 If you insert a row of data `(72, 'Tom', 'John', '2015-06-25', NULL, NULL, 15)`, it falls in the `p2` partition. But if you insert a record whose `store_id` is larger than 20, an error is reported because TiDB cannot know which partition this record should be inserted into. In this case, you can use `MAXVALUE` when creating a table:
 
-{{< copyable "sql" >}}
-
 ```sql
 CREATE TABLE employees (
     id INT NOT NULL,
@@ -86,8 +80,6 @@ PARTITION BY RANGE (store_id) (
 
 You can also partition a table by employees' job codes, which are the values of the `job_code` column. Assume that two-digit job codes stand for regular employees, three-digit codes stand for office and customer support personnel, and four-digit codes stand for managerial personnel. Then you can create a partitioned table like this:
 
-{{< copyable "sql" >}}
-
 ```sql
 CREATE TABLE employees (
     id INT NOT NULL,
@@ -110,8 +102,6 @@ In this example, all rows relating to regular employees are stored in the `p0` p
 
 Besides splitting up the table by `store_id`, you can also partition a table by dates. For example, you can partition by employees' separation year:
 
-{{< copyable "sql" >}}
-
 ```sql
 CREATE TABLE employees (
     id INT NOT NULL,
@@ -132,8 +122,6 @@ PARTITION BY RANGE ( YEAR(separated) ) (
 ```
 
 In Range partitioning, you can partition based on the values of the `timestamp` column and use the `unix_timestamp()` function, for example:
-
-{{< copyable "sql" >}}
 
 ```sql
 CREATE TABLE quarterly_report_status (
@@ -319,8 +307,6 @@ List partitioning is similar to Range partitioning. Unlike Range partitioning, i
 
 Suppose that you want to create a personnel record table. You can create a table as follows:
 
-{{< copyable "sql" >}}
-
 ```sql
 CREATE TABLE employees (
     id INT NOT NULL,
@@ -341,8 +327,6 @@ Suppose that there are 20 stores distributed in 4 districts, as shown in the tab
 ```
 
 If you want to store the personnel data of employees of the same region in the same partition, you can create a List partitioned table based on `store_id`:
-
-{{< copyable "sql" >}}
 
 ```sql
 CREATE TABLE employees (
@@ -475,8 +459,6 @@ Suppose that you want to divide the store employees from the following 12 cities
 
 You can use List COLUMNS partitioning to create a table and store each row in the partition that corresponds to the employee's city, as shown below:
 
-{{< copyable "sql" >}}
-
 ```sql
 CREATE TABLE employees_1 (
     id INT NOT NULL,
@@ -499,8 +481,6 @@ PARTITION BY LIST COLUMNS(city) (
 Unlike List partitioning, in List COLUMNS partitioning, you do not need to use the expression in the `COLUMNS()` clause to convert column values to integers.
 
 List COLUMNS partitioning can also be implemented using columns of the `DATE` and `DATETIME` types, as shown in the following example. This example uses the same names and columns as the previous `employees_1` table, but uses List COLUMNS partitioning based on the `hired` column:
-
-{{< copyable "sql" >}}
 
 ```sql
 CREATE TABLE employees_2 (
@@ -527,8 +507,6 @@ PARTITION BY LIST COLUMNS(hired) (
 
 In addition, you can also add multiple columns in the `COLUMNS()` clause. For example:
 
-{{< copyable "sql" >}}
-
 ```sql
 CREATE TABLE t (
     id int,
@@ -549,8 +527,6 @@ To create a Hash partitioned table, you need to append a `PARTITION BY HASH (exp
 
 The following operation creates a Hash partitioned table, which is divided into 4 partitions by `store_id`:
 
-{{< copyable "sql" >}}
-
 ```sql
 CREATE TABLE employees (
     id INT NOT NULL,
@@ -569,8 +545,6 @@ PARTITIONS 4;
 If `PARTITIONS num` is not specified, the default number of partitions is 1.
 
 You can also use an SQL expression that returns an integer for `expr`. For example, you can partition a table by the hire year:
-
-{{< copyable "sql" >}}
 
 ```sql
 CREATE TABLE employees (
@@ -598,8 +572,6 @@ In conclusion, when the expression has a form that is closer to `y = cx`, it is 
 In theory, pruning is also possible for expressions involving more than one column value, but determining which of such expressions are suitable can be quite difficult and time-consuming. For this reason, the use of hashing expressions involving multiple columns is not particularly recommended.
 
 When using `PARTITION BY HASH`, TiDB decides which partition the data should fall into based on the modulus of the result of the expression. In other words, if a partitioning expression is `expr` and the number of partitions is `num`, `MOD(expr, num)` decides the partition in which the data is stored. Assume that `t1` is defined as follows:
-
-{{< copyable "sql" >}}
 
 ```sql
 CREATE TABLE t1 (col1 INT, col2 CHAR(5), col3 DATE)
@@ -735,8 +707,6 @@ It is allowed in TiDB to use `NULL` as the calculation result of a partitioning 
 
 When you insert a row into a table partitioned by Range, and the column value used to determine the partition is `NULL`, then this row is inserted into the lowest partition.
 
-{{< copyable "sql" >}}
-
 ```sql
 CREATE TABLE t1 (
     c1 INT,
@@ -754,8 +724,6 @@ PARTITION BY RANGE(c1) (
 Query OK, 0 rows affected (0.09 sec)
 ```
 
-{{< copyable "sql" >}}
-
 ```sql
 select * from t1 partition(p0);
 ```
@@ -769,8 +737,6 @@ select * from t1 partition(p0);
 1 row in set (0.00 sec)
 ```
 
-{{< copyable "sql" >}}
-
 ```sql
 select * from t1 partition(p1);
 ```
@@ -778,8 +744,6 @@ select * from t1 partition(p1);
 ```
 Empty set (0.00 sec)
 ```
-
-{{< copyable "sql" >}}
 
 ```sql
 select * from t1 partition(p2);
@@ -791,8 +755,6 @@ Empty set (0.00 sec)
 
 Drop the `p0` partition and verify the result:
 
-{{< copyable "sql" >}}
-
 ```sql
 alter table t1 drop partition p0;
 ```
@@ -800,8 +762,6 @@ alter table t1 drop partition p0;
 ```
 Query OK, 0 rows affected (0.08 sec)
 ```
-
-{{< copyable "sql" >}}
 
 ```sql
 select * from t1;
@@ -814,8 +774,6 @@ Empty set (0.00 sec)
 #### Handling of NULL with Hash partitioning
 
 When partitioning tables by Hash, there is a different way of handling `NULL` value - if the calculation result of the partitioning expression is `NULL`, it is considered as `0`.
-
-{{< copyable "sql" >}}
 
 ```sql
 CREATE TABLE th (
@@ -831,8 +789,6 @@ PARTITIONS 2;
 Query OK, 0 rows affected (0.00 sec)
 ```
 
-{{< copyable "sql" >}}
-
 ```sql
 INSERT INTO th VALUES (NULL, 'mothra'), (0, 'gigan');
 ```
@@ -840,8 +796,6 @@ INSERT INTO th VALUES (NULL, 'mothra'), (0, 'gigan');
 ```
 Query OK, 2 rows affected (0.04 sec)
 ```
-
-{{< copyable "sql" >}}
 
 ```sql
 select * from th partition (p0);
@@ -856,8 +810,6 @@ select * from th partition (p0);
 +------|--------+
 2 rows in set (0.00 sec)
 ```
-
-{{< copyable "sql" >}}
 
 ```sql
 select * from th partition (p1);
@@ -1217,8 +1169,6 @@ ALTER TABLE t1 PARTITION BY HASH (col1) PARTITIONS 3 UPDATE INDEXES (uidx12 LOCA
 
 Assume that you create a partitioned table `t1`:
 
-{{< copyable "sql" >}}
-
 ```sql
 CREATE TABLE t1 (
     fname VARCHAR(50) NOT NULL,
@@ -1236,8 +1186,6 @@ PARTITION BY RANGE( region_code ) (
 ```
 
 If you want to get the result of this `SELECT` statement:
-
-{{< copyable "sql" >}}
 
 ```sql
 SELECT fname, lname, region_code, dob
@@ -1260,16 +1208,12 @@ Currently, partition pruning does not work with `LIKE` conditions.
 
     For example:
 
-    {{< copyable "sql" >}}
-
     ```sql
     create table t1 (x int) partition by range (x) (
             partition p0 values less than (5),
             partition p1 values less than (10));
     create table t2 (x int);
     ```
-
-    {{< copyable "sql" >}}
 
     ```sql
     explain select * from t1 left join t2 on t1.x = t2.x where t2.x > 5;
@@ -1287,15 +1231,11 @@ Currently, partition pruning does not work with `LIKE` conditions.
 
     For example:
 
-    {{< copyable "sql" >}}
-
     ```sql
     create table t1 (x int) partition by range (x) (
             partition p0 values less than (5),
             partition p1 values less than (10));
     ```
-
-    {{< copyable "sql" >}}
 
     ```sql
     explain select * from t2 where x < (select * from t1 where t2.x < t1.x and t2.x < 2);
@@ -1323,8 +1263,6 @@ Currently, partition pruning does not work with `LIKE` conditions.
 
     For example, the partition expression is a simple column:
 
-    {{< copyable "sql" >}}
-
     ```sql
     create table t (id int) partition by range (id) (
             partition p0 values less than (5),
@@ -1334,8 +1272,6 @@ Currently, partition pruning does not work with `LIKE` conditions.
 
     Or the partition expression is in the form of `fn(col)` where `fn` is `to_days`:
 
-    {{< copyable "sql" >}}
-
     ```sql
     create table t (dt datetime) partition by range (to_days(id)) (
             partition p0 values less than (to_days('2020-04-01')),
@@ -1344,8 +1280,6 @@ Currently, partition pruning does not work with `LIKE` conditions.
     ```
 
     An exception is `floor(unix_timestamp())` as the partition expression. TiDB does some optimization for that case by case, so it is supported by partition pruning.
-
-    {{< copyable "sql" >}}
 
     ```sql
     create table t (ts timestamp(3) not null default current_timestamp(3))
@@ -1358,8 +1292,6 @@ Currently, partition pruning does not work with `LIKE` conditions.
 ## Partition selection
 
 `SELECT` statements support partition selection, which is implemented by using a `PARTITION` option.
-
-{{< copyable "sql" >}}
 
 ```sql
 SET @@sql_mode = '';
@@ -1393,8 +1325,6 @@ INSERT INTO employees VALUES
 
 You can view the rows stored in the `p1` partition:
 
-{{< copyable "sql" >}}
-
 ```sql
 SELECT * FROM employees PARTITION (p1);
 ```
@@ -1416,8 +1346,6 @@ If you want to get the rows in multiple partitions, you can use a list of partit
 
 When you use partition selection, you can still use `WHERE` conditions and options such as `ORDER BY` and `LIMIT`. It is also supported to use aggregation options such as `HAVING` and `GROUP BY`.
 
-{{< copyable "sql" >}}
-
 ```sql
 SELECT * FROM employees PARTITION (p0, p2)
     WHERE lname LIKE 'S%';
@@ -1432,8 +1360,6 @@ SELECT * FROM employees PARTITION (p0, p2)
 +----|-------|-------|----------|---------------+
 2 rows in set (0.00 sec)
 ```
-
-{{< copyable "sql" >}}
 
 ```sql
 SELECT id, CONCAT(fname, ' ', lname) AS name
@@ -1451,8 +1377,6 @@ SELECT id, CONCAT(fname, ' ', lname) AS name
 +----|----------------+
 4 rows in set (0.06 sec)
 ```
-
-{{< copyable "sql" >}}
 
 ```sql
 SELECT store_id, COUNT(department_id) AS c
@@ -1494,8 +1418,6 @@ This section discusses the relationship of partitioning keys with primary keys a
 
 For example, the following table creation statements are invalid:
 
-{{< copyable "sql" >}}
-
 ```sql
 CREATE TABLE t1 (
     col1 INT NOT NULL,
@@ -1525,8 +1447,6 @@ In each case, the proposed table has at least one unique key that does not inclu
 
 The valid statements are as follows:
 
-{{< copyable "sql" >}}
-
 ```sql
 CREATE TABLE t1 (
     col1 INT NOT NULL,
@@ -1553,8 +1473,6 @@ PARTITIONS 4;
 
 The following example displays an error:
 
-{{< copyable "sql" >}}
-
 ```sql
 CREATE TABLE t3 (
     col1 INT NOT NULL,
@@ -1575,8 +1493,6 @@ ERROR 8264 (HY000): Global Index is needed for index 'col1', since the unique in
 
 The `CREATE TABLE` statement fails because both `col1` and `col3` are included in the proposed partitioning key, but neither of these columns is part of both of unique keys on the table. After the following modifications, the `CREATE TABLE` statement becomes valid:
 
-{{< copyable "sql" >}}
-
 ```sql
 CREATE TABLE t3 (
     col1 INT NOT NULL,
@@ -1592,8 +1508,6 @@ PARTITION BY HASH(col1 + col3)
 
 The following table cannot be partitioned at all, because there is no way to include in a partitioning key any columns that belong to both unique keys:
 
-{{< copyable "sql" >}}
-
 ```sql
 CREATE TABLE t4 (
     col1 INT NOT NULL,
@@ -1606,8 +1520,6 @@ CREATE TABLE t4 (
 ```
 
 Because every primary key is by definition a unique key, so the next two statements are invalid:
-
-{{< copyable "sql" >}}
 
 ```sql
 CREATE TABLE t5 (
@@ -1636,8 +1548,6 @@ PARTITIONS 4;
 
 In the above examples, the primary key does not include all columns referenced in the partitioning expression. After adding the missing column in the primary key, the `CREATE TABLE` statement becomes valid:
 
-{{< copyable "sql" >}}
-
 ```sql
 CREATE TABLE t5 (
     col1 INT NOT NULL,
@@ -1664,8 +1574,6 @@ If a table has neither unique keys nor primary keys, then this restriction does 
 
 When you change tables using DDL statements, you also need to consider this restriction when adding a unique index. For example, when you create a partitioned table as shown below:
 
-{{< copyable "sql" >}}
-
 ```sql
 CREATE TABLE t_no_pk (c1 INT, c2 INT)
     PARTITION BY RANGE(c1) (
@@ -1683,8 +1591,6 @@ Query OK, 0 rows affected (0.12 sec)
 You can add a non-unique index by using `ALTER TABLE` statements. But if you want to add a unique index, the `c1` column must be included in the unique index.
 
 When using a partitioned table, you cannot specify the prefix index as a unique attribute:
-
-{{< copyable "sql" >}}
 
 ```sql
 CREATE TABLE t (a varchar(20), b blob,
@@ -1741,15 +1647,11 @@ For the unsupported partitioning types, when you create a table in TiDB, the par
 
 The `LOAD DATA` syntax does not support partition selection currently in TiDB.
 
-{{< copyable "sql" >}}
-
 ```sql
 create table t (id int, val int) partition by hash(id) partitions 4;
 ```
 
 The regular `LOAD DATA` operation is supported:
-
-{{< copyable "sql" >}}
 
 ```sql
 load local data infile "xxx" into t ...
@@ -1757,15 +1659,11 @@ load local data infile "xxx" into t ...
 
 But `Load Data` does not support partition selection:
 
-{{< copyable "sql" >}}
-
 ```sql
 load local data infile "xxx" into t partition (p1)...
 ```
 
 For a partitioned table, the result returned by `select * from t` is unordered between the partitions. This is different from the result in MySQL, which is ordered between the partitions but unordered inside the partitions.
-
-{{< copyable "sql" >}}
 
 ```sql
 create table t (id int, val int) partition by range (id) (
@@ -1778,8 +1676,6 @@ create table t (id int, val int) partition by range (id) (
 Query OK, 0 rows affected (0.10 sec)
 ```
 
-{{< copyable "sql" >}}
-
 ```sql
 insert into t values (1, 2), (3, 4),(5, 6),(7,8),(9,10);
 ```
@@ -1790,8 +1686,6 @@ Records: 5  Duplicates: 0  Warnings: 0
 ```
 
 TiDB returns a different result every time, for example:
-
-{{< copyable "sql" >}}
 
 ```sql
 select * from t;
@@ -1811,8 +1705,6 @@ select * from t;
 ```
 
 The result returned in MySQL:
-
-{{< copyable "sql" >}}
 
 ```sql
 select * from t;
@@ -1835,8 +1727,6 @@ select * from t;
 
 TiDB accesses partitioned tables in either `dynamic` or `static` mode. `dynamic` mode is used by default since v6.3.0. However, dynamic partitioning is effective only after the full table-level statistics, or global statistics, are collected. If you enable the `dynamic` pruning mode before global statistics collection is completed, TiDB remains in the `static` mode until global statistics are fully collected. For detailed information about global statistics, see [Collect statistics of partitioned tables in dynamic pruning mode](/statistics.md#collect-statistics-of-partitioned-tables-in-dynamic-pruning-mode).
 
-{{< copyable "sql" >}}
-
 ```sql
 set @@session.tidb_partition_prune_mode = 'dynamic'
 ```
@@ -1846,8 +1736,6 @@ Manual ANALYZE and normal queries use the session-level `tidb_partition_prune_mo
 In `static` mode, partitioned tables use partition-level statistics. In `dynamic` mode, partitioned tables use table-level global statistics.
 
 When switching from `static` mode to `dynamic` mode, you need to check and collect statistics manually. This is because after the switch to `dynamic` mode, partitioned tables have only partition-level statistics but no table-level statistics. Global statistics are collected only upon the next `auto-analyze` operation.
-
-{{< copyable "sql" >}}
 
 ```sql
 set session tidb_partition_prune_mode = 'dynamic';
@@ -1866,8 +1754,6 @@ show stats_meta where table_name like "t";
 ```
 
 To make sure that the statistics used by SQL statements are correct after you enable global `dynamic` pruning mode, you need to manually trigger `analyze` on the tables or on a partition of the table to obtain global statistics.
-
-{{< copyable "sql" >}}
 
 ```sql
 analyze table t partition p1;
@@ -1896,15 +1782,11 @@ You can also use scripts to update statistics of all partitioned tables. For det
 
 After table-level statistics are ready, you can enable the global dynamic pruning mode, which is effective to all SQL statements and `auto-analyze` operations.
 
-{{< copyable "sql" >}}
-
 ```sql
 set global tidb_partition_prune_mode = dynamic
 ```
 
 In `static` mode, TiDB accesses each partition separately using multiple operators, and then merges the results using `Union`. The following example is a simple read operation where TiDB merges the results of two corresponding partitions using `Union`:
-
-{{< copyable "sql" >}}
 
 ```sql
 mysql> create table t1(id int, age int, key(id)) partition by range(id) (
@@ -1934,8 +1816,6 @@ mysql> explain select * from t1 where id < 150;
 
 In `dynamic` mode, each operator supports direct access to multiple partitions, so TiDB no longer uses `Union`.
 
-{{< copyable "sql" >}}
-
 ```sql
 mysql> set @@session.tidb_partition_prune_mode = 'dynamic';
 Query OK, 0 rows affected (0.00 sec)
@@ -1956,8 +1836,6 @@ From the above query results, you can see that the `Union` operator in the execu
 `dynamic` mode makes execution plans simpler and clearer. Omitting the Union operation can improve the execution efficiency and avoid the problem of Union concurrent execution. In addition, `dynamic` mode also allows execution plans with IndexJoin which cannot be used in `static` mode. (See examples below)
 
 **Example 1**: In the following example, a query is performed in `static` mode using the execution plan with IndexJoin:
-
-{{< copyable "sql" >}}
 
 ```sql
 mysql> create table t1 (id int, age int, key(id)) partition by range(id)
@@ -2010,8 +1888,6 @@ From example 1, you can see that even if the `TIDB_INLJ` hint is used, the query
 
 **Example 2**: In the following example, the query is performed in `dynamic` mode using the execution plan with IndexJoin:
 
-{{< copyable "sql" >}}
-
 ```sql
 mysql> set @@tidb_partition_prune_mode = 'dynamic';
 Query OK, 0 rows affected (0.00 sec)
@@ -2039,8 +1915,6 @@ Currently, `static` pruning mode does not support plan cache for both prepared a
 ### Update statistics of partitioned tables in dynamic pruning mode
 
 1. Locate all partitioned tables:
-
-    {{< copyable "sql" >}}
 
     ```sql
     SELECT DISTINCT CONCAT(TABLE_SCHEMA,'.', TABLE_NAME)
@@ -2095,8 +1969,6 @@ Currently, `static` pruning mode does not support plan cache for both prepared a
     sed -i "" '1d' gatherGlobalStats.sql --- mac
     sed -i '1d' gatherGlobalStats.sql --- linux
     ```
-
-    {{< copyable "sql" >}}
 
     ```sql
     SET session tidb_partition_prune_mode = dynamic;

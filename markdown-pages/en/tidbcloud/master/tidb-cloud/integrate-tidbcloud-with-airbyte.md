@@ -48,13 +48,13 @@ Conveniently, the steps are the same for setting TiDB as the source and the dest
 
 2. Fill in the following parameters.
 
-    - Host: The endpoint of your <CustomContent plan="starter">{{{ .starter }}} instance</CustomContent><CustomContent plan="essential">{{{ .essential }}} instance</CustomContent><CustomContent plan="premium">{{{ .premium }}} instance</CustomContent><CustomContent plan="dedicated">{{{ .dedicated }}} cluster</CustomContent>
+    - Host: The endpoint of your <CustomContent plan="starter">TiDB Cloud Starter instance</CustomContent><CustomContent plan="essential">TiDB Cloud Essential instance</CustomContent><CustomContent plan="premium">TiDB Cloud Premium instance</CustomContent><CustomContent plan="dedicated">TiDB Cloud Dedicated cluster</CustomContent>
     - Port: The port of the database
     - Database: The database that you want to sync the data
     - Username: The username to access the database
     - Password: The password of the username
 
-    You can get the parameter values from the connection dialog in the TiDB Cloud console. To open the dialog, go to the [**My TiDB**](https://tidbcloud.com/tidbs) page, click the name of your target <CustomContent plan="starter">{{{ .starter }}} instance</CustomContent><CustomContent plan="essential">{{{ .essential }}} instance</CustomContent><CustomContent plan="premium">{{{ .premium }}} instance</CustomContent><CustomContent plan="dedicated">{{{ .dedicated }}} cluster</CustomContent> to go to its overview page, and then click **Connect** in the upper-right corner.
+    You can get the parameter values from the connection dialog in the TiDB Cloud console. To open the dialog, go to the [**My TiDB**](https://tidbcloud.com/tidbs) page, click the name of your target <CustomContent plan="starter">TiDB Cloud Starter instance</CustomContent><CustomContent plan="essential">TiDB Cloud Essential instance</CustomContent><CustomContent plan="premium">TiDB Cloud Premium instance</CustomContent><CustomContent plan="dedicated">TiDB Cloud Dedicated cluster</CustomContent> to go to its overview page, and then click **Connect** in the upper-right corner.
 
 3. Enable **SSL Connection**, and set TLS protocols to **TLSv1.2** or **TLSv1.3** in **JDBC URL Params**.
 
@@ -62,7 +62,7 @@ Conveniently, the steps are the same for setting TiDB as the source and the dest
     >
     > - TiDB Cloud supports TLS connection. You can choose your TLS protocols in **TLSv1.2** and **TLSv1.3**, for example, `enabledTLSProtocols=TLSv1.2`.
     > - If you want to disable TLS connection to TiDB Cloud via JDBC, you need to set useSSL to `false` in JDBC URL Params specifically and close SSL connection, for example, `useSSL=false`.
-    > - {{{ .starter }}} and {{{ .essential }}} only support TLS connections.
+    > - TiDB Cloud Starter and TiDB Cloud Essential only support TLS connections.
 
 4. Click **Set up source** or **destination** to complete creating the connector. The following screenshot shows the configuration of TiDB as the source.
 
