@@ -140,6 +140,26 @@ EOF
   rm -f "$PATCH"
 }
 
+patch_gatsby_config_build_all() {
+  MARKER="DOCSITE_PREVIEW_BUILD_ALL"
+  FILE="website-docs/gatsby-config.js"
+
+  grep -q "$MARKER" "$FILE" && return 0
+
+  awk '
+    /^const isDevelopment = process\.env\.NODE_ENV === "development";$/ {
+      print "// DOCSITE_PREVIEW_BUILD_ALL: include all markdown pages in local preview dev builds."
+      print "const isDevelopment ="
+      print "  process.env.NODE_ENV === \"development\" &&"
+      print "  process.env.DOCSITE_PREVIEW_BUILD_ALL !== \"1\";"
+      next
+    }
+    { print }
+  ' "$FILE" >"$FILE.tmp"
+
+  mv "$FILE.tmp" "$FILE"
+}
+
 # The default command is build, which builds the website for production.
 CMD=build
 
@@ -166,11 +186,12 @@ cp docs.json website-docs/docs/docs.json
 [ -f tooltip-terms.json ] && cp tooltip-terms.json website-docs/docs/tooltip-terms.json
 copy_preview_to_mdx_source
 patch_create_doc_home_preview
+patch_gatsby_config_build_all
 
 # Run the start command for development environment. <https://www.gatsbyjs.com/docs/reference/gatsby-cli/#develop>
 if [ "$CMD" == "start" ]; then
   mkdir -p website-docs/.cache
-  (cd website-docs && pnpm install --frozen-lockfile && pnpm start)
+  (cd website-docs && pnpm install --frozen-lockfile && DOCSITE_PREVIEW_BUILD_ALL="${DOCSITE_PREVIEW_BUILD_ALL:-1}" pnpm start)
 fi
 
 # Run the build command for production environment. <https://www.gatsbyjs.com/docs/reference/gatsby-cli/#build>
