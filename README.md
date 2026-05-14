@@ -10,6 +10,7 @@
 ## Key features
 
 - **Ease of use**: preview a PR by simply creating a new branch.
+- **Changed-file index**: generate a standalone `/preview/` page grouped by pull request, language, product, and version, and link to it from the documentation home page.
 - **Cross-repository preview**: simultaneously preview changes from multiple PRs across different repositories.
 - **Centralized preview schedule management**: organize and manage preview schedules in a unified workflow.
 - **Customizability**: customize the preview process to meet your requirements.

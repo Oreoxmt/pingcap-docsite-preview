@@ -39,6 +39,107 @@ move_images() {
   )
 }
 
+copy_preview_to_mdx_source() {
+  if [ -f "preview.md" ]; then
+    DEST="markdown-pages/en/tidb/master/_preview.md"
+    mkdir -p "$(dirname "$DEST")"
+    cp preview.md "$DEST"
+  fi
+}
+
+patch_create_doc_home_preview() {
+  MARKER="DOCSITE_PREVIEW_DOC_HOME"
+  FILE="website-docs/gatsby/create-pages/create-doc-home.ts"
+
+  grep -q "$MARKER" "$FILE" && return 0
+
+  PATCH=$(mktemp)
+  cat >"$PATCH" <<'EOF'
+  // DOCSITE_PREVIEW_DOC_HOME: build /preview/ using the same DocTemplate.
+  const previewQueryStr = `
+  {
+    allMdx(
+      filter: {
+        fileAbsolutePath: { regex: "/_preview.md$/" }
+        frontmatter: { draft: { ne: true } }
+      }
+    ) {
+      nodes {
+        id
+        frontmatter {
+          aliases
+        }
+        slug
+      }
+    }
+  }
+`;
+  const previewDocs = await graphql<PageQueryData>(previewQueryStr);
+  if (previewDocs.errors) {
+    sig.error(previewDocs.errors);
+  }
+
+  const previewNodes = (previewDocs.data?.allMdx.nodes ?? []).map((node) => {
+    const { config, name, filePath } = generateConfig(node.slug);
+    return { ...node, pathConfig: config, name, filePath };
+  });
+
+  previewNodes.forEach((node) => {
+    const { id, name, pathConfig, filePath } = node;
+    const previewPath = "/preview/";
+    const namespace = TOCNamespace.Home;
+    const namespaceSlug = TOCNamespaceSlugMap[namespace];
+    const navUrl = generateNavTOCPath(pathConfig, namespaceSlug);
+    const starterNavUrl = generateNavTOCPath(pathConfig, "tidb-cloud-starter");
+    const essentialNavUrl = generateNavTOCPath(
+      pathConfig,
+      "tidb-cloud-essential"
+    );
+    const premiumNavUrl = generateNavTOCPath(pathConfig, "tidb-cloud-premium");
+
+    createPage({
+      path: previewPath,
+      component: template,
+      context: {
+        id,
+        name,
+        pathConfig,
+        filePath,
+        navUrl,
+        starterNavUrl,
+        essentialNavUrl,
+        premiumNavUrl,
+        pageUrl: previewPath,
+        availIn: {
+          locale: [Locale.en],
+          version: [],
+        },
+        buildType: (process.env.WEBSITE_BUILD_TYPE ??
+          DEFAULT_BUILD_TYPE) as BuildType,
+        feature: {
+          banner: true,
+          feedback: false,
+          globalHome: true,
+        },
+        namespace,
+      },
+    });
+  });
+EOF
+
+  awk -v patch_file="$PATCH" '
+    /^};$/ && !patched {
+      while ((getline line < patch_file) > 0) print line
+      close(patch_file)
+      patched = 1
+    }
+    { print }
+  ' "$FILE" >"$FILE.tmp"
+
+  mv "$FILE.tmp" "$FILE"
+  rm -f "$PATCH"
+}
+
 # The default command is build, which builds the website for production.
 CMD=build
 
@@ -63,6 +164,8 @@ fi
 # Copy docs.json and tooltip-terms.json to website-docs/docs.
 cp docs.json website-docs/docs/docs.json
 [ -f tooltip-terms.json ] && cp tooltip-terms.json website-docs/docs/tooltip-terms.json
+copy_preview_to_mdx_source
+patch_create_doc_home_preview
 
 # Run the start command for development environment. <https://www.gatsbyjs.com/docs/reference/gatsby-cli/#develop>
 if [ "$CMD" == "start" ]; then
