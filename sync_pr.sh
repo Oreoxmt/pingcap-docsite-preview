@@ -110,8 +110,451 @@ process_cloud_toc() {
   mv "$DIR/TOC-tidb-cloud.md" "$DIR/TOC.md"
 }
 
+get_preview_page_title() {
+  FILE=$1
+  TITLE=""
+
+  if [[ -f "$FILE" ]]; then
+    TITLE=$(awk '
+      BEGIN { in_frontmatter = 0 }
+      NR == 1 && $0 == "---" { in_frontmatter = 1; next }
+      in_frontmatter && $0 == "---" { in_frontmatter = 0; next }
+      in_frontmatter && $0 ~ /^title:[[:space:]]*/ {
+        sub(/^title:[[:space:]]*/, "")
+        gsub(/^["'\'']|["'\'']$/, "")
+        print
+        exit
+      }
+      !in_frontmatter && $0 ~ /^#[[:space:]]+/ {
+        sub(/^#[[:space:]]+/, "")
+        print
+        exit
+      }
+    ' "$FILE")
+  fi
+
+  if [[ -n "$TITLE" ]]; then
+    printf "%s" "$TITLE"
+  else
+    basename "$FILE" .md
+  fi
+}
+
+get_preview_version_slug() {
+  PRODUCT=$1
+  BRANCH=$2
+
+  case "$PRODUCT" in
+  tidb)
+    if [[ "$BRANCH" == "master" ]]; then
+      printf "dev"
+    elif [[ "$BRANCH" == "$(jq -r '.docs.tidb.stable' docs.json)" ]]; then
+      printf "stable"
+    else
+      printf "%s" "${BRANCH/release-/v}"
+    fi
+    ;;
+  tidb-in-kubernetes)
+    if [[ "$BRANCH" == "main" ]]; then
+      printf "dev"
+    elif [[ "$BRANCH" == "$(jq -r '.docs["tidb-in-kubernetes"].stable' docs.json)" ]]; then
+      printf "stable"
+    else
+      printf "%s" "${BRANCH/release-/v}"
+    fi
+    ;;
+  esac
+}
+
+get_preview_doc_url() {
+  DEST_DIR=$1
+  FILE=$2
+  REL_DEST=$(printf "%s" "${DEST_DIR#markdown-pages/}" | tr -s '/')
+  LOCALE=$(echo "$REL_DEST" | cut -d'/' -f1)
+  PRODUCT=$(echo "$REL_DEST" | cut -d'/' -f2)
+  BRANCH=$(echo "$REL_DEST" | cut -d'/' -f3)
+  NAME=$(basename "$FILE" .md)
+  FIRST_DIR=${FILE%%/*}
+  LANG_PREFIX=""
+
+  [[ "$LOCALE" != "en" ]] && LANG_PREFIX="/$LOCALE"
+
+  case "$PRODUCT" in
+  tidb)
+    if [[ "$BRANCH" == "$(jq -r '.docs.tidb.stable' docs.json)" ]]; then
+      case "$FIRST_DIR" in
+      develop)
+        printf "%s/developer/%s" "$LANG_PREFIX" "$NAME"
+        return
+        ;;
+      ai | best-practices | api)
+        printf "%s/%s/%s" "$LANG_PREFIX" "$FIRST_DIR" "$NAME"
+        return
+        ;;
+      esac
+    fi
+    printf "%s/tidb/%s/%s" "$LANG_PREFIX" "$(get_preview_version_slug tidb "$BRANCH")" "$NAME"
+    ;;
+  tidbcloud)
+    printf "%s/tidbcloud/%s" "$LANG_PREFIX" "$NAME"
+    ;;
+  tidb-in-kubernetes)
+    printf "%s/tidb-in-kubernetes/%s/%s" "$LANG_PREFIX" "$(get_preview_version_slug tidb-in-kubernetes "$BRANCH")" "$NAME"
+    ;;
+  *)
+    printf "%s/%s/%s" "$LANG_PREFIX" "$PRODUCT" "$NAME"
+    ;;
+  esac
+}
+
+escape_html() {
+  printf "%s" "$1" | sed \
+    -e 's/&/\&amp;/g' \
+    -e 's/</\&lt;/g' \
+    -e 's/>/\&gt;/g' \
+    -e 's/"/\&quot;/g' \
+    -e "s/'/\&#39;/g"
+}
+
+generate_preview_page() {
+  DEST_DIR=$1
+  SRC_DIR=$2
+  CHANGED_FILES=$3
+  PREVIEW_FILE="preview.md"
+  SOURCE_PATH="${SRC_DIR#"$REPO_DIR"/}"
+  REL_DEST=$(printf "%s" "${DEST_DIR#markdown-pages/}" | tr -s '/')
+  TARGET_LOCALE=$(echo "$REL_DEST" | cut -d'/' -f1)
+  TARGET_PRODUCT=$(echo "$REL_DEST" | cut -d'/' -f2)
+  TARGET_BRANCH=$(echo "$REL_DEST" | cut -d'/' -f3)
+  TARGET_VERSION="$TARGET_BRANCH"
+  if [[ "$TARGET_PRODUCT" == "tidb" || "$TARGET_PRODUCT" == "tidb-in-kubernetes" ]]; then
+    TARGET_VERSION=$(get_preview_version_slug "$TARGET_PRODUCT" "$TARGET_BRANCH")
+  fi
+  SECTION_KEY=$(printf "%s-%s-%s-%s-%s-%s" "$REPO_OWNER" "$REPO_NAME" "$PR_NUMBER" "$TARGET_LOCALE" "$TARGET_PRODUCT" "$TARGET_BRANCH" | tr -c '[:alnum:]_-' '-')
+  SECTION_START="<!-- DOCSITE_PREVIEW_GROUP_${SECTION_KEY}_START -->"
+  SECTION_END="<!-- DOCSITE_PREVIEW_GROUP_${SECTION_KEY}_END -->"
+  DOC_ROWS=""
+  SUPPORT_ROWS=""
+  OTHER_ROWS=""
+
+  [[ "$SOURCE_PATH" == "./" ]] && SOURCE_PATH="."
+
+  while IFS= read -r FILE; do
+    [[ -z "$FILE" ]] && continue
+
+    case "$FILE" in
+    *.md)
+      BASENAME=$(basename "$FILE")
+      if [[ "$BASENAME" == TOC*.md || "$BASENAME" == _*.md ]]; then
+        SUPPORT_ROWS+="<tr><td><code>$(escape_html "$FILE")</code></td></tr>"$'\n'
+      else
+        TITLE=$(get_preview_page_title "$DEST_DIR/$FILE")
+        URL=$(get_preview_doc_url "$DEST_DIR" "$FILE")
+        DOC_ROWS+="<tr><td><a href=\"$(escape_html "$URL")\">$(escape_html "$TITLE")</a></td><td><code>$(escape_html "$FILE")</code></td></tr>"$'\n'
+      fi
+      ;;
+    *)
+      OTHER_ROWS+="<tr><td><code>$(escape_html "$FILE")</code></td></tr>"$'\n'
+      ;;
+    esac
+  done <<<"$CHANGED_FILES"
+
+  TMP_GROUP=$(mktemp)
+  cat >"$TMP_GROUP" <<EOF
+$SECTION_START
+
+<details open>
+<summary><strong><a href="https://github.com/${REPO_OWNER}/${REPO_NAME}/pull/${PR_NUMBER}">$(escape_html "${REPO_OWNER}/${REPO_NAME}#${PR_NUMBER}")</a></strong> / $(escape_html "$TARGET_LOCALE") / $(escape_html "$TARGET_PRODUCT") / $(escape_html "$TARGET_VERSION")</summary>
+
+<table class="meta-table">
+<tbody>
+<tr><th>Language</th><td><code>$(escape_html "$TARGET_LOCALE")</code></td></tr>
+<tr><th>Product</th><td><code>$(escape_html "$TARGET_PRODUCT")</code></td></tr>
+<tr><th>Version</th><td><code>$(escape_html "$TARGET_VERSION")</code></td></tr>
+<tr><th>Base branch</th><td><code>$(escape_html "$BASE_BRANCH")</code></td></tr>
+<tr><th>Source path</th><td><code>$(escape_html "$SOURCE_PATH")</code></td></tr>
+</tbody>
+</table>
+EOF
+
+  if [[ -n "$DOC_ROWS" ]]; then
+    {
+      printf "\n<h2>Documentation pages</h2>\n"
+      printf "<table>\n<thead><tr><th>Page</th><th>File</th></tr></thead>\n<tbody>\n%s</tbody>\n</table>\n" "$DOC_ROWS"
+    } >>"$TMP_GROUP"
+  else
+    printf "\n<p>No changed documentation pages were detected.</p>\n" >>"$TMP_GROUP"
+  fi
+
+  if [[ -n "$SUPPORT_ROWS" ]]; then
+    {
+      printf "\n<h2>Navigation and index files</h2>\n"
+      printf "<table>\n<thead><tr><th>File</th></tr></thead>\n<tbody>\n%s</tbody>\n</table>\n" "$SUPPORT_ROWS"
+    } >>"$TMP_GROUP"
+  fi
+
+  if [[ -n "$OTHER_ROWS" ]]; then
+    {
+      printf "\n<h2>Other changed files</h2>\n"
+      printf "<table>\n<thead><tr><th>File</th></tr></thead>\n<tbody>\n%s</tbody>\n</table>\n" "$OTHER_ROWS"
+    } >>"$TMP_GROUP"
+  fi
+
+  printf "\n</details>\n\n%s\n" "$SECTION_END" >>"$TMP_GROUP"
+
+  if [[ ! -f "$PREVIEW_FILE" ]]; then
+    cat >"$PREVIEW_FILE" <<'EOF'
+---
+title: Preview links
+hide_sidebar: true
+hide_commit: true
+hide_leftNav: true
+summary: Documentation preview links for synced PRs, grouped by PR, language, product, and version.
+---
+
+<DocHomeContainer title="Preview links" subTitle="Review documentation preview links for synced PRs, grouped by PR, language, product, and version.">
+
+<DocHomeSection label="Preview links" anchor="preview-links" id="preview-links">
+
+Preview links generated by `pingcap-docsite-preview`.
+
+<!-- DOCSITE_PREVIEW_GROUPS_START -->
+<!-- DOCSITE_PREVIEW_GROUPS_END -->
+
+</DocHomeSection>
+
+</DocHomeContainer>
+EOF
+  fi
+
+  awk -v group_file="$TMP_GROUP" -v groups_end="<!-- DOCSITE_PREVIEW_GROUPS_END -->" -v section_start="$SECTION_START" -v section_end="$SECTION_END" '
+    BEGIN {
+      while ((getline line < group_file) > 0) group = group line ORS
+      close(group_file)
+      skipping = 0
+    }
+    $0 == section_start {
+      skipping = 1
+      next
+    }
+    $0 == section_end {
+      skipping = 0
+      next
+    }
+    $0 == groups_end {
+      printf "%s", group
+      print
+      next
+    }
+    !skipping { print }
+  ' "$PREVIEW_FILE" >"$PREVIEW_FILE.tmp"
+
+  mv "$PREVIEW_FILE.tmp" "$PREVIEW_FILE"
+  rm -f "$TMP_GROUP"
+}
+
+restore_preview_page_from_head() {
+  # Preserve preview groups across multi-PR sync runs if an earlier step leaves
+  # the generated preview index absent from the working tree.
+  if [[ ! -f "preview.md" ]] && git cat-file -e HEAD:preview.md 2>/dev/null; then
+    git show HEAD:preview.md >preview.md
+  fi
+}
+
+get_doc_home_file() {
+  DEST_DIR=$1
+  REL_DEST=$(printf "%s" "${DEST_DIR#markdown-pages/}" | tr -s '/')
+  LOCALE=$(echo "$REL_DEST" | cut -d'/' -f1)
+  printf "markdown-pages/%s/tidb/master/_docHome.md" "$LOCALE"
+}
+
+generate_doc_home_preview_section() {
+  DEST_DIR=$1
+  SRC_DIR=$2
+  CHANGED_FILES=$3
+  DOC_HOME_FILE=$(get_doc_home_file "$DEST_DIR")
+  SOURCE_PATH="${SRC_DIR#"$REPO_DIR"/}"
+  REL_DEST=$(printf "%s" "${DEST_DIR#markdown-pages/}" | tr -s '/')
+  TARGET_LOCALE=$(echo "$REL_DEST" | cut -d'/' -f1)
+  TARGET_PRODUCT=$(echo "$REL_DEST" | cut -d'/' -f2)
+  TARGET_BRANCH=$(echo "$REL_DEST" | cut -d'/' -f3)
+  TARGET_VERSION="$TARGET_BRANCH"
+  if [[ "$TARGET_PRODUCT" == "tidb" || "$TARGET_PRODUCT" == "tidb-in-kubernetes" ]]; then
+    TARGET_VERSION=$(get_preview_version_slug "$TARGET_PRODUCT" "$TARGET_BRANCH")
+  fi
+  SECTION_KEY=$(printf "%s-%s-%s-%s-%s-%s" "$REPO_OWNER" "$REPO_NAME" "$PR_NUMBER" "$TARGET_LOCALE" "$TARGET_PRODUCT" "$TARGET_BRANCH" | tr -c '[:alnum:]_-' '-')
+  SECTION_START="<!-- DOCSITE_PREVIEW_LINKS_START -->"
+  SECTION_END="<!-- DOCSITE_PREVIEW_LINKS_END -->"
+  GROUP_START="<!-- DOCSITE_PREVIEW_LINKS_${SECTION_KEY}_START -->"
+  GROUP_END="<!-- DOCSITE_PREVIEW_LINKS_${SECTION_KEY}_END -->"
+  DOC_ROWS=""
+  SUPPORT_ROWS=""
+  OTHER_ROWS=""
+
+  [[ -f "$DOC_HOME_FILE" ]] || return 0
+  [[ "$SOURCE_PATH" == "./" ]] && SOURCE_PATH="."
+
+  while IFS= read -r FILE; do
+    [[ -z "$FILE" ]] && continue
+
+    case "$FILE" in
+    *.md)
+      BASENAME=$(basename "$FILE")
+      if [[ "$BASENAME" == TOC*.md || "$BASENAME" == _*.md ]]; then
+        SUPPORT_ROWS+="<tr><td><code>$(escape_html "$FILE")</code></td></tr>"$'\n'
+      else
+        TITLE=$(get_preview_page_title "$DEST_DIR/$FILE")
+        URL=$(get_preview_doc_url "$DEST_DIR" "$FILE")
+        DOC_ROWS+="<tr><td><a href=\"$(escape_html "$URL")\">$(escape_html "$TITLE")</a></td><td><code>$(escape_html "$FILE")</code></td></tr>"$'\n'
+      fi
+      ;;
+    *)
+      OTHER_ROWS+="<tr><td><code>$(escape_html "$FILE")</code></td></tr>"$'\n'
+      ;;
+    esac
+  done <<<"$CHANGED_FILES"
+
+  TMP_GROUP=$(mktemp)
+  cat >"$TMP_GROUP" <<EOF
+$GROUP_START
+
+<details>
+<summary><strong><a href="https://github.com/${REPO_OWNER}/${REPO_NAME}/pull/${PR_NUMBER}">$(escape_html "${REPO_OWNER}/${REPO_NAME}#${PR_NUMBER}")</a></strong> / $(escape_html "$TARGET_LOCALE") / $(escape_html "$TARGET_PRODUCT") / $(escape_html "$TARGET_VERSION")</summary>
+
+<table>
+<tbody>
+<tr><th>Language</th><td><code>$(escape_html "$TARGET_LOCALE")</code></td></tr>
+<tr><th>Product</th><td><code>$(escape_html "$TARGET_PRODUCT")</code></td></tr>
+<tr><th>Version</th><td><code>$(escape_html "$TARGET_VERSION")</code></td></tr>
+<tr><th>Base branch</th><td><code>$(escape_html "$BASE_BRANCH")</code></td></tr>
+<tr><th>Source path</th><td><code>$(escape_html "$SOURCE_PATH")</code></td></tr>
+</tbody>
+</table>
+EOF
+
+  if [[ -n "$DOC_ROWS" ]]; then
+    {
+      printf "\n<strong>Documentation pages</strong>\n\n"
+      printf "<table>\n<thead><tr><th>Page</th><th>File</th></tr></thead>\n<tbody>\n%s</tbody>\n</table>\n" "$DOC_ROWS"
+    } >>"$TMP_GROUP"
+  else
+    printf "\nNo changed documentation pages were detected.\n" >>"$TMP_GROUP"
+  fi
+
+  if [[ -n "$SUPPORT_ROWS" ]]; then
+    {
+      printf "\n<strong>Navigation and index files</strong>\n\n"
+      printf "<table>\n<thead><tr><th>File</th></tr></thead>\n<tbody>\n%s</tbody>\n</table>\n" "$SUPPORT_ROWS"
+    } >>"$TMP_GROUP"
+  fi
+
+  if [[ -n "$OTHER_ROWS" ]]; then
+    {
+      printf "\n<strong>Other changed files</strong>\n\n"
+      printf "<table>\n<thead><tr><th>File</th></tr></thead>\n<tbody>\n%s</tbody>\n</table>\n" "$OTHER_ROWS"
+    } >>"$TMP_GROUP"
+  fi
+
+  {
+    printf "\n</details>\n\n"
+    printf "%s\n" "$GROUP_END"
+  } >>"$TMP_GROUP"
+
+  TMP_SECTION=$(mktemp)
+  {
+    cat <<EOF
+$SECTION_START
+
+<DocHomeSection label="Preview links" anchor="preview-links" id="preview-links">
+
+Preview links generated by \`pingcap-docsite-preview\`. For a standalone view, open [Preview links](/preview/).
+
+EOF
+    cat "$TMP_GROUP"
+    cat <<EOF
+</DocHomeSection>
+
+$SECTION_END
+EOF
+  } >"$TMP_SECTION"
+
+  if grep -Fq "$SECTION_START" "$DOC_HOME_FILE" && awk -v section_start="$SECTION_START" -v section_end="$SECTION_END" '
+    $0 == section_start { in_section = 1; next }
+    $0 == section_end { in_section = 0 }
+    in_section && /<DocHomeSection[[:space:]][^>]*id="preview-links"/ { found = 1 }
+    END { exit(found ? 0 : 1) }
+  ' "$DOC_HOME_FILE"; then
+    awk -v group_file="$TMP_GROUP" -v section_start="$SECTION_START" -v section_end="$SECTION_END" -v group_start="$GROUP_START" -v group_end="$GROUP_END" '
+      BEGIN {
+        while ((getline line < group_file) > 0) group = group line ORS
+        close(group_file)
+        skipping = 0
+        in_preview_section = 0
+      }
+      $0 == section_start {
+        in_preview_section = 1
+        print
+        next
+      }
+      $0 == section_end {
+        in_preview_section = 0
+        print
+        next
+      }
+      $0 == group_start {
+        skipping = 1
+        next
+      }
+      $0 == group_end {
+        skipping = 0
+        next
+      }
+      in_preview_section && $0 == "</DocHomeSection>" {
+        printf "%s", group
+        print
+        next
+      }
+      !skipping { print }
+    ' "$DOC_HOME_FILE" >"$DOC_HOME_FILE.tmp"
+  else
+    awk -v section_file="$TMP_SECTION" -v section_start="$SECTION_START" -v section_end="$SECTION_END" '
+    BEGIN {
+      while ((getline line < section_file) > 0) section = section line ORS
+      close(section_file)
+      inserted = 0
+      skipping = 0
+    }
+    $0 == section_start {
+      skipping = 1
+      next
+    }
+    $0 == section_end {
+      skipping = 0
+      next
+    }
+    skipping {
+      next
+    }
+    {
+      print
+      if (!inserted && $0 ~ /^<DocHomeContainer[ >]/) {
+        printf "\n%s", section
+        inserted = 1
+      }
+    }
+    END {
+      if (!inserted) printf "\n%s", section
+    }
+    ' "$DOC_HOME_FILE" >"$DOC_HOME_FILE.tmp"
+  fi
+
+  mv "$DOC_HOME_FILE.tmp" "$DOC_HOME_FILE"
+  rm -f "$TMP_GROUP" "$TMP_SECTION"
+}
+
 perform_sync_task() {
   generate_sync_tasks
+  restore_preview_page_from_head
 
   # Set the target branch and folders of TOC namespace per product.
   # These folders are served from a fixed target branch; when BASE_BRANCH differs, they must also be synced there for the preview to reflect changes at their canonical URLs.
@@ -150,6 +593,8 @@ perform_sync_task() {
     echo "$CHANGED_FILES" | tee /dev/fd/2 |
       rsync -av --files-from=- "$SRC_DIR" "$DEST_DIR"
 
+    restore_preview_page_from_head
+
     # Get the current commit SHA.
     CURRENT_COMMIT=$(git -C "$REPO_DIR" rev-parse HEAD)
     commit_changes "Sync files for PR https://github.com/$REPO_OWNER/$REPO_NAME/pull/$PR_NUMBER (commit: https://github.com/$REPO_OWNER/$REPO_NAME/pull/$PR_NUMBER/commits/$CURRENT_COMMIT)"
@@ -165,7 +610,10 @@ perform_sync_task() {
       process_cloud_toc "$DEST_DIR"
     fi
 
-    commit_changes "Post-process docs (variables replaced, copyable removed)"
+    generate_preview_page "$DEST_DIR" "$SRC_DIR" "$CHANGED_FILES"
+    generate_doc_home_preview_section "$DEST_DIR" "$SRC_DIR" "$CHANGED_FILES"
+
+    commit_changes "Post-process docs and update doc home preview links"
 
     # Sync TOC namespace folders to the target branch path when BASE_BRANCH differs.
     if [[ -n "$TOC_TARGET_BRANCH" && "$BASE_BRANCH" != "$TOC_TARGET_BRANCH" ]]; then
