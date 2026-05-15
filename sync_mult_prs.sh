@@ -14,6 +14,7 @@ cd "$SCRIPT_DIR"
 # Define the PRs to sync.
 # The PRs will be synced in the order of the following statements.
 ./sync_pr.sh preview/pingcap/docs-cn/21641
+./sync_pr.sh preview/pingcap/docs/22898
 
 commit_changes() {
   mess=$1
