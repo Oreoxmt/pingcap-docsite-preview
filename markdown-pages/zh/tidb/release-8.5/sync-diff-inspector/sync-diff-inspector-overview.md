@@ -192,8 +192,6 @@ collation = ""
 
 执行如下命令：
 
-{{< copyable "shell-regular" >}}
-
 ```bash
 ./sync_diff_inspector --config=./config.toml
 ```
