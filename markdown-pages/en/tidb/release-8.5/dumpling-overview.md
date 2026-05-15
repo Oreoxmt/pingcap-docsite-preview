@@ -84,6 +84,8 @@ This document assumes that there is a TiDB instance on the 127.0.0.1:4000 host a
 
 Dumpling exports data to SQL files by default. You can also export data to SQL files by adding the `--filetype sql` flag:
 
+{{< copyable "shell-regular" >}}
+
 ```shell
 tiup dumpling -u root -P 4000 -h 127.0.0.1 --filetype sql -t 8 -o /tmp/test -r 200000 -F 256MiB
 ```
@@ -119,6 +121,8 @@ For more information, see [URI Formats of External Storage Services](/external-s
 You can export data to CSV files by adding the `--filetype csv` argument.
 
 When you export data to CSV files, you can use `--sql <SQL>` to filter the records with the SQL statements. For example, you can export all records that match `id < 100` in `test.sbtest1` using the following command:
+
+{{< copyable "shell-regular" >}}
 
 ```shell
 tiup dumpling -u root -P 4000 -h 127.0.0.1 -o /tmp/test --filetype csv --sql 'select * from `test`.`sbtest1` where id < 100' -F 100MiB --output-filename-template 'test.sbtest1.{{.Index}}'
@@ -162,6 +166,8 @@ You can use the `--compress <format>` option to compress the CSV and SQL data an
 
 - `metadata`: The start time of the exported files and the position of the master binary log.
 
+    {{< copyable "shell-regular" >}}
+
     ```shell
     cat metadata
     ```
@@ -176,6 +182,8 @@ You can use the `--compress <format>` option to compress the CSV and SQL data an
 
 - `{schema}-schema-create.sql`: The SQL file used to create the schema
 
+    {{< copyable "shell-regular" >}}
+
     ```shell
     cat test-schema-create.sql
     ```
@@ -185,6 +193,8 @@ You can use the `--compress <format>` option to compress the CSV and SQL data an
     ```
 
 - `{schema}.{table}-schema.sql`: The SQL file used to create the table
+
+    {{< copyable "shell-regular" >}}
 
     ```shell
     cat test.t1-schema.sql
@@ -197,6 +207,8 @@ You can use the `--compress <format>` option to compress the CSV and SQL data an
     ```
 
 - `{schema}.{table}.{0001}.{sql|csv}`: The date source file
+
+    {{< copyable "shell-regular" >}}
 
     ```shell
     cat test.t1.0.sql
@@ -217,6 +229,8 @@ Starting from v4.0.8, Dumpling supports exporting data to cloud storages. If you
 You need to create an Amazon S3 bucket in the specified region (see the [Amazon documentation - How do I create an S3 Bucket](https://docs.aws.amazon.com/AmazonS3/latest/user-guide/create-bucket.html)). If you also need to create a folder in the bucket, see the [Amazon documentation - Creating a folder](https://docs.aws.amazon.com/AmazonS3/latest/user-guide/create-folder.html).
 
 Pass `SecretKey` and `AccessKey` of the account with the permission to access the Amazon S3 backend storage to the Dumpling node as environment variables.
+
+{{< copyable "shell-regular" >}}
 
 ```shell
 export AWS_ACCESS_KEY_ID=${AccessKey}
@@ -244,6 +258,8 @@ The above command exports the data that matches `id < 100` from each table. Note
 #### Use the `--filter` option to filter data
 
 Dumpling can filter specific databases or tables by specifying the table filter with the `--filter` option. The syntax of table filters is similar to that of `.gitignore`. For details, see [Table Filter](/table-filter.md).
+
+{{< copyable "shell-regular" >}}
 
 ```shell
 tiup dumpling -u root -P 4000 -h 127.0.0.1 -o /tmp/test -r 200000 --filter "employees.*" --filter "*.WorkOrder"
@@ -291,6 +307,8 @@ Dumpling uses the `--consistency <consistency level>` option to control the way 
 
 After everything is done, you can see the exported file in `/tmp/test`:
 
+{{< copyable "shell-regular" >}}
+
 ```shell
 ls -lh /tmp/test | awk '{print $5 "\t" $9}'
 ```
@@ -311,6 +329,8 @@ ls -lh /tmp/test | awk '{print $5 "\t" $9}'
 Dumpling can export the data of a certain [tidb_snapshot](/read-historical-data.md#how-tidb-reads-data-from-history-versions) with the `--snapshot` option specified.
 
 The `--snapshot` option can be set to a TSO (the `Position` field output by the `SHOW MASTER STATUS` command) or a valid time of the `datetime` data type (in the form of `YYYY-MM-DD hh:mm:ss`), for example:
+
+{{< copyable "shell-regular" >}}
 
 ```shell
 tiup dumpling --snapshot 417773951312461825
