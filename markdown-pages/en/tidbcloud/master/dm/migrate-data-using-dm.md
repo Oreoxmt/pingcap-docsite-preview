@@ -58,8 +58,6 @@ The list of privileges needed on the MySQL host can be found in the [precheck](/
 
 2. Execute the following command in the terminal, and use `tiup dmctl` to load the MySQL-1 data source configuration to the DM cluster:
 
-    {{< copyable "shell-regular" >}}
-
     ```bash
     tiup dmctl --master-addr 172.16.10.71:8261 operate-source create conf/source1.yaml
     ```
@@ -131,8 +129,6 @@ For details about the precheck feature, see [Precheck the upstream MySQL instanc
 
 Run the `tiup dmctl` command to start the data migration tasks. `task.yaml` is the configuration file that is edited above.
 
-{{< copyable "" >}}
-
 ```bash
 tiup dmctl --master-addr 172.16.10.71:8261 start-task ./task.yaml
 ```
@@ -163,8 +159,6 @@ tiup dmctl --master-addr 172.16.10.71:8261 start-task ./task.yaml
 ## Step 6: Check the data migration task
 
 If you need to check the task state or whether a certain data migration task is running in the DM cluster, run the following command in `tiup dmctl`:
-
-{{< copyable "" >}}
 
 ```bash
 tiup dmctl --master-addr 172.16.10.71:8261 query-status

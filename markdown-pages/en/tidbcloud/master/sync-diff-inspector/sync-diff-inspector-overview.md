@@ -189,8 +189,6 @@ collation = ""
 
 Run the following command:
 
-{{< copyable "shell-regular" >}}
-
 ```bash
 ./sync_diff_inspector --config=./config.toml
 ```
