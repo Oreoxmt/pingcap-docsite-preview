@@ -6,7 +6,7 @@ category: intro
 
 # What is TiDB Cloud
 
-[TiDB Cloud](https://www.pingcap.com/tidb-cloud/) is a fully managed, cloud-native Database-as-a-Service (DBaaS) based on [TiDB](https://docs.pingcap.com/tidb/stable/overview), an open-source Hybrid Transactional and Analytical Processing (HTAP) database. TiDB Cloud offers an easy way to deploy and manage databases to let you focus on your applications, not the complexities of the databases. <CustomContent language="en,zh">You can create TiDB Cloud resources (such as TiDB Cloud Starter instances, TiDB Cloud Essential instances, and TiDB Cloud Dedicated clusters) to quickly build mission-critical applications on Amazon Web Services (AWS), Google Cloud, Microsoft Azure, and Alibaba Cloud.</CustomContent><CustomContent language="ja">You can create TiDB Cloud resources (such as TiDB Cloud Starter instances, TiDB Cloud Essential instances, and TiDB Cloud Dedicated clusters) to quickly build mission-critical applications on Amazon Web Services (AWS), Google Cloud, and Microsoft Azure.</CustomContent>
+[TiDB Cloud](https://www.pingcap.com/tidb-cloud/) is a fully managed, cloud-native Database-as-a-Service (DBaaS) based on [TiDB](https://docs.pingcap.com/tidb/stable/overview), an open-source Hybrid Transactional and Analytical Processing (HTAP) database. TiDB Cloud offers an easy way to deploy and manage databases to let you focus on your applications, not the complexities of the databases. <CustomContent language="en,zh">You can create TiDB Cloud resources (such as {{{ .starter }}} instances, {{{ .essential }}} instances, and {{{ .dedicated }}} clusters) to quickly build mission-critical applications on Amazon Web Services (AWS), Google Cloud, Microsoft Azure, and Alibaba Cloud.</CustomContent><CustomContent language="ja">You can create TiDB Cloud resources (such as {{{ .starter }}} instances, {{{ .essential }}} instances, and {{{ .dedicated }}} clusters) to quickly build mission-critical applications on Amazon Web Services (AWS), Google Cloud, and Microsoft Azure.</CustomContent>
 
 ![TiDB Cloud Overview](/media/tidb-cloud/tidb-cloud-overview.png)
 
@@ -76,45 +76,45 @@ TiDB Cloud provides the following deployment options:
 
 - TiDB Cloud Starter
 
-    TiDB Cloud Starter is a fully managed, multi-tenant TiDB offering. It delivers an instant, autoscaling MySQL-compatible database and offers a generous free quota and consumption based billing once free limits are exceeded.
+    {{{ .starter }}} is a fully managed, multi-tenant TiDB offering. It delivers an instant, autoscaling MySQL-compatible database and offers a generous free quota and consumption based billing once free limits are exceeded.
 
     <CustomContent language="en,zh">
 
-    Currently, TiDB Cloud Starter is generally available on AWS and in public preview on Alibaba Cloud.
+    Currently, {{{ .starter }}} is generally available on AWS and in public preview on Alibaba Cloud.
 
     </CustomContent>
 
-- TiDB Cloud Essential
+- {{{ .essential }}}
 
-    For applications experiencing growing workloads and needing scalability in real time, TiDB Cloud Essential provides the flexibility and performance to keep pace with your business growth.
+    For applications experiencing growing workloads and needing scalability in real time, {{{ .essential }}} provides the flexibility and performance to keep pace with your business growth.
 
     <CustomContent language="en,zh">
 
-    Currently, TiDB Cloud Essential is in public preview on AWS and Alibaba Cloud.
+    Currently, {{{ .essential }}} is in public preview on AWS and Alibaba Cloud.
 
-    For feature comparison between TiDB Cloud Starter and TiDB Cloud Essential on Alibaba Cloud, see [TiDB on Alibaba Cloud](https://www.pingcap.com/partners/alibaba-cloud/).
+    For feature comparison between {{{ .starter }}} and {{{ .essential }}} on Alibaba Cloud, see [TiDB on Alibaba Cloud](https://www.pingcap.com/partners/alibaba-cloud/).
 
     </CustomContent>
 
     <CustomContent language="ja">
 
-    Currently, TiDB Cloud Essential is in public preview on AWS.
+    Currently, {{{ .essential }}} is in public preview on AWS.
 
     </CustomContent>
 
-- TiDB Cloud Premium
+- {{{ .premium }}}
 
-    TiDB Cloud Premium is designed for mission-critical businesses that demand unlimited real-time scalability. It delivers workload-aware auto-scaling and comprehensive enterprise capabilities.
+    {{{ .premium }}} is designed for mission-critical businesses that demand unlimited real-time scalability. It delivers workload-aware auto-scaling and comprehensive enterprise capabilities.
 
     <CustomContent language="en,zh">
 
-    Currently, TiDB Cloud Premium is in public preview on AWS and Alibaba Cloud. 
+    Currently, {{{ .premium }}} is in public preview on AWS and Alibaba Cloud. 
 
     </CustomContent>
 
     <CustomContent language="ja">
 
-    Currently, TiDB Cloud Premium is in public preview on AWS.
+    Currently, {{{ .premium }}} is in public preview on AWS.
 
     </CustomContent>
 
