@@ -1,7 +1,6 @@
 # Temporary files
 temp
 website-docs
-preview.md
 # Environment variables used in tests
 .env
 
