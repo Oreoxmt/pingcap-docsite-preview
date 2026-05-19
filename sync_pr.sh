@@ -44,18 +44,31 @@ get_pr_base_branch() {
 
 }
 
+normalize_preview_target() {
+  TARGET_BRANCH="$BASE_BRANCH"
+  TARGET_LOCALE=""
+
+  if [[ "$REPO_NAME" == "docs" && "$BASE_BRANCH" =~ ^i18n-([a-z][a-z])-(master|release-[0-9]+\.[0-9]+|v[0-9]+\.[0-9]+)$ ]]; then
+    TARGET_LOCALE="${BASH_REMATCH[1]}"
+    TARGET_BRANCH="${BASH_REMATCH[2]}"
+    if [[ "$TARGET_BRANCH" =~ ^v[0-9]+\.[0-9]+$ ]]; then
+      TARGET_BRANCH="release-${TARGET_BRANCH#v}"
+    fi
+  fi
+}
+
 get_destination_suffix() {
   # Determine the product name based on PREVIEW_PRODUCT.
   case "$PREVIEW_PRODUCT" in
   preview)
-    DIR_SUFFIX="tidb/${BASE_BRANCH}"
+    DIR_SUFFIX="tidb/${TARGET_BRANCH}"
     ;;
   preview-cloud)
     DIR_SUFFIX="tidbcloud/master"
     IS_CLOUD=true
     ;;
   preview-operator)
-    DIR_SUFFIX="tidb-in-kubernetes/${BASE_BRANCH}"
+    DIR_SUFFIX="tidb-in-kubernetes/${TARGET_BRANCH}"
     ;;
   *)
     echo "Error: Branch name must start with preview/, preview-cloud/, or preview-operator/."
@@ -68,8 +81,8 @@ generate_sync_tasks() {
   # Define sync tasks for different repositories.
   case "$REPO_NAME" in
   docs)
-    # Sync all modified or added files from the root dir to markdown-pages/en/.
-    SYNC_TASKS=("./,en/")
+    # Sync all modified or added files from the root dir to markdown-pages/{locale}/.
+    SYNC_TASKS=("./,${TARGET_LOCALE:-en}/")
     ;;
   docs-cn)
     # sync all modified or added files from the root dir to markdown-pages/zh/.
@@ -366,7 +379,7 @@ perform_sync_task() {
   restore_preview_page_from_head
 
   # Set the target branch and folders of TOC namespace per product.
-  # These folders are served from a fixed target branch; when BASE_BRANCH differs, they must also be synced there for the preview to reflect changes at their canonical URLs.
+  # These folders are served from a fixed target branch; when TARGET_BRANCH differs, they must also be synced there for the preview to reflect changes at their canonical URLs.
   #  - tidb:               docs.tidb.stable from docs.json (e.g. release-8.5)
   #  - tidb-in-kubernetes: main
   #  - tidbcloud:          master (already the default target, no extra sync needed)
@@ -423,8 +436,8 @@ perform_sync_task() {
 
     commit_changes "Post-process docs and update preview links"
 
-    # Sync TOC namespace folders to the target branch path when BASE_BRANCH differs.
-    if [[ -n "$TOC_TARGET_BRANCH" && "$BASE_BRANCH" != "$TOC_TARGET_BRANCH" ]]; then
+    # Sync TOC namespace folders to the target branch path when TARGET_BRANCH differs.
+    if [[ -n "$TOC_TARGET_BRANCH" && "$TARGET_BRANCH" != "$TOC_TARGET_BRANCH" ]]; then
       TOC_TARGET_DIR="$(dirname "$DEST_DIR")/$TOC_TARGET_BRANCH"
 
       if [[ "$TOC_TARGET_DIR" == "$DEST_DIR" ]]; then
@@ -499,6 +512,7 @@ PR_NUMBER=$(echo "$BRANCH_NAME" | cut -d'/' -f4)
 REPO_DIR="temp/$REPO_NAME"
 
 get_pr_base_branch
+normalize_preview_target
 get_destination_suffix
 clone_repo
 perform_sync_task
