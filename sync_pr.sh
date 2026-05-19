@@ -48,12 +48,9 @@ normalize_preview_target() {
   TARGET_BRANCH="$BASE_BRANCH"
   TARGET_LOCALE=""
 
-  if [[ "$REPO_NAME" == "docs" && "$BASE_BRANCH" =~ ^i18n-([a-z][a-z])-(master|release-[0-9]+\.[0-9]+|v[0-9]+\.[0-9]+)$ ]]; then
+  if [[ "$BASE_BRANCH" =~ ^i18n-(.+)-(master|release-.+)$ ]]; then
     TARGET_LOCALE="${BASH_REMATCH[1]}"
     TARGET_BRANCH="${BASH_REMATCH[2]}"
-    if [[ "$TARGET_BRANCH" =~ ^v[0-9]+\.[0-9]+$ ]]; then
-      TARGET_BRANCH="release-${TARGET_BRANCH#v}"
-    fi
   fi
 }
 
@@ -85,8 +82,8 @@ generate_sync_tasks() {
     SYNC_TASKS=("./,${TARGET_LOCALE:-en}/")
     ;;
   docs-cn)
-    # sync all modified or added files from the root dir to markdown-pages/zh/.
-    SYNC_TASKS=("./,zh/")
+    # sync all modified or added files from the root dir to markdown-pages/{locale}/.
+    SYNC_TASKS=("./,${TARGET_LOCALE:-zh}/")
     ;;
   docs-tidb-operator)
     # Task 1: sync all modified or added files from en/ to markdown-pages/en/.
