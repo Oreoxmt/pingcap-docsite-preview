@@ -59,8 +59,6 @@ summary: 本文介绍如何使用 DM 工具迁移数据。首先部署 DM 集群
 
 2. 在终端中执行下面的命令，使用 `tiup dmctl` 将 MySQL-1 的数据源配置加载到 DM 集群中：
 
-    {{< copyable "shell-regular" >}}
-
     ```bash
     tiup dmctl --master-addr 172.16.10.71:8261 operate-source create conf/source1.yaml
     ```
@@ -126,8 +124,6 @@ mydumpers:
 
 使用 `tiup dmctl` 执行以下命令启动数据迁移任务。其中，`task.yaml` 是之前编辑的配置文件。
 
-{{< copyable "" >}}
-
 ```bash
 tiup dmctl --master-addr 172.16.10.71:8261 start-task ./task.yaml
 ```
@@ -159,8 +155,6 @@ tiup dmctl --master-addr 172.16.10.71:8261 start-task ./task.yaml
 
 如需了解 DM 集群中是否存在正在运行的迁移任务及任务状态等信息，可使用 `tiup dmctl` 执行以下命令进行查询：
 
-{{< copyable "" >}}
-
 ```bash
 tiup dmctl --master-addr 172.16.10.71:8261 query-status
 ```
@@ -168,8 +162,6 @@ tiup dmctl --master-addr 172.16.10.71:8261 query-status
 ## 第 7 步：停止任务
 
 如果不再需要进行数据迁移，可以使用 `tiup dmctl` 执行以下命令停止迁移任务：
-
-{{< copyable "" >}}
 
 ```bash
 tiup dmctl --master-addr 172.16.10.71:8261 stop-task test
